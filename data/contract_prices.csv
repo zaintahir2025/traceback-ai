@@ -1,0 +1,3 @@
+supplier_id,item,contract_unit_price,valid_from,valid_to
+SUP-42,Widget-A,48,2026-01-01,2026-12-31
+SUP-17,Gadget-B,20,2026-01-01,2026-12-31

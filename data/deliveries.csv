@@ -1,0 +1,3 @@
+delivery_id,po_id,item,delivered_qty,delivery_date,warehouse
+DN-045,PO-1001,Widget-A,100,2026-10-08,WH-01
+DN-046,PO-1002,Gadget-B,50,2026-10-09,WH-01

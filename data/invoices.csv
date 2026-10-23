@@ -1,0 +1,3 @@
+invoice_id,po_id,item,invoiced_qty,unit_price,currency,fees,invoice_date
+INV-9001,PO-1001,Widget-A,120,50,USD,0,2026-10-10
+INV-9002,PO-1002,Gadget-B,50,20,USD,0,2026-10-11
