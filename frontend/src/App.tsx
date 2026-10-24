@@ -17,6 +17,10 @@ import { AgentTrace } from "./components/AgentTrace";
 import { ApprovalBar } from "./components/ApprovalBar";
 import { EmailPreview } from "./components/EmailPreview";
 import { SourceModal } from "./components/SourceModal";
+import { PortfolioAnalytics } from "./components/PortfolioAnalytics";
+import { AuditorChat } from "./components/AuditorChat";
+import { SimulationModal } from "./components/SimulationModal";
+import { AuditCertificateModal } from "./components/AuditCertificateModal";
 import { Footer } from "./components/Footer";
 import {
   ShieldAlert,
@@ -25,7 +29,11 @@ import {
   FileSpreadsheet,
   RefreshCw,
   Sparkles,
-  ExternalLink
+  ExternalLink,
+  TrendingUp,
+  MessageSquare,
+  Award,
+  Sliders
 } from "lucide-react";
 
 export const App: React.FC = () => {
@@ -34,9 +42,9 @@ export const App: React.FC = () => {
   const [investigation, setInvestigation] = useState<InvestigationResult | null>(null);
   const [systemHealth, setSystemHealth] = useState<SystemHealth | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<"evidence" | "trace" | "email">("evidence");
+  const [activeTab, setActiveTab] = useState<"evidence" | "trace" | "email" | "analytics" | "chat">("evidence");
 
-  // Source Modal State
+  // Modals state
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
     file: string;
@@ -46,6 +54,9 @@ export const App: React.FC = () => {
     isOpen: false,
     file: "purchase_orders.csv"
   });
+
+  const [isSimulationOpen, setIsSimulationOpen] = useState(false);
+  const [isCertificateOpen, setIsCertificateOpen] = useState(false);
 
   // Load system health & PO list on initial mount
   useEffect(() => {
@@ -83,6 +94,7 @@ export const App: React.FC = () => {
 
   const handleSelectPo = (poId: string) => {
     setSelectedPoId(poId);
+    setActiveTab("evidence");
   };
 
   const handleReviewDecision = async (
@@ -120,6 +132,12 @@ export const App: React.FC = () => {
     });
   };
 
+  const handleSimulationComplete = (simResult: InvestigationResult) => {
+    setInvestigation(simResult);
+    setSelectedPoId(simResult.poId);
+    setActiveTab("evidence");
+  };
+
   return (
     <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
       {/* Sidebar Navigation */}
@@ -132,6 +150,8 @@ export const App: React.FC = () => {
         onRefresh={() => runInvestigation(selectedPoId)}
         dataSourcesStatus={investigation?.dataSourcesStatus || null}
         onViewSourceFile={handleOpenSourceFile}
+        onOpenSimulation={() => setIsSimulationOpen(true)}
+        onOpenCertificate={() => setIsCertificateOpen(true)}
       />
 
       {/* Main Investigation Panel */}
@@ -150,7 +170,7 @@ export const App: React.FC = () => {
                 </span>
                 <span className="text-slate-400">•</span>
                 <span className="text-xs font-medium text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
-                  Item: {investigation?.item || "Widget-A"}
+                  {investigation?.item || "Widget-A"}
                 </span>
               </div>
             </div>
@@ -166,7 +186,7 @@ export const App: React.FC = () => {
                   : "text-slate-400 hover:text-slate-200"
               }`}
             >
-              <ShieldAlert className="w-3.5 h-3.5" /> Reconciliation & Evidence
+              <ShieldAlert className="w-3.5 h-3.5" /> Evidence Trail
               {investigation && investigation.discrepancies.length > 0 && (
                 <span className="w-4 h-4 rounded-full bg-rose-500 text-[10px] text-white flex items-center justify-center font-bold">
                   {investigation.discrepancies.length}
@@ -181,7 +201,7 @@ export const App: React.FC = () => {
                   : "text-slate-400 hover:text-slate-200"
               }`}
             >
-              <Cpu className="w-3.5 h-3.5" /> Meterless Agent Trace
+              <Cpu className="w-3.5 h-3.5" /> Agent Trace
             </button>
             <button
               onClick={() => setActiveTab("email")}
@@ -191,7 +211,27 @@ export const App: React.FC = () => {
                   : "text-slate-400 hover:text-slate-200"
               }`}
             >
-              <Mail className="w-3.5 h-3.5" /> Supplier Resolution Email
+              <Mail className="w-3.5 h-3.5" /> Resolution Email
+            </button>
+            <button
+              onClick={() => setActiveTab("analytics")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                activeTab === "analytics"
+                  ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <TrendingUp className="w-3.5 h-3.5" /> Portfolio Risk
+            </button>
+            <button
+              onClick={() => setActiveTab("chat")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                activeTab === "chat"
+                  ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <MessageSquare className="w-3.5 h-3.5" /> AI Copilot
             </button>
           </div>
         </header>
@@ -235,8 +275,8 @@ export const App: React.FC = () => {
                     onInspectSource={handleInspectSource}
                   />
 
-                  {/* Inline quick access to Agent Trace preview */}
-                  <div className="border border-slate-800 rounded-2xl p-4 bg-slate-900/60 flex items-center justify-between">
+                  {/* Inline quick access bar */}
+                  <div className="border border-slate-800 rounded-2xl p-4 bg-slate-900/60 flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <span className="text-xs font-bold text-white block">
                         Verified by Meterless Autonomous Agent
@@ -245,12 +285,20 @@ export const App: React.FC = () => {
                         Mission {investigation.missionTrace.missionId} finished in {investigation.missionTrace.totalDurationMs}ms with 5 reasoning steps.
                       </span>
                     </div>
-                    <button
-                      onClick={() => setActiveTab("trace")}
-                      className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition flex items-center gap-1"
-                    >
-                      Inspect Full Agent Trace <ExternalLink className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => setIsCertificateOpen(true)}
+                        className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition flex items-center gap-1.5"
+                      >
+                        <Award className="w-3.5 h-3.5 text-indigo-400" /> View Compliance Certificate
+                      </button>
+                      <button
+                        onClick={() => setActiveTab("trace")}
+                        className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition flex items-center gap-1 px-2"
+                      >
+                        Inspect Full Agent Trace <ExternalLink className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -274,6 +322,20 @@ export const App: React.FC = () => {
                   />
                 </div>
               )}
+
+              {/* Tab 4: Portfolio Risk Scorecards & Leakage Analytics */}
+              {activeTab === "analytics" && (
+                <div className="space-y-6">
+                  <PortfolioAnalytics onSelectPo={handleSelectPo} />
+                </div>
+              )}
+
+              {/* Tab 5: Interactive AI Auditor Copilot */}
+              {activeTab === "chat" && (
+                <div className="space-y-6">
+                  <AuditorChat poId={investigation.poId} />
+                </div>
+              )}
             </>
           ) : null}
         </main>
@@ -290,6 +352,22 @@ export const App: React.FC = () => {
         highlightRow={modalState.row}
         highlightColumn={modalState.column}
       />
+
+      {/* Live Simulation Modal */}
+      <SimulationModal
+        isOpen={isSimulationOpen}
+        onClose={() => setIsSimulationOpen(false)}
+        onSimulationComplete={handleSimulationComplete}
+      />
+
+      {/* Official Audit Certificate Modal */}
+      {investigation && (
+        <AuditCertificateModal
+          isOpen={isCertificateOpen}
+          onClose={() => setIsCertificateOpen(false)}
+          investigation={investigation}
+        />
+      )}
     </div>
   );
 };

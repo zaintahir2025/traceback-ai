@@ -259,7 +259,15 @@ export class ZetarisClient {
         const row = stmt.get(poId) as RawJoinedRow | undefined;
 
         if (row) {
-          return this.buildUnifiedRecordFromRow(row, formattedSql);
+          const invStmt = this.db.prepare("SELECT invoice_id, invoiced_qty, unit_price, fees FROM invoices WHERE po_id = ?");
+          const invRows = invStmt.all(poId) as Array<{ invoice_id: string; invoiced_qty: number; unit_price: number; fees: number }>;
+          const allInvoices = invRows.map(i => ({
+            invoiceId: String(i.invoice_id),
+            invoicedQty: Number(i.invoiced_qty),
+            unitPrice: Number(i.unit_price),
+            fees: Number(i.fees || 0)
+          }));
+          return this.buildUnifiedRecordFromRow(row, formattedSql, allInvoices);
         }
       }
     } catch (sqlErr) {
@@ -275,7 +283,11 @@ export class ZetarisClient {
     throw new Error(`[ZetarisClient] Purchase Order ${poId} not found in any virtualized data sources.`);
   }
 
-  private buildUnifiedRecordFromRow(row: RawJoinedRow, sqlExecuted: string): UnifiedRecord {
+  private buildUnifiedRecordFromRow(
+    row: RawJoinedRow,
+    sqlExecuted: string,
+    allInvoices?: Array<{ invoiceId: string; invoicedQty: number; unitPrice: number; fees: number }>
+  ): UnifiedRecord {
     const poId = String(row.po_id);
     const supplierId = String(row.supplier_id);
     const item = String(row.item);
@@ -335,6 +347,18 @@ export class ZetarisClient {
       }
     ];
 
+    const invoiceList =
+      allInvoices && allInvoices.length > 0
+        ? allInvoices
+        : [
+            {
+              invoiceId: String(row.invoice_id || ""),
+              invoicedQty,
+              unitPrice: invoiceUnitPrice,
+              fees
+            }
+          ];
+
     return {
       poId,
       supplierId,
@@ -353,14 +377,7 @@ export class ZetarisClient {
       warehouse: String(row.warehouse || "WH-01"),
       invoiceId: String(row.invoice_id || ""),
       deliveryId: String(row.delivery_id || ""),
-      allInvoicesForPo: [
-        {
-          invoiceId: String(row.invoice_id || ""),
-          invoicedQty,
-          unitPrice: invoiceUnitPrice,
-          fees
-        }
-      ],
+      allInvoicesForPo: invoiceList,
       sqlQueryExecuted: sqlExecuted,
       sourceRefs
     };

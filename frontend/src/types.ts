@@ -143,6 +143,54 @@ export interface CsvFileDump {
   }>;
 }
 
+export interface SupplierScorecard {
+  supplierId: string;
+  totalSpend: number;
+  overcharge: number;
+  poCount: number;
+  overchargeRate: number;
+  violations: string[];
+  grade: string;
+  riskLevel: string;
+}
+
+export interface PortfolioSummary {
+  totalPOsAudited: number;
+  totalSpendAudited: number;
+  totalOverchargesRecovered: number;
+  recoveryPercentage: number;
+  cleanCount: number;
+  flaggedCount: number;
+  categoryBreakdown: Record<string, number>;
+}
+
+export interface BatchAuditResult {
+  portfolioSummary: PortfolioSummary;
+  supplierScorecards: SupplierScorecard[];
+  results: InvestigationResult[];
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: "user" | "agent";
+  text: string;
+  timestamp: string;
+  modelUsed?: string;
+}
+
+export interface CustomAuditParams {
+  poId: string;
+  supplierId: string;
+  item: string;
+  orderedQty: number;
+  deliveredQty: number;
+  invoicedQty: number;
+  poUnitPrice: number;
+  invoiceUnitPrice: number;
+  contractUnitPrice: number;
+  fees: number;
+}
+
 export interface SystemHealth {
   status: string;
   timestamp: string;

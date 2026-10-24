@@ -74,19 +74,25 @@ describe("TraceBack AI - Core Reconciliation & Financial Audit Engine", () => {
     expect(feeDiscrepancy?.confidence).toBe(0.92);
   });
 
-  it("should detect duplicate invoice submissions for the same PO", () => {
-    const recordWithDuplicate: UnifiedRecord = {
-      ...mockScenarios["PO-1002"],
-      allInvoicesForPo: [
-        { invoiceId: "INV-9002", invoicedQty: 50, unitPrice: 20, fees: 0 },
-        { invoiceId: "INV-9002", invoicedQty: 50, unitPrice: 20, fees: 0 }
-      ]
-    };
+  it("should accurately audit PO-1003 for unexpected non-contracted ancillary fees ($350)", () => {
+    const record = mockScenarios["PO-1003"];
+    const discrepancies = compareRecords(record);
+    const summary = buildAnalysisSummary(record, discrepancies);
 
-    const discrepancies = compareRecords(recordWithDuplicate);
-    const dupDiscrepancy = discrepancies.find((d) => d.type === "DUPLICATE_INVOICE");
+    expect(summary.totalFinancialImpact).toBe(350);
+    const feeDisc = discrepancies.find((d) => d.type === "UNEXPECTED_FEE");
+    expect(feeDisc).toBeDefined();
+    expect(feeDisc?.financialImpact).toBe(350);
+  });
 
-    expect(dupDiscrepancy).toBeDefined();
-    expect(dupDiscrepancy?.financialImpact).toBe(1000);
+  it("should accurately audit PO-1004 for duplicate invoice billing risk ($1,000)", () => {
+    const record = mockScenarios["PO-1004"];
+    const discrepancies = compareRecords(record);
+    const summary = buildAnalysisSummary(record, discrepancies);
+
+    expect(summary.totalFinancialImpact).toBe(1000);
+    const dupDisc = discrepancies.find((d) => d.type === "DUPLICATE_INVOICE");
+    expect(dupDisc).toBeDefined();
+    expect(dupDisc?.financialImpact).toBe(1000);
   });
 });

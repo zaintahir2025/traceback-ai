@@ -26,6 +26,8 @@ interface SidebarProps {
     contractPrices: { loaded: boolean; rowCount: number; file: string };
   } | null;
   onViewSourceFile: (fileName: string) => void;
+  onOpenSimulation: () => void;
+  onOpenCertificate: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -36,7 +38,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   loading,
   onRefresh,
   dataSourcesStatus,
-  onViewSourceFile
+  onViewSourceFile,
+  onOpenSimulation,
+  onOpenCertificate
 }) => {
   const zetaris = systemHealth?.sponsorIntegrations.zetaris;
   const meterless = systemHealth?.sponsorIntegrations.meterless;
@@ -69,6 +73,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        {/* Quick Action Tools */}
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={onOpenSimulation}
+            className="p-2.5 rounded-xl bg-indigo-600/15 hover:bg-indigo-600/25 border border-indigo-500/30 text-indigo-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Simulate Order</span>
+          </button>
+          <button
+            onClick={onOpenCertificate}
+            className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition"
+          >
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Audit Seal</span>
+          </button>
+        </div>
+
         {/* PO Investigation Selector */}
         <div>
           <div className="flex items-center justify-between mb-2">
@@ -76,13 +98,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
               Select Purchase Order
             </span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-mono">
-              {purchaseOrders.length} Available
+              {purchaseOrders.length} Scenarios
             </span>
           </div>
           <div className="space-y-2">
             {purchaseOrders.map((po) => {
               const isSelected = po.poId === selectedPoId;
-              const isDiscrepant = po.poId === "PO-1001";
+              const isClean = po.poId === "PO-1002";
 
               return (
                 <button
@@ -96,13 +118,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-mono font-bold text-white text-sm">{po.poId}</span>
-                    {isDiscrepant ? (
-                      <span className="inline-flex items-center text-[10px] font-medium text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded border border-rose-500/20">
-                        <AlertTriangle className="w-3 h-3 mr-1" /> Overcharges
-                      </span>
-                    ) : (
+                    {isClean ? (
                       <span className="inline-flex items-center text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
                         <CheckCircle2 className="w-3 h-3 mr-1" /> Clean
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center text-[10px] font-medium text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded border border-rose-500/20">
+                        <AlertTriangle className="w-3 h-3 mr-1" /> Overcharge
                       </span>
                     )}
                   </div>

@@ -25,12 +25,14 @@ In enterprise supply chain operations, organizations leak **1.5% to 4% of total 
 3. **Supplier Invoices** from the Accounts Payable portal
 4. **Contract Price Lists** from Legal/Procurement schedules
 
-### 💰 Measurable Financial Recovery in Demo Scenario
-| Discrepancy Type | Source Finding | Contract / Received Baseline | Variance Delta | Financial Recovery | Confidence |
+### 💰 Measurable Financial Recovery in Demo Scenarios
+| Purchase Order | Supplier Entity | Issue Category | Variance Delta | Recoverable Impact | Audit Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Quantity Overbill** | Invoiced: `120` units (`invoices.csv:L2`) | Received: `100` units (`deliveries.csv:L2`) | **+20 unreceived units** | **+$1,000.00 USD** | `98%` |
-| **Price Escalation** | Invoiced: `$50.00`/unit (`invoices.csv:L2`) | Master Contract: `$48.00`/unit (`contract_prices.csv:L2`) | **+$2.00/unit markup** | **+$200.00 USD** | `95%` |
-| **Total Impact** | **PO-1001 Audit** | **4-Way Cross-Source Virtualization** | — | **$1,200.00 USD** | **96.5% Mean** |
+| **PO-1001** | `SUP-42` | Quantity Overbill + Rate Escalation | **+20 units / +$2 rate** | **+$1,200.00 USD** | `Flagged (High Risk)` |
+| **PO-1002** | `SUP-17` | Perfect Concordance | **0 variances** | **$0.00 USD** | `Cleared (Clean A+)` |
+| **PO-1003** | `SUP-88` | Non-Contracted Ancillary Fees | **+$350 fee markup** | **+$350.00 USD** | `Flagged (Medium Risk)` |
+| **PO-1004** | `SUP-99` | Duplicate Invoice Double Billing | **Duplicate INV-9004** | **+$1,000.00 USD** | `Flagged (Critical Risk)` |
+| **Total Portfolio** | **4 Suppliers Audited** | **4-Way Cross-Source Virtualization** | — | **$2,550.00 USD** | **23.2% Recovery Rate** |
 
 ---
 
@@ -67,6 +69,16 @@ TraceBack AI deeply integrates all four sponsor technologies with functional, ro
 ### 4. ⚡ Cursor — AI-First Development & Velocity
 - **Workflow**: Built end-to-end utilizing Cursor Agent Mode, `@`-context schema referencing, inline edits (Ctrl+K), and Cursor Composer.
 - **Documentation**: Documented in [`docs/CURSOR_USAGE.md`](file:///docs/CURSOR_USAGE.md) and [`PROMPTS_LOG.md`](file:///PROMPTS_LOG.md).
+
+---
+
+## 🚀 Advanced Platform Capabilities
+
+1. **AI Auditor Copilot (NVIDIA NIM)**: Interactive conversational assistant grounded in the 4 virtualized data sources. Auditors can ask questions regarding contract clauses, warehouse delivery logs, or request escalated dispute letters in real time.
+2. **Enterprise Portfolio Risk & Supplier Scorecards**: Batch audit view aggregating total spend ($11,000 USD), recoverable leakage ($2,550 USD), and supplier compliance letter grades (from Grade A+ down to Grade F).
+3. **Live Custom Audit Simulation Engine**: Test any hypothetical order by inputting custom quantities, rates, and fee structures on the fly.
+4. **Official Compliance Audit Certificate & Print View**: Generate a formal, print-ready compliance certificate with verification hashes, H-MEM audit stamps, and authorized auditor sign-offs.
+5. **Zero-Setup Offline Execution**: Full client-side simulation fallback ensures that the live demo functions 100% seamlessly on GitHub Pages without requiring external backend servers.
 
 ---
 

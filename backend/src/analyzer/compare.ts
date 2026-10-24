@@ -148,37 +148,34 @@ export function compareRecords(record: UnifiedRecord): Discrepancy[] {
 
   // 5. Duplicate Invoice Check
   if (record.allInvoicesForPo && record.allInvoicesForPo.length > 1) {
-    const uniqueInvoiceIds = new Set(record.allInvoicesForPo.map((i) => i.invoiceId));
-    if (uniqueInvoiceIds.size < record.allInvoicesForPo.length) {
-      const duplicateInvoice = record.allInvoicesForPo[1];
-      const dupImpact = duplicateInvoice.invoicedQty * duplicateInvoice.unitPrice;
-      discrepancies.push({
-        id: `DISC-DUP-${record.poId}-05`,
-        type: "DUPLICATE_INVOICE",
-        severity: "high",
-        field: "invoice_id",
-        sourceA: {
-          label: `Primary Invoice ${record.allInvoicesForPo[0].invoiceId}`,
-          file: "invoices.csv",
-          row: invQtyRef.row,
-          column: "invoice_id",
-          value: record.allInvoicesForPo[0].invoiceId
-        },
-        sourceB: {
-          label: `Duplicate Invoice ${duplicateInvoice.invoiceId}`,
-          file: "invoices.csv",
-          row: invQtyRef.row + 1,
-          column: "invoice_id",
-          value: duplicateInvoice.invoiceId
-        },
-        delta: 1,
-        financialImpact: dupImpact,
-        currency,
-        reason: `Duplicate invoice submission detected for the same purchase order scope.`,
-        confidence: 0.99,
-        remediationHint: `Immediately halt processing for duplicate invoice ${duplicateInvoice.invoiceId}.`
-      });
-    }
+    const duplicateInvoice = record.allInvoicesForPo[1];
+    const dupImpact = duplicateInvoice.invoicedQty * duplicateInvoice.unitPrice;
+    discrepancies.push({
+      id: `DISC-DUP-${record.poId}-05`,
+      type: "DUPLICATE_INVOICE",
+      severity: "high",
+      field: "invoice_id",
+      sourceA: {
+        label: `Primary Invoice ${record.allInvoicesForPo[0].invoiceId}`,
+        file: "invoices.csv",
+        row: invQtyRef.row,
+        column: "invoice_id",
+        value: record.allInvoicesForPo[0].invoiceId
+      },
+      sourceB: {
+        label: `Duplicate Invoice ${duplicateInvoice.invoiceId}`,
+        file: "invoices.csv",
+        row: invQtyRef.row + 1,
+        column: "invoice_id",
+        value: duplicateInvoice.invoiceId
+      },
+      delta: 1,
+      financialImpact: dupImpact,
+      currency,
+      reason: `Duplicate invoice submission detected: Both ${record.allInvoicesForPo[0].invoiceId} and ${duplicateInvoice.invoiceId} bill for the identical PO scope of ${duplicateInvoice.invoicedQty} units.`,
+      confidence: 0.99,
+      remediationHint: `Immediately halt processing for duplicate invoice ${duplicateInvoice.invoiceId} and recover $${dupImpact.toLocaleString()}.`
+    });
   }
 
   return discrepancies;
