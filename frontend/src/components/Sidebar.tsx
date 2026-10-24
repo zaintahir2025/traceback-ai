@@ -28,6 +28,7 @@ interface SidebarProps {
   onViewSourceFile: (fileName: string) => void;
   onOpenSimulation: () => void;
   onOpenCertificate: () => void;
+  onOpenSponsorHub?: (tab: "nvidia" | "zetaris" | "meterless" | "cursor") => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -40,7 +41,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   dataSourcesStatus,
   onViewSourceFile,
   onOpenSimulation,
-  onOpenCertificate
+  onOpenCertificate,
+  onOpenSponsorHub
 }) => {
   const zetaris = systemHealth?.sponsorIntegrations.zetaris;
   const meterless = systemHealth?.sponsorIntegrations.meterless;
@@ -142,11 +144,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Zetaris Virtualization Status Card */}
-        <div className="rounded-xl border border-slate-800 bg-slate-850/40 p-3.5 space-y-3">
+        <div
+          onClick={() => onOpenSponsorHub?.("zetaris")}
+          className="rounded-xl border border-slate-800 hover:border-cyan-500/50 bg-slate-850/40 hover:bg-slate-800/60 p-3.5 space-y-3 transition cursor-pointer group"
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Database className="w-4 h-4 text-cyan-400" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-200">
+              <Database className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-200 group-hover:text-cyan-300">
                 Zetaris Virtualizer
               </span>
             </div>
@@ -178,6 +183,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {zetaris?.latencyMs || 2}ms
               </span>
             </div>
+          </div>
+
+          <div className="pt-1 flex items-center justify-between text-[11px] text-cyan-400/80 group-hover:text-cyan-300 font-medium border-t border-slate-800/80">
+            <span>Inspect Virtual SQL Query</span>
+            <span className="group-hover:translate-x-0.5 transition-transform">↗</span>
           </div>
         </div>
 
@@ -241,26 +251,42 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Agent Stack Badges */}
         <div className="rounded-xl border border-slate-800/80 bg-slate-850/30 p-3 space-y-2">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block">
-            Architecture Stack
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block">
+              Architecture Stack
+            </span>
+            <button
+              onClick={() => onOpenSponsorHub?.("cursor")}
+              className="text-[10px] font-mono text-indigo-400 hover:text-indigo-300 hover:underline"
+            >
+              Cursor Mode ↗
+            </button>
+          </div>
           <div className="space-y-1.5 text-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400 flex items-center gap-1">
+            <button
+              onClick={() => onOpenSponsorHub?.("meterless")}
+              className="w-full flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 transition text-left cursor-pointer group"
+            >
+              <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1">
                 <Cpu className="w-3.5 h-3.5 text-emerald-400" /> Meterless Agent
               </span>
-              <span className="text-[11px] font-mono text-slate-300">
+              <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
                 {meterless?.isLive ? "Remote Relay" : "Scout → H-MEM"}
+                <span className="text-slate-500 group-hover:text-emerald-300">↗</span>
               </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400 flex items-center gap-1">
+            </button>
+            <button
+              onClick={() => onOpenSponsorHub?.("nvidia")}
+              className="w-full flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 transition text-left cursor-pointer group"
+            >
+              <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1">
                 <Server className="w-3.5 h-3.5 text-purple-400" /> NVIDIA NIM
               </span>
-              <span className="text-[11px] font-mono text-slate-300">
+              <span className="text-[11px] font-mono text-purple-400 flex items-center gap-1">
                 {nvidia?.isLive ? "Llama 3.1 Live" : "Local Engine"}
+                <span className="text-slate-500 group-hover:text-purple-300">↗</span>
               </span>
-            </div>
+            </button>
           </div>
         </div>
       </div>

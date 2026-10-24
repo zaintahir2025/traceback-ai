@@ -21,6 +21,7 @@ import { PortfolioAnalytics } from "./components/PortfolioAnalytics";
 import { AuditorChat } from "./components/AuditorChat";
 import { SimulationModal } from "./components/SimulationModal";
 import { AuditCertificateModal } from "./components/AuditCertificateModal";
+import { SponsorTechHubModal } from "./components/SponsorTechHubModal";
 import { Footer } from "./components/Footer";
 import {
   ShieldAlert,
@@ -57,6 +58,13 @@ export const App: React.FC = () => {
 
   const [isSimulationOpen, setIsSimulationOpen] = useState(false);
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
+  const [isSponsorHubOpen, setIsSponsorHubOpen] = useState(false);
+  const [sponsorHubTab, setSponsorHubTab] = useState<"nvidia" | "zetaris" | "meterless" | "cursor">("nvidia");
+
+  const handleOpenSponsorHub = (tab: "nvidia" | "zetaris" | "meterless" | "cursor") => {
+    setSponsorHubTab(tab);
+    setIsSponsorHubOpen(true);
+  };
 
   // Load system health & PO list on initial mount
   useEffect(() => {
@@ -152,6 +160,7 @@ export const App: React.FC = () => {
         onViewSourceFile={handleOpenSourceFile}
         onOpenSimulation={() => setIsSimulationOpen(true)}
         onOpenCertificate={() => setIsCertificateOpen(true)}
+        onOpenSponsorHub={handleOpenSponsorHub}
       />
 
       {/* Main Investigation Panel */}
@@ -341,7 +350,7 @@ export const App: React.FC = () => {
         </main>
 
         {/* Sponsor Badges & Hackathon Footer */}
-        <Footer systemHealth={systemHealth} />
+        <Footer systemHealth={systemHealth} onOpenSponsorHub={handleOpenSponsorHub} />
       </div>
 
       {/* Raw Data Source Inspection Modal */}
@@ -368,6 +377,14 @@ export const App: React.FC = () => {
           investigation={investigation}
         />
       )}
+
+      {/* Sponsor Tech Hub & Live Inspector Modal */}
+      <SponsorTechHubModal
+        isOpen={isSponsorHubOpen}
+        onClose={() => setIsSponsorHubOpen(false)}
+        initialTab={sponsorHubTab}
+        systemHealth={systemHealth}
+      />
     </div>
   );
 };

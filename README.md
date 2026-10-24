@@ -70,6 +70,13 @@ TraceBack AI deeply integrates all four sponsor technologies with functional, ro
 - **Workflow**: Built end-to-end utilizing Cursor Agent Mode, `@`-context schema referencing, inline edits (Ctrl+K), and Cursor Composer.
 - **Documentation**: Documented in [`docs/CURSOR_USAGE.md`](file:///docs/CURSOR_USAGE.md) and [`PROMPTS_LOG.md`](file:///PROMPTS_LOG.md).
 
+### 🔍 Interactive Sponsor Tech Hub & Live Inspector (New!)
+Every sponsor badge in the dashboard footer and sidebar is an **interactive portal**:
+- **NVIDIA NIM Tester**: Test live inference against `meta/llama-3.1-8b-instruct` in real-time or configure your own NVIDIA API key in the browser.
+- **Zetaris Virtual SQL Console**: Inspect the cross-source SQL JOIN across the 4 decentralized datasets and execute custom federated queries.
+- **Meterless Mission & H-MEM Inspector**: Inspect the 5-step agent execution chain (`scoutIntent` → `fetchUnifiedData` → `detectDiscrepancies` → `scoreConfidence` → `draftExplanation`) and active session memory records.
+- **Cursor Agent Mode Viewer**: Browse `.cursorrules`, `@-context` rules, and actual prompt histories.
+
 ---
 
 ## 🚀 Advanced Platform Capabilities
