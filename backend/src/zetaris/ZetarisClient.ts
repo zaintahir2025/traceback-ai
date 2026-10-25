@@ -1,10 +1,19 @@
-import { DatabaseSync } from "node:sqlite";
+import { createRequire } from "node:module";
 import { config, isZetarisLive } from "../config.js";
 import { logger } from "../utils/logger.js";
 import { readCsvSync, findSourceRef } from "../utils/csv.js";
 import { UnifiedRecord, SourceReference } from "../analyzer/types.js";
 import { UNIFIED_VIEW_SQL, RawJoinedRow } from "./unifiedView.js";
 import { mockScenarios } from "../mockData.js";
+
+const nodeRequire = createRequire(import.meta.url);
+let DatabaseSyncClass: any = null;
+try {
+  const sqliteModule = nodeRequire("node:sqlite");
+  DatabaseSyncClass = sqliteModule.DatabaseSync;
+} catch {
+  DatabaseSyncClass = null;
+}
 
 /**
  * ZetarisClient
@@ -15,7 +24,7 @@ import { mockScenarios } from "../mockData.js";
  * federated SQL join across 4 disparate CSV sources (PO, Deliveries, Invoices, Contract Prices).
  */
 export class ZetarisClient {
-  private db: DatabaseSync | null = null;
+  private db: any = null;
   private initialized = false;
 
   constructor() {
@@ -27,7 +36,11 @@ export class ZetarisClient {
    */
   private initMockEngine() {
     try {
-      this.db = new DatabaseSync(":memory:");
+      if (!DatabaseSyncClass) {
+        logger.warn("[ZetarisClient] node:sqlite not available in this runtime, using fallback mock.");
+        return;
+      }
+      this.db = new DatabaseSyncClass(":memory:");
 
       // 1. Create Purchase Orders Virtual Table
       this.db.exec(`

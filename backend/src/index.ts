@@ -3,6 +3,7 @@ import cors from "cors";
 import { config, logSystemModes } from "./config.js";
 import { logger } from "./utils/logger.js";
 import { router as investigateRouter } from "./routes/investigate.js";
+import { mcpRouter } from "./routes/mcp.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use((req, _res, next) => {
 
 // Mount API routes
 app.use("/api", investigateRouter);
+app.use("/api", mcpRouter);
 
 // Root informational endpoint
 app.get("/", (_req, res) => {
@@ -24,6 +26,12 @@ app.get("/", (_req, res) => {
     service: "TraceBack AI Backend API",
     status: "running",
     hackathonWindow: "Oct 22–27, 2026",
+    sponsorTechIntegrations: {
+      zetaris: "Data Virtualization / 4-Way Cross-Source Federated SQL (ZetarisClient)",
+      meterless: "Agent Mission Orchestration & H-MEM Memory (MeterlessMission)",
+      nvidia: "NVIDIA NIM Inference (meta/llama-3.1-8b-instruct)",
+      mcp: "Model Context Protocol JSON-RPC 2.0 Server (/api/mcp)"
+    },
     endpoints: {
       health: "/api/health",
       pos: "/api/pos",
@@ -31,7 +39,11 @@ app.get("/", (_req, res) => {
       rawSource: "/api/raw-source/:file",
       review: "/api/review/:poId",
       zetarisStatus: "/api/zetaris/status",
-      hMemDump: "/api/memory"
+      zetarisQuery: "/api/zetaris/query",
+      meterlessMission: "/api/meterless/mission",
+      meterlessMemory: "/api/meterless/memory",
+      mcpRpc: "/api/mcp",
+      mcpTools: "/api/mcp/tools"
     }
   });
 });

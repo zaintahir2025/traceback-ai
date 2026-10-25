@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "traceback-ai": {
+      "command": "npx",
+      "args": ["tsx", "backend/src/mcp/cli.ts"],
+      "env": {
+        "PORT": "4001",
+        "NODE_ENV": "development"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "name": "traceback-ai-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "Backend engine for TraceBack AI - Supplier Invoice Checker",
   "main": "dist/index.js",
   "scripts": {
