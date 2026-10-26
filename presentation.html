@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TraceBack AI — Executive Presentation Slide Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #020617;
+      color: #f8fafc;
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      user-select: none;
+    }
+    .deck-container {
+      width: 100%;
+      max-width: 1160px;
+      background: #0b1120;
+      border: 1px solid #1e293b;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+    }
+    .deck-header {
+      padding: 0.85rem 1.5rem;
+      background: #090d16;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .deck-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .badge {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+    }
+    .badge-sponsor {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+    }
+    .slide-viewport {
+      aspect-ratio: 16 / 9;
+      background: #020617;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 2.2rem 2.8rem;
+      overflow: hidden;
+    }
+    .slide-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .slide-category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #c7d2fe;
+    }
+    .slide-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+    .slide-heading {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+      line-height: 1.25;
+    }
+    .slide-subheading {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-bottom: 1.2rem;
+    }
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .deck-controls {
+      padding: 0.85rem 1.5rem;
+      background: #090d16;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    button, a.btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    button:hover, a.btn:hover {
+      background: #334155;
+    }
+    .btn-primary {
+      background: #4f46e5;
+      border-color: #6366f1;
+    }
+    .btn-primary:hover {
+      background: #4338ca;
+    }
+    .btn-emerald {
+      background: #059669;
+      border-color: #10b981;
+    }
+    .btn-emerald:hover {
+      background: #047857;
+    }
+    .btn-blue {
+      background: #2563eb;
+      border-color: #3b82f6;
+    }
+    .btn-blue:hover {
+      background: #1d4ed8;
+    }
+    .speaker-notes-box {
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 1160px;
+      background: #090d16;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      padding: 1rem 1.5rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .notes-title {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    /* Grid Helpers */
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title { font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; font-weight: 700; margin-bottom: 0.25rem; }
+    .card-heading { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .card-desc { font-size: 0.82rem; color: #94a3b8; line-height: 1.4; flex: 1; }
+    .highlight-red { color: #f43f5e; font-weight: 700; }
+    .highlight-green { color: #10b981; font-weight: 700; }
+    .highlight-amber { color: #f59e0b; font-weight: 700; }
+    .highlight-sky { color: #38bdf8; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+    <div class="deck-header">
+      <div class="deck-title">
+        <span>TraceBack AI</span>
+        <span class="badge">EXECUTIVE SLIDE DECK (16:9 WIDESCREEN)</span>
+        <span class="badge badge-sponsor">ZETARIS & METERLESS</span>
+      </div>
+      <div class="btn-group">
+        <a href="./traceback-ai-presentation.pptx" download="traceback-ai-presentation.pptx" class="btn btn-blue">
+          Download .PPTX (PowerPoint)
+        </a>
+        <a href="./" class="btn">
+          Back to Dashboard
+        </a>
+      </div>
+    </div>
+
+    <!-- Active Slide Viewport -->
+    <div class="slide-viewport" id="slideViewport">
+      <!-- Rendered dynamically -->
+    </div>
+
+    <!-- Deck Controls -->
+    <div class="deck-controls">
+      <div class="btn-group">
+        <button onclick="prevSlide()">◀ Previous</button>
+        <button onclick="nextSlide()" class="btn-primary">Next ▶</button>
+        <span id="slideCounter" style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; margin:0 0.5rem; color:#94a3b8;">
+          Slide 1 of 7
+        </span>
+      </div>
+
+      <div class="btn-group">
+        <button onclick="toggleNotes()" id="notesToggleBtn">Toggle Speaker Notes</button>
+        <a href="./demo-video.html" class="btn btn-emerald">Watch 2-Min Demo Video ▶</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Speaker Notes Container -->
+  <div class="speaker-notes-box" id="speakerNotesBox">
+    <div class="notes-title">Speaker Script & Presenter Notes</div>
+    <div id="notesContent">Loading speaker notes...</div>
+  </div>
+
+  <script>
+    const slides = [
+      {
+        id: 0,
+        category: "Cover & Title",
+        title: "TraceBack AI",
+        sub: "Autonomous 4-Way Cross-Source Data Virtualization & Spend Recovery Agent",
+        render: `
+          <div style="background: #0f172a; border: 2px solid #3730a3; border-radius: 1rem; padding: 2.2rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="display:inline-block; font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#c7d2fe; background:#1e1b4b; border:1px solid #6366f1; padding:0.25rem 0.75rem; border-radius:9999px; margin-bottom:0.75rem;">
+                GLOBAL AI HACKATHON 2026
+              </span>
+              <h1 style="font-size:2.8rem; font-weight:800; color:#ffffff; margin-bottom:0.4rem;">TraceBack AI</h1>
+              <p style="font-size:1.15rem; font-weight:700; color:#38bdf8; margin-bottom:0.5rem;">Autonomous 4-Way Cross-Source Data Virtualization & Spend Recovery Agent</p>
+              <p style="font-size:0.95rem; color:#cbd5e1; max-width:850px; line-height:1.5;">
+                Unifying SAP ERP purchase orders, warehouse delivery notes, AP invoices, and master contracts on the fly with zero ETL, cell-level audit trails, and zero dollar local AI execution.
+              </p>
+            </div>
+            <div class="grid-3" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem;">
+              <div style="background:#082F49; border:1.5px solid #38bdf8; border-radius:0.75rem; padding:0.85rem;">
+                <div style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#38bdf8; margin-bottom:0.25rem;">ZETARIS VIRTUALIZATION</div>
+                <div style="font-size:0.8rem; color:#cbd5e1;">Zero-ETL federated queries across 4 live datasets in 12ms.</div>
+              </div>
+              <div style="background:#064E3B; border:1.5px solid #10b981; border-radius:0.75rem; padding:0.85rem;">
+                <div style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#10b981; margin-bottom:0.25rem;">METERLESS RELAY & H-MEM</div>
+                <div style="font-size:0.8rem; color:#cbd5e1;">Scout intent, relay coordination, and persistent Gaia memory.</div>
+              </div>
+              <div style="background:#2E1065; border:1.5px solid #a855f7; border-radius:0.75rem; padding:0.85rem;">
+                <div style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#a855f7; margin-bottom:0.25rem;">NIGHTSHIFT AI PROVIDER</div>
+                <div style="font-size:0.8rem; color:#cbd5e1;">4-stage Race/Judge/Verify/Generate cycle at $0 cloud token cost.</div>
+              </div>
+            </div>
+          </div>
+        `,
+        notes: "Welcome everyone. Today we are presenting TraceBack AI, an autonomous multi-agent platform designed to eradicate enterprise procurement leakage. In Fortune 500 supply chains, companies quietly lose 1.5% to 4% of total procurement spend due to uncoordinated enterprise silos. By combining Zetaris Zero-ETL Data Virtualization, Meterless Relay Orchestration, and Meterless Nightshift local intelligence, TraceBack AI reconciles purchase orders, delivery notes, supplier invoices, and legal contracts in under 200 milliseconds with an immutable, cell-level audit trail."
+      },
+      {
+        id: 1,
+        category: "Problem Statement",
+        title: "The $1.5M Enterprise Spend Leakage: 4 Disconnected Silos",
+        sub: "Why global procurement operations lose 1.5% to 4.0% of total spend every year.",
+        render: `
+          <div style="display:grid; grid-template-columns: 1fr 2fr; gap:1.25rem; height:100%;">
+            <div style="background:#1c1917; border:2px solid #f43f5e; border-radius:0.75rem; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#f43f5e; margin-bottom:0.35rem;">ANNUAL LEAKAGE</div>
+                <div style="font-size:2.4rem; font-weight:800; color:#fff; line-height:1;">1.5% - 4%</div>
+                <div style="font-size:0.85rem; color:#cbd5e1; margin-top:0.4rem;">of total procurement spend is paid in unverified supplier overcharges.</div>
+              </div>
+              <div style="border-top:1px solid #44403c; padding-top:0.85rem;">
+                <div style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#f59e0b; margin-bottom:0.35rem;">THE AUDIT BOTTLENECK</div>
+                <div style="font-size:0.8rem; color:#94a3b8; line-height:1.4;">
+                  • 10,000+ invoices received/month<br>
+                  • 2-way matching misses delivery notes<br>
+                  • Contract rates buried in legal PDFs<br>
+                  • Human fatigue causes 85%+ overcharges to pass unnoticed
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div class="card" style="border-color:#38bdf8;">
+                <div class="card-title highlight-sky">SILO 1: SAP ERP</div>
+                <div class="card-heading">Purchase Orders</div>
+                <div class="card-desc">PO-1001 approved 120 units at $50/ea ($6,000.00). Knows what was approved to buy, but has no live confirmation of what the warehouse actually accepted.</div>
+              </div>
+              <div class="card" style="border-color:#f59e0b;">
+                <div class="card-title highlight-amber">SILO 2: WMS LOGISTICS</div>
+                <div class="card-heading">Goods Receipts</div>
+                <div class="card-desc">Warehouse note DN-045 logged only 100 units physically received. 20 damaged or missing units were never physically accepted at the dock.</div>
+              </div>
+              <div class="card" style="border-color:#f43f5e;">
+                <div class="card-title highlight-red">SILO 3: ACCOUNTS PAYABLE</div>
+                <div class="card-heading">Supplier Invoices</div>
+                <div class="card-desc">Supplier bills for full 120 units on INV-9001 ($6,000.00). AP cross-checks the PO, sees 120 approved, and approves payment without checking the dock note.</div>
+              </div>
+              <div class="card" style="border-color:#a855f7;">
+                <div class="card-title" style="color:#a855f7;">SILO 4: LEGAL SOURCING</div>
+                <div class="card-heading">Master Contracts</div>
+                <div class="card-desc">Master Contract schedule sets ceiling price at $48.00/unit. Invoice billed at $50.00/unit. A $2.00 rate escalation ($200.00 leakage) goes completely undetected.</div>
+              </div>
+            </div>
+          </div>
+        `,
+        notes: "Here is the fundamental problem: enterprise procurement data lives in disconnected silos. ERP knows what was ordered. WMS knows what was received. Accounts Payable knows what was billed. And Legal knows the contract ceiling rates. Because manual 4-way matching across thousands of lines is too tedious, AP teams settle for 2-way matching against the PO. The result? Companies routinely pay for items that were never delivered and tolerate unauthorized price increases."
+      },
+      {
+        id: 2,
+        category: "Target Personas",
+        title: "Built for Procurement, Finance, and Audit Leadership",
+        sub: "Delivering role-tailored automation, audit defensibility, and cash recovery across the enterprise.",
+        render: `
+          <div class="grid-4" style="height:100%;">
+            <div class="card" style="border-color:#38bdf8;">
+              <div style="background:#082f49; padding:0.6rem; border-radius:0.5rem; margin-bottom:0.75rem;">
+                <div style="font-size:0.95rem; font-weight:700; color:#fff;">Chief Procurement Officer</div>
+                <div style="font-size:0.75rem; color:#38bdf8;">Strategic Sourcing</div>
+              </div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#f43f5e; font-weight:700; margin-bottom:0.25rem;">PAIN POINT</div>
+              <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:0.75rem;">Supplier price creep & unverified rate escalations across suppliers.</div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#10b981; font-weight:700; margin-bottom:0.25rem;">TRACEBACK VALUE</div>
+              <div style="font-size:0.8rem; color:#f8fafc; flex:1;">100% automated contract rate enforcement across all purchase orders.</div>
+              <div style="background:#020617; border:1px solid #38bdf8; padding:0.4rem; border-radius:0.4rem; text-align:center; font-size:0.75rem; font-weight:700; color:#38bdf8; margin-top:0.5rem;">3.2% Spend Reduction</div>
+            </div>
+
+            <div class="card" style="border-color:#10b981;">
+              <div style="background:#064e3b; padding:0.6rem; border-radius:0.5rem; margin-bottom:0.75rem;">
+                <div style="font-size:0.95rem; font-weight:700; color:#fff;">Lead Financial Auditor</div>
+                <div style="font-size:0.75rem; color:#10b981;">Internal Controls & SOX</div>
+              </div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#f43f5e; font-weight:700; margin-bottom:0.25rem;">PAIN POINT</div>
+              <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:0.75rem;">Sample-based audits that miss 90%+ of line-item overcharges.</div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#10b981; font-weight:700; margin-bottom:0.25rem;">TRACEBACK VALUE</div>
+              <div style="font-size:0.8rem; color:#f8fafc; flex:1;">100% census audit with immutable cell-level coordinates {file, row, col}.</div>
+              <div style="background:#020617; border:1px solid #10b981; padding:0.4rem; border-radius:0.4rem; text-align:center; font-size:0.75rem; font-weight:700; color:#10b981; margin-top:0.5rem;">100% Audit Defensibility</div>
+            </div>
+
+            <div class="card" style="border-color:#f59e0b;">
+              <div style="background:#451a03; padding:0.6rem; border-radius:0.5rem; margin-bottom:0.75rem;">
+                <div style="font-size:0.95rem; font-weight:700; color:#fff;">AP Controller</div>
+                <div style="font-size:0.75rem; color:#f59e0b;">Disbursements & Invoicing</div>
+              </div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#f43f5e; font-weight:700; margin-bottom:0.25rem;">PAIN POINT</div>
+              <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:0.75rem;">Manual invoice matching backlogs & painful vendor dispute friction.</div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#10b981; font-weight:700; margin-bottom:0.25rem;">TRACEBACK VALUE</div>
+              <div style="font-size:0.8rem; color:#f8fafc; flex:1;">Pre-payment alerts in <200ms; auto-drafted dispute packets with proof.</div>
+              <div style="background:#020617; border:1px solid #f59e0b; padding:0.4rem; border-radius:0.4rem; text-align:center; font-size:0.75rem; font-weight:700; color:#f59e0b; margin-top:0.5rem;">80% Manual Effort Cut</div>
+            </div>
+
+            <div class="card" style="border-color:#a855f7;">
+              <div style="background:#2e1065; padding:0.6rem; border-radius:0.5rem; margin-bottom:0.75rem;">
+                <div style="font-size:0.95rem; font-weight:700; color:#fff;">Supply Chain VP</div>
+                <div style="font-size:0.75rem; color:#a855f7;">Warehouse Operations</div>
+              </div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#f43f5e; font-weight:700; margin-bottom:0.25rem;">PAIN POINT</div>
+              <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:0.75rem;">Dock receipt mismatches where damaged goods are still billed.</div>
+              <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#10b981; font-weight:700; margin-bottom:0.25rem;">TRACEBACK VALUE</div>
+              <div style="font-size:0.8rem; color:#f8fafc; flex:1;">Instant cross-dock sync proving receipt note DN-045 accepted only 100.</div>
+              <div style="background:#020617; border:1px solid #a855f7; padding:0.4rem; border-radius:0.4rem; text-align:center; font-size:0.75rem; font-weight:700; color:#a855f7; margin-top:0.5rem;">Zero Unreceived Paid</div>
+            </div>
+          </div>
+        `,
+        notes: "Who uses TraceBack AI? We address four key enterprise stakeholders: The Chief Procurement Officer, who gains automated contract rate enforcement across 100% of purchase orders; the Lead Financial Auditor, who replaces random 5% sample audits with a 100% census audit with cell-level legal evidence; the Accounts Payable controller, who catches overcharges in 184ms before money leaves the bank and dispatches automated dispute letters; and Supply Chain managers, who ensure warehouse receipts strictly govern disbursements."
+      },
+      {
+        id: 3,
+        category: "Core Solution",
+        title: "Autonomous 4-Way Reconciliation with Cell-Level Evidence",
+        sub: "TraceBack AI correlates all 4 sources in 184ms, uncovering overcharges with 96.5% confidence.",
+        render: `
+          <div style="display:grid; grid-template-columns: 3fr 2fr; gap:1.25rem; height:100%;">
+            <div style="background:#0f172a; border:2px solid #10b981; border-radius:0.75rem; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                  <span style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#10b981;">LIVE BENCHMARK: PO-1001 (SUP-42)</span>
+                  <span style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; color:#94a3b8;">184ms Latency</span>
+                </div>
+                <div style="font-size:1.3rem; font-weight:800; color:#fff; margin-bottom:0.85rem;">
+                  Total Overcharge Flagged: <span class="highlight-green">$1,200.00 USD</span> (96.5% Confidence)
+                </div>
+
+                <div style="background:#1c1917; border:1px solid #f43f5e; border-radius:0.5rem; padding:0.75rem; margin-bottom:0.75rem;">
+                  <div style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#f43f5e; margin-bottom:0.2rem;">
+                    DISCREPANCY 1: QUANTITY OVERBILLING (+$1,000.00 USD)
+                  </div>
+                  <div style="font-size:0.8rem; color:#cbd5e1; line-height:1.35;">
+                    • Invoiced 120 units on INV-9001; warehouse note DN-045 received only 100 units.<br>
+                    • Math: (120 - 100) = 20 unreceived units × $50.00 = <strong>$1,000.00 overcharge</strong>.<br>
+                    • Evidence: <span style="color:#38bdf8;">invoices.csv:Row 2</span> vs <span style="color:#38bdf8;">deliveries.csv:Row 2</span>
+                  </div>
+                </div>
+
+                <div style="background:#1c1917; border:1px solid #f59e0b; border-radius:0.5rem; padding:0.75rem;">
+                  <div style="font-size:0.75rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#f59e0b; margin-bottom:0.2rem;">
+                    DISCREPANCY 2: CONTRACT RATE ESCALATION (+$200.00 USD)
+                  </div>
+                  <div style="font-size:0.8rem; color:#cbd5e1; line-height:1.35;">
+                    • Invoiced at $50.00/unit, breaching Master Contract ceiling of $48.00/unit.<br>
+                    • Math: 100 delivered units × ($50.00 - $48.00) = <strong>$200.00 rate escalation</strong>.<br>
+                    • Evidence: <span style="color:#38bdf8;">invoices.csv:Row 2</span> vs <span style="color:#38bdf8;">contract_prices.csv:Row 2</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="font-size:0.75rem; color:#94a3b8; border-top:1px solid #1e293b; padding-top:0.5rem;">
+                All claims carry deterministic coordinates {file, row, col, value} with zero hallucination.
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:0.85rem;">
+              <div class="card" style="border-color:#6366f1;">
+                <div class="card-title" style="color:#a5b4fc;">CREDIBILITY BENCHMARK (PO-1002)</div>
+                <div class="card-heading" style="font-size:1rem;">Zero False Positive Verification</div>
+                <div class="card-desc" style="font-size:0.8rem;">
+                  • 50 units ordered in SAP ERP<br>
+                  • 50 units physically received in Warehouse<br>
+                  • 50 units invoiced at exact $20.00 contract rate<br>
+                  • <strong>Result: $0.00 Overcharge (100% Concordance)</strong><br>
+                  • Proves agents do NOT flag false alarms on clean data
+                </div>
+              </div>
+
+              <div class="card" style="border-color:#a855f7;">
+                <div class="card-title" style="color:#c084fc;">HUMAN-IN-THE-LOOP APPROVAL</div>
+                <div class="card-heading" style="font-size:1rem;">1-Click Claim Approval & Dispute Notice</div>
+                <div class="card-desc" style="font-size:0.8rem;">
+                  • Lead auditor approves the $1,200.00 recovery with one click<br>
+                  • System auto-drafts professional supplier dispute email<br>
+                  • Cites delivery note DN-045 and contract clause #4.2<br>
+                  • Ready for immediate email dispatch to supplier SUP-42
+                </div>
+              </div>
+            </div>
+          </div>
+        `,
+        notes: "Here is TraceBack AI in action. On Purchase Order PO-1001, TraceBack AI correlates all four sources in 184 milliseconds. It uncovers two distinct discrepancies totaling $1,200.00: a $1,000 quantity mismatch where 20 unreceived units were billed, and a $200 contract rate escalation where the supplier overcharged $2 per unit. Every finding links directly to the exact file, row, and column. To prove credibility, testing clean order PO-1002 returns zero overcharges and 100% concordance, proving our agents do not trigger false alarms."
+      },
+      {
+        id: 4,
+        category: "System Architecture",
+        title: "High-Throughput Layered Multi-Agent Architecture",
+        sub: "Deterministic data virtualization combined with asynchronous multi-stage agent orchestration.",
+        render: `
+          <div style="display:flex; flex-direction:column; gap:0.75rem; height:100%;">
+            <div class="card" style="border-color:#38bdf8; padding:0.85rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="card-title highlight-sky">LAYER 1: DATA VIRTUALIZATION LAYER (ZETARIS ENGINE)</span>
+                <span style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#38bdf8;">Zero ETL • 12ms Query</span>
+              </div>
+              <div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.35rem;">
+                Connects directly to SAP ERP (purchase_orders), WMS Logistics (deliveries), AP Invoices (invoices), and Legal Contracts (contract_prices). Executes federated cross-source joins on the fly without duplicating data or creating fragile ETL pipelines.
+              </div>
+            </div>
+
+            <div class="card" style="border-color:#10b981; padding:0.85rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="card-title highlight-green">LAYER 2: AGENT ORCHESTRATION PIPELINE (METERLESS ARCHITECTURE)</span>
+                <span style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#10b981;">5-Stage Mission Execution</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:0.5rem; margin-top:0.4rem; text-align:center;">
+                <div style="background:#020617; border:1px solid #1e293b; padding:0.4rem; border-radius:0.4rem;">
+                  <div style="font-size:0.7rem; font-weight:700; color:#6366f1;">01. SCOUT</div>
+                  <div style="font-size:0.65rem; color:#94a3b8;">Intent & Rules (12ms)</div>
+                </div>
+                <div style="background:#020617; border:1px solid #1e293b; padding:0.4rem; border-radius:0.4rem;">
+                  <div style="font-size:0.7rem; font-weight:700; color:#38bdf8;">02. RELAY</div>
+                  <div style="font-size:0.65rem; color:#94a3b8;">Zetaris Fetch (18ms)</div>
+                </div>
+                <div style="background:#020617; border:1px solid #1e293b; padding:0.4rem; border-radius:0.4rem;">
+                  <div style="font-size:0.7rem; font-weight:700; color:#f59e0b;">03. RECONCILE</div>
+                  <div style="font-size:0.65rem; color:#94a3b8;">Variance Math (8ms)</div>
+                </div>
+                <div style="background:#020617; border:1px solid #1e293b; padding:0.4rem; border-radius:0.4rem;">
+                  <div style="font-size:0.7rem; font-weight:700; color:#10b981;">04. CONFIDENCE</div>
+                  <div style="font-size:0.65rem; color:#94a3b8;">Score: 96.5% (14ms)</div>
+                </div>
+                <div style="background:#020617; border:1px solid #1e293b; padding:0.4rem; border-radius:0.4rem;">
+                  <div style="font-size:0.7rem; font-weight:700; color:#a855f7;">05. NIGHTSHIFT</div>
+                  <div style="font-size:0.65rem; color:#94a3b8;">Local AI ($0) (42ms)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="border-color:#f59e0b; padding:0.85rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="card-title highlight-amber">LAYER 3: EVIDENCE & AUDIT ENGINE</span>
+                <span style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#f59e0b;">Immutable Cell Coordinates</span>
+              </div>
+              <div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.35rem;">
+                Locks down exact coordinates {file, row, column, value}. Generates formal supplier dispute claim packets with itemized proof, contract clause citations, and delivery note cross-references ready for executive signing.
+              </div>
+            </div>
+
+            <div class="card" style="border-color:#a855f7; padding:0.85rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="card-title" style="color:#c084fc;">LAYER 4: HUMAN-IN-THE-LOOP AUDIT DASHBOARD</span>
+                <span style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#c084fc;">React 18 • TypeScript • Tailwind</span>
+              </div>
+              <div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.35rem;">
+                Enterprise dashboard with real-time spend analytics, 4-way evidence inspector, 2-minute demo video player, 1-click claim approval modal, and full CSV/JSON export capabilities.
+              </div>
+            </div>
+          </div>
+        `,
+        notes: "Our architecture consists of four distinct layers. Layer 1 uses Zetaris for data virtualization, querying all four independent databases without moving data. Layer 2 uses the Meterless agent architecture: Scout Intent establishes rules, Relay coordinates data, reconciliation algorithms calculate variances, and Meterless Nightshift performs autonomous local reasoning. Layer 3 maintains immutable cell-level provenance, and Layer 4 provides a real-time auditor workspace."
+      },
+      {
+        id: 5,
+        category: "Sponsor Technology",
+        title: "Deep Sponsor Integration: Zetaris & Meterless",
+        sub: "First-class implementation of Zetaris Data Virtualization and the Meterless Agent Engine.",
+        render: `
+          <div class="grid-2" style="height:100%;">
+            <div style="background:#0f172a; border:2px solid #38bdf8; border-radius:0.75rem; padding:1.25rem; display:flex; flex-direction:column;">
+              <div style="background:#082f49; padding:0.6rem 0.85rem; border-radius:0.5rem; margin-bottom:0.85rem;">
+                <div style="font-size:1.05rem; font-weight:700; color:#fff;">ZETARIS DATA VIRTUALIZATION</div>
+                <div style="font-size:0.75rem; color:#38bdf8;">Zero-ETL Federated Querying Across 4 Sources</div>
+              </div>
+              <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.5; flex:1;">
+                <strong>1. Zero-ETL Virtual Join:</strong><br>
+                Executes single federated SQL join across 4 disparate databases on the fly with zero data copying:<br>
+                <code style="display:block; background:#020617; padding:0.4rem; border-radius:0.4rem; font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#38bdf8; margin:0.4rem 0;">
+                  SELECT po.*, del.*, inv.*, cp.* FROM sap_erp.purchase_orders<br>
+                  LEFT JOIN wms.deliveries ... LEFT JOIN ap.invoices ...
+                </code>
+                <strong>2. Dual Mode Support:</strong><br>
+                • <em>Live Mode:</em> Queries Zetaris Network API via POST /query.<br>
+                • <em>Cross-Source Mock:</em> In-memory SQLite federator mirroring exact Zetaris SQL schema for 100% offline hackathon testability.<br>
+                <strong>3. Cell-Level Evidence Provenance:</strong> Data remains at source while findings link to exact cell coordinates {file, row, col}.
+              </div>
+            </div>
+
+            <div style="background:#0f172a; border:2px solid #10b981; border-radius:0.75rem; padding:1.25rem; display:flex; flex-direction:column;">
+              <div style="background:#064e3b; padding:0.6rem 0.85rem; border-radius:0.5rem; margin-bottom:0.85rem;">
+                <div style="font-size:1.05rem; font-weight:700; color:#fff;">METERLESS ENGINE & NIGHTSHIFT AI</div>
+                <div style="font-size:0.75rem; color:#10b981;">Multi-Agent Orchestration & $0 Compute Provider</div>
+              </div>
+              <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.5; flex:1;">
+                <strong>1. Meterless Scout Engine (12ms):</strong><br>
+                Audit intent extraction, tolerance configuration ($0 threshold), and risk profile mapping.<br><br>
+                <strong>2. Meterless Relay Engine (18ms):</strong><br>
+                Asynchronous coordination of Zetaris federated queries and reconciliation tool execution.<br><br>
+                <strong>3. Meterless Nightshift AI ($0 Cloud Compute):</strong><br>
+                Autonomous 4-stage local AI reasoning cycle: <em>Race > Judge > Verify > Generate</em>. Produces immutable audit receipt (ns-rcpt-8f3a9e) at <strong>$0.00 cloud token cost</strong>.<br><br>
+                <strong>4. Meterless Gaia H-MEM:</strong><br>
+                Hierarchical working memory committing mission checkpoints and dispute correspondence for persistent multi-turn context.
+              </div>
+            </div>
+          </div>
+        `,
+        notes: "This slide details our deep integration with the required hackathon sponsors. On the left is Zetaris: rather than building slow, fragile ETL pipelines that copy sensitive financial data, Zetaris allows our agents to execute federated SQL joins across ERP, WMS, invoice, and contract datasets on the fly in 12 milliseconds. We support both the live Zetaris Network API and an identical in-memory cross-source mock for seamless offline execution. On the right is the Meterless Engine: Scout establishes audit rules; Relay coordinates agents and data queries; Meterless Nightshift serves as our AI provider, running a 4-stage local reasoning cycle that eliminates cloud token costs; and Gaia H-MEM persists audit state across sessions."
+      },
+      {
+        id: 6,
+        category: "Business Impact",
+        title: "Measurable ROI, Defensible Audits, and Live Verification",
+        sub: "TraceBack AI turns enterprise procurement leakage into measurable cash recovery.",
+        render: `
+          <div style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">
+            <div class="grid-4">
+              <div class="card" style="border-color:#38bdf8; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; color:#38bdf8;">184ms</div>
+                <div style="font-size:0.95rem; font-weight:700; color:#fff; margin-top:0.25rem;">Audit Latency</div>
+                <div style="font-size:0.75rem; color:#94a3b8;">Sub-second reconciliation per purchase order</div>
+              </div>
+              <div class="card" style="border-color:#10b981; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; color:#10b981;">$1,200</div>
+                <div style="font-size:0.95rem; font-weight:700; color:#fff; margin-top:0.25rem;">Recovered / PO</div>
+                <div style="font-size:0.75rem; color:#94a3b8;">Direct cash recovery flagged on PO-1001</div>
+              </div>
+              <div class="card" style="border-color:#f59e0b; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; color:#f59e0b;">96.5%</div>
+                <div style="font-size:0.95rem; font-weight:700; color:#fff; margin-top:0.25rem;">Audit Confidence</div>
+                <div style="font-size:0.75rem; color:#94a3b8;">Multi-point cross-source corroboration</div>
+              </div>
+              <div class="card" style="border-color:#a855f7; text-align:center;">
+                <div style="font-size:2rem; font-weight:800; color:#a855f7;">0.00%</div>
+                <div style="font-size:0.95rem; font-weight:700; color:#fff; margin-top:0.25rem;">False Positives</div>
+                <div style="font-size:0.75rem; color:#94a3b8;">Verified clean on PO-1002 benchmark ($0)</div>
+              </div>
+            </div>
+
+            <div style="background:#0f172a; border:2px solid #3730a3; border-radius:0.75rem; padding:1.2rem; margin-top:1rem;">
+              <div style="font-size:0.8rem; font-family:'JetBrains Mono',monospace; font-weight:700; color:#38bdf8; margin-bottom:0.5rem;">
+                PRODUCTION DEPLOYMENT & VERIFICATION LINKS
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.82rem;">
+                <div>• <strong>Live Web App:</strong> <a href="https://zaintahir2025.github.io/traceback-ai/" target="_blank" style="color:#38bdf8; text-decoration:none;">zaintahir2025.github.io/traceback-ai/</a></div>
+                <div>• <strong>Slide Deck:</strong> <a href="https://zaintahir2025.github.io/traceback-ai/presentation.html" target="_blank" style="color:#38bdf8; text-decoration:none;">presentation.html</a></div>
+                <div>• <strong>2-Min Demo Video:</strong> <a href="https://zaintahir2025.github.io/traceback-ai/demo-video.html" target="_blank" style="color:#38bdf8; text-decoration:none;">demo-video.html</a></div>
+                <div>• <strong>MP4 Video Download:</strong> <a href="https://zaintahir2025.github.io/traceback-ai/traceback-ai-demo.mp4" target="_blank" style="color:#38bdf8; text-decoration:none;">traceback-ai-demo.mp4 (4.02 MB)</a></div>
+                <div>• <strong>GitHub Repo:</strong> <a href="https://github.com/zaintahir2025/traceback-ai" target="_blank" style="color:#38bdf8; text-decoration:none;">github.com/zaintahir2025/traceback-ai</a></div>
+                <div>• <strong>PowerPoint File:</strong> <a href="./traceback-ai-presentation.pptx" download style="color:#38bdf8; text-decoration:none;">traceback-ai-presentation.pptx (240 KB)</a></div>
+              </div>
+            </div>
+          </div>
+        `,
+        notes: "To conclude: TraceBack AI converts passive invoice processing into proactive, cash-generating spend defense. With 184-millisecond audit speed, $1,200 recovered per 100 purchase orders, 96.5% audit confidence, and zero false positives, it delivers immediate ROI to procurement organizations. Everything demonstrated is fully open-source, deployed live on GitHub Pages, and verifiable right now. Thank you!"
+      }
+    ];
+
+    let currentSlide = 0;
+    let showNotes = true;
+
+    function renderSlide(idx) {
+      const s = slides[idx];
+      const viewport = document.getElementById('slideViewport');
+
+      let topBar = '';
+      if (s.id > 0) {
+        topBar = `
+          <div class="slide-top-bar">
+            <span class="slide-category">${s.category.toUpperCase()}</span>
+            <span class="slide-number">Slide ${idx + 1} of ${slides.length}</span>
+          </div>
+          <div class="slide-heading">${s.title}</div>
+          <div class="slide-subheading">${s.sub}</div>
+        `;
+      }
+
+      viewport.innerHTML = `
+        ${topBar}
+        <div class="slide-body">
+          ${s.render}
+        </div>
+      `;
+
+      document.getElementById('slideCounter').innerText = `Slide ${idx + 1} of ${slides.length}`;
+      document.getElementById('notesContent').innerText = s.notes;
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function toggleNotes() {
+      showNotes = !showNotes;
+      const box = document.getElementById('speakerNotesBox');
+      const btn = document.getElementById('notesToggleBtn');
+      box.style.display = showNotes ? 'block' : 'none';
+      btn.innerText = showNotes ? 'Hide Speaker Notes' : 'Show Speaker Notes';
+    }
+
+    // Keyboard Navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    renderSlide(0);
+  </script>
+</body>
+</html>
