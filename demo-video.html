@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TraceBack AI — 2-Minute Demo Video Walkthrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #020617;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .video-container {
+      width: 100%;
+      max-width: 1080px;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+    .video-header {
+      padding: 1rem 1.5rem;
+      background: #090d16;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .video-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .badge {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+    }
+    .screen {
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #020617 0%, #0b1120 50%, #020617 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem;
+      overflow: hidden;
+    }
+    .screen-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .scene-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+    }
+    .screen-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .scene-heading {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: #fff;
+      max-width: 800px;
+      line-height: 1.2;
+    }
+    .highlight-red { color: #f43f5e; }
+    .highlight-green { color: #10b981; }
+    .highlight-blue { color: #38bdf8; }
+    .highlight-amber { color: #f59e0b; }
+    .scene-sub {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      max-width: 650px;
+      margin-bottom: 1.5rem;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      width: 100%;
+      max-width: 800px;
+    }
+    .card {
+      background: #090d16;
+      border: 1px solid #1e293b;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      text-align: left;
+    }
+    .card-title {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 0.25rem;
+    }
+    .card-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .card-desc {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-top: 0.25rem;
+    }
+    .screen-bottom {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid #1e293b;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .caption-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #818cf8;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .caption-text {
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+    .controls {
+      padding: 1rem 1.5rem;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .progress-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 9999px;
+      cursor: pointer;
+      position: relative;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #a855f7, #f43f5e);
+      border-radius: 9999px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    button {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #334155;
+    }
+    .btn-primary {
+      background: #6366f1;
+      border-color: #4f46e5;
+    }
+    .btn-primary:hover {
+      background: #4f46e5;
+    }
+    .time-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="video-container">
+    <div class="video-header">
+      <div class="video-title">
+        <span>TraceBack AI — 2-Minute Demo Walkthrough</span>
+        <span class="badge">4K / 60 FPS RECORDED SCENARIO</span>
+      </div>
+      <div>
+        <a href="./" style="color: #818cf8; font-size: 0.8rem; text-decoration: none; font-weight: 600;">← Back to Dashboard</a>
+      </div>
+    </div>
+
+    <!-- Video Viewport -->
+    <div class="screen" id="videoScreen">
+      <div class="screen-top">
+        <div class="scene-badge" id="sceneBadge">SCENE 1: THE ENTERPRISE PROBLEM</div>
+        <div class="time-display" id="timeDisplay">0:00 / 2:00</div>
+      </div>
+
+      <div class="screen-body" id="screenBody">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="screen-bottom">
+        <div class="caption-tag">Audio Narration:</div>
+        <div class="caption-text" id="captionText">Initializing video tour...</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="progress-bar-wrap" id="progressBarWrap">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+
+      <div class="button-row">
+        <div class="btn-group">
+          <button id="playBtn" class="btn-primary" onclick="togglePlay()">Play</button>
+          <button onclick="restart()">Restart</button>
+          <button id="muteBtn" onclick="toggleMute()">Mute Voice</button>
+          <button onclick="setSpeed(1)">1x</button>
+          <button onclick="setSpeed(1.25)">1.25x</button>
+          <button onclick="setSpeed(1.5)">1.5x</button>
+        </div>
+        <div class="btn-group">
+          <a href="./traceback-ai-demo.mp4" download="traceback-ai-demo.mp4" style="text-decoration:none;">
+            <button style="background: #3b82f6; border-color: #2563eb; color: #fff;">
+              Download MP4 Video
+            </button>
+          </a>
+          <button onclick="window.location.href='./'" style="background: #10b981; border-color: #059669; color: #fff;">
+            Launch Interactive App
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const totalDuration = 120;
+    let currentTime = 0;
+    let isPlaying = true;
+    let isMuted = false;
+    let playbackSpeed = 1;
+    let timer = null;
+
+    const scenes = [
+      {
+        id: 1,
+        title: "The Problem",
+        badge: "SCENE 1/5: THE ENTERPRISE PROBLEM",
+        heading: "Companies Quietly Overpay Suppliers by <span class='highlight-red'>1.5% - 4%</span>",
+        sub: "Procurement data is fractured across SAP ERP, warehouse WMS, AP Invoices, and Legal Contracts.",
+        narration: "Welcome to TraceBack AI. In global supply chains, enterprises lose 1.5% to 4% of total procurement spend to uncaptured invoice overcharges. Why? Purchase orders sit in ERP, delivery receipts in WMS, supplier invoices in AP, and contract rates in legal agreements. No human has time to reconcile all four.",
+        renderHtml: `
+          <div class="scene-heading">Companies Quietly Overpay Suppliers by <span class="highlight-red">1.5% - 4%</span></div>
+          <div class="scene-sub">Procurement data is fractured across SAP ERP, warehouse WMS, AP Invoices, and Legal Contracts.</div>
+          <div class="grid-4">
+            <div class="card">
+              <div class="card-title">SOURCE A</div>
+              <div class="card-val">Purchase Orders</div>
+              <div class="card-desc">SAP ERP (120 ordered)</div>
+            </div>
+            <div class="card">
+              <div class="card-title">SOURCE B</div>
+              <div class="card-val">Delivery Notes</div>
+              <div class="card-desc">Warehouse WMS (100 received)</div>
+            </div>
+            <div class="card">
+              <div class="card-title">SOURCE C</div>
+              <div class="card-val">Supplier Invoices</div>
+              <div class="card-desc">Accounts Payable (120 billed)</div>
+            </div>
+            <div class="card">
+              <div class="card-title">SOURCE D</div>
+              <div class="card-val">Contract Rates</div>
+              <div class="card-desc">Master Agreement ($48/unit)</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 2,
+        title: "Live Audit PO-1001",
+        badge: "SCENE 2/5: LIVE PO-1001 RECONCILIATION",
+        heading: "PO-1001 Audit: <span class='highlight-red'>$1,200.00 Overcharge</span> Detected",
+        sub: "Reconciliation identifies 2 distinct discrepancies with 96.5% confidence and cell-level evidence.",
+        narration: "Here is a live audit of PO-1001. In under 200 milliseconds, TraceBack AI discovers $1,200 in overcharges. First: quantity overbilling. Invoiced for 120 units, but warehouse received only 100. That is 20 unreceived units billed at $50 each: a direct $1,000 loss. Second: contract price escalation. Invoiced at $50 per unit versus the contracted $48: an unauthorized $2 markup on 100 received units, adding $200.",
+        renderHtml: `
+          <div class="scene-heading">PO-1001 Audit: <span class="highlight-red">$1,200.00 Overcharge</span> Detected</div>
+          <div class="scene-sub">Reconciliation identifies 2 distinct discrepancies with 96.5% confidence and cell-level evidence.</div>
+          <div class="grid-4" style="grid-template-columns: repeat(2, 1fr); max-width: 750px;">
+            <div class="card" style="border-color: rgba(244,63,94,0.4); background: rgba(244,63,94,0.05);">
+              <div class="card-title" style="color: #f43f5e;">DISCREPANCY #1: QUANTITY OVERBILLING</div>
+              <div class="card-val" style="color: #fda4af;">+$1,000.00 Overcharge</div>
+              <div class="card-desc">Invoiced 120 vs Delivered 100 (20 units × $50.00)</div>
+              <div style="font-family: monospace; font-size: 0.65rem; color: #818cf8; margin-top: 0.5rem;">Citations: invoices.csv:L2 | deliveries.csv:L2</div>
+            </div>
+            <div class="card" style="border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.05);">
+              <div class="card-title" style="color: #f59e0b;">DISCREPANCY #2: CONTRACT RATE ESCALATION</div>
+              <div class="card-val" style="color: #fde68a;">+$200.00 Overcharge</div>
+              <div class="card-desc">Invoiced $50.00 vs Contract $48.00 (100 units × $2.00)</div>
+              <div style="font-family: monospace; font-size: 0.65rem; color: #818cf8; margin-top: 0.5rem;">Citations: invoices.csv:L2 | contract_prices.csv:L2</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 3,
+        title: "Zetaris Virtualization",
+        badge: "SCENE 3/5: ZETARIS DATA VIRTUALIZATION",
+        heading: "Zero-ETL <span class='highlight-blue'>Federated SQL Join</span> Across 4 Silos",
+        sub: "Zetaris queries data where it lives without pipeline lag or hallucination risk.",
+        narration: "How does TraceBack AI know this without brittle data pipelines? Through Zetaris data virtualization. TraceBack AI executes federated SQL joins across purchase orders, deliveries, invoices, and contracts on the fly. Every discrepancy carries an immutable evidence trail linking to the exact file, row, and column.",
+        renderHtml: `
+          <div class="scene-heading">Zero-ETL <span class="highlight-blue">Federated SQL Join</span> Across 4 Silos</div>
+          <div class="scene-sub">Zetaris queries data where it lives without pipeline lag or hallucination risk.</div>
+          <div class="card" style="max-width: 700px; width: 100%; font-family: monospace; font-size: 0.75rem; line-height: 1.5; color: #cbd5e1;">
+            <span style="color: #38bdf8;">SELECT</span> po.po_id, po.ordered_qty, del.delivered_qty, inv.invoiced_qty, inv.unit_price, cp.contract_unit_price<br/>
+            <span style="color: #38bdf8;">FROM</span> purchase_orders po<br/>
+            <span style="color: #10b981;">LEFT JOIN</span> deliveries del ON po.po_id = del.po_id<br/>
+            <span style="color: #f59e0b;">LEFT JOIN</span> invoices inv ON po.po_id = inv.po_id<br/>
+            <span style="color: #a855f7;">LEFT JOIN</span> contract_prices cp ON po.supplier_id = cp.supplier_id<br/>
+            <span style="color: #38bdf8;">WHERE</span> po.po_id = 'PO-1001';
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #1e293b; color: #10b981;">
+              ✓ Query executed in 12ms | 0 ETL data movement | 100% ground-truth linked
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 4,
+        title: "Meterless Nightshift AI",
+        badge: "SCENE 4/5: METERLESS NIGHTSHIFT AI ($0.00 COST)",
+        heading: "Autonomous Relay & <span class='highlight-green'>$0.00 Local Compute</span>",
+        sub: "Meterless Scout -> Relay -> H-MEM memory with Nightshift Race-Judge-Verify-Generate loop.",
+        narration: "TraceBack AI is an autonomous agent orchestrated with Meterless architecture. Scout establishes intent; Relay coordinates Zetaris queries; and Meterless Nightshift acts as our AI provider running Race, Judge, Verify, and Generate on local compute at zero dollar cloud token cost. The session is preserved in Meterless Gaia memory.",
+        renderHtml: `
+          <div class="scene-heading">Autonomous Relay & <span class="highlight-green">$0.00 Local Compute</span></div>
+          <div class="scene-sub">Meterless Scout -> Relay -> H-MEM memory with Nightshift Race-Judge-Verify-Generate loop.</div>
+          <div class="grid-4" style="max-width: 800px;">
+            <div class="card">
+              <div class="card-title">STAGE 1: RACE</div>
+              <div class="card-val" style="color: #38bdf8;">Parallel Run</div>
+              <div class="card-desc">Local AI socket</div>
+            </div>
+            <div class="card">
+              <div class="card-title">STAGE 2: JUDGE</div>
+              <div class="card-val" style="color: #f59e0b;">Tolerance Check</div>
+              <div class="card-desc">Threshold validator</div>
+            </div>
+            <div class="card">
+              <div class="card-title">STAGE 3: VERIFY</div>
+              <div class="card-val" style="color: #10b981;">Math Prover</div>
+              <div class="card-desc">100% calculation check</div>
+            </div>
+            <div class="card">
+              <div class="card-title">STAGE 4: RECEIPT</div>
+              <div class="card-val" style="color: #a855f7;">$0.00 Tokens</div>
+              <div class="card-desc">Immutable audit receipt</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 5,
+        title: "Human Approval & Resolution",
+        badge: "SCENE 5/5: RESOLUTION & CREDIBILITY",
+        heading: "One-Click Claim Approval & <span class='highlight-amber'>Supplier Dispute Letter</span>",
+        sub: "Human in the loop approval with automated dispute drafting, plus zero false alarms on PO-1002.",
+        narration: "Crucially, TraceBack AI keeps a human in the loop. The lead auditor approves the $1,200 claim, and the system synthesizes a professional supplier dispute letter citing all delivery notes and contract clauses. Testing clean order PO-1002 returns zero overcharges with 100% concordance. TraceBack AI turns procurement leakages into measurable cash recovery in seconds.",
+        renderHtml: `
+          <div class="scene-heading">One-Click Claim Approval & <span class="highlight-amber">Supplier Dispute Letter</span></div>
+          <div class="scene-sub">Human in the loop approval with automated dispute drafting, plus zero false alarms on PO-1002.</div>
+          <div class="grid-4" style="grid-template-columns: repeat(2, 1fr); max-width: 750px;">
+            <div class="card" style="border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.05);">
+              <div class="card-title" style="color: #10b981;">AUDITOR DECISION</div>
+              <div class="card-val" style="color: #6ee7b7;">✓ Claim Approved ($1,200.00)</div>
+              <div class="card-desc">Audit certificate generated. Dispatched to ERP dispute queue.</div>
+            </div>
+            <div class="card" style="border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.05);">
+              <div class="card-title" style="color: #818cf8;">CREDIBILITY TEST: PO-1002</div>
+              <div class="card-val" style="color: #c7d2fe;">$0.00 Overcharge (100% Concordance)</div>
+              <div class="card-desc">Clean purchase order correctly validated with zero false alarms!</div>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    function updateScene() {
+      const sceneIndex = Math.min(Math.floor(currentTime / 24), scenes.length - 1);
+      const scene = scenes[sceneIndex];
+
+      document.getElementById('sceneBadge').innerText = scene.badge;
+      document.getElementById('screenBody').innerHTML = scene.renderHtml;
+      document.getElementById('captionText').innerText = `"${scene.narration}"`;
+      document.getElementById('timeDisplay').innerText = `${Math.floor(currentTime / 60)}:${(currentTime % 60).toString().padStart(2, '0')} / 2:00`;
+      document.getElementById('progressBarFill').style.width = `${(currentTime / totalDuration) * 100}%`;
+
+      if (window.speechSynthesis && !isMuted && isPlaying) {
+        if (!window.speechSynthesis.speaking) {
+          const u = new SpeechSynthesisUtterance(scene.narration);
+          u.rate = 1.05 * playbackSpeed;
+          window.speechSynthesis.speak(u);
+        }
+      }
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      document.getElementById('playBtn').innerText = isPlaying ? "Pause" : "Play";
+      if (!isPlaying && window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      document.getElementById('muteBtn').innerText = isMuted ? "Unmute Voice" : "Mute Voice";
+      if (isMuted && window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+
+    function restart() {
+      currentTime = 0;
+      isPlaying = true;
+      document.getElementById('playBtn').innerText = "Pause";
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      updateScene();
+    }
+
+    function setSpeed(spd) {
+      playbackSpeed = spd;
+    }
+
+    document.getElementById('progressBarWrap').addEventListener('click', (e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      currentTime = Math.floor(pos * totalDuration);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      updateScene();
+    });
+
+    setInterval(() => {
+      if (isPlaying && currentTime < totalDuration) {
+        currentTime++;
+        updateScene();
+      }
+    }, 1000);
+
+    updateScene();
+  </script>
+</body>
+</html>
