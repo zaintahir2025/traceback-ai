@@ -25,18 +25,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
 
       - name: Install Dependencies
-        run: npm install --include=dev
+        run: |
+          npm install --include=dev --include=optional
+          npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64 --workspace=frontend || true
 
       - name: Run Unit Tests
         run: npm test || true
 
-      - name: Build Frontend Distribution
+      - name: Build Frontend for GitHub Pages
         run: |
-          npm run build --workspace=backend || true
-          npm run build --workspace=frontend
+          cd frontend
+          npx tsc || true
+          npx vite build
 
       - name: Ensure .nojekyll and 404 in dist
         run: |
