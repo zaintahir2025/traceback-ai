@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "pptxgenjs": "^4.0.1",
     "puppeteer-core": "^25.16.0"
   }
 }

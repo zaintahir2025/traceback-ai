@@ -36,7 +36,8 @@ import {
   MessageSquare,
   Award,
   Sliders,
-  Film
+  Film,
+  Presentation
 } from "lucide-react";
 
 export const App: React.FC = () => {
@@ -255,6 +256,18 @@ export const App: React.FC = () => {
               <Film className="w-3.5 h-3.5 fill-current" />
               <span>2-Min Demo Video</span>
             </button>
+
+            {/* Executive Slide Deck Button */}
+            <a
+              href="./presentation.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 text-slate-200 flex items-center gap-1.5 transition no-underline shadow-sm"
+              title="Open Executive PowerPoint Presentation Deck"
+            >
+              <Presentation className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Slide Deck (.PPTX)</span>
+            </a>
           </div>
         </header>
 

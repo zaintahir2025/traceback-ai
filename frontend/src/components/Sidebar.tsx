@@ -9,7 +9,8 @@ import {
   Sparkles,
   RefreshCw,
   Cpu,
-  Film
+  Film,
+  Presentation
 } from "lucide-react";
 import { PurchaseOrderItem, SystemHealth } from "../types";
 
@@ -88,6 +89,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>Watch 2-Min Demo Video</span>
           </button>
         )}
+
+        {/* Executive Slide Deck Button */}
+        <a
+          href="./presentation.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 hover:border-slate-600 text-slate-200 text-xs font-bold flex items-center justify-center gap-2 transition shadow-sm no-underline"
+          title="Open Executive Presentation Slide Deck"
+        >
+          <Presentation className="w-4 h-4 text-indigo-400" />
+          <span>Executive Slide Deck (.PPTX)</span>
+        </a>
 
         {/* Quick Action Tools */}
         <div className="grid grid-cols-2 gap-2">
