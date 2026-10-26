@@ -23,25 +23,25 @@ const html = `
   <script>
     const canvas = document.getElementById('c');
     const ctx = canvas.getContext('2d');
-    const totalDuration = 98.2;
+    const totalDuration = 107.4;
 
     const subtitles = [
-      { start: 0.0, end: 4.0, text: "Welcome to TraceBack AI — Autonomous Supplier Invoice & Reconciliation Agent." },
-      { start: 4.0, end: 10.0, text: "In global supply chains, enterprises lose 1.5% to 4% of total procurement spend to invoice overcharges." },
-      { start: 10.0, end: 17.5, text: "Data is siloed across ERP purchase orders, warehouse receipts, supplier invoices, and legal contracts." },
-      { start: 17.5, end: 23.5, text: "TraceBack AI unifies all four sources into an autonomous agent with an immutable evidence trail." },
-      { start: 23.5, end: 29.5, text: "Let's examine a live audit of Purchase Order PO-1001 with supplier SUP-42." },
-      { start: 29.5, end: 36.5, text: "In under 200 milliseconds, TraceBack AI discovers $1,200.00 in recoverable overcharges with 96.5% confidence." },
-      { start: 36.5, end: 43.0, text: "Discrepancy 1: Quantity overbilling. Billed for 120 units, but warehouse logged only 100 received ($1,000 loss)." },
-      { start: 43.0, end: 49.5, text: "Discrepancy 2: Contract rate escalation. Invoiced at $50/unit versus contracted $48 ($200 rate leakage)." },
-      { start: 49.5, end: 54.5, text: "Every finding cites the exact CSV file, row, and column for immediate audit defensibility." },
-      { start: 54.5, end: 61.5, text: "How does TraceBack AI achieve this without brittle ETL pipelines? Through Zetaris data virtualization." },
-      { start: 61.5, end: 68.5, text: "TraceBack AI executes federated SQL joins across purchase orders, deliveries, invoices, and contracts on the fly." },
-      { start: 68.5, end: 74.5, text: "Data remains in place with zero pipeline latency, linking directly to raw cell-level evidence." },
-      { start: 74.5, end: 80.5, text: "TraceBack AI is orchestrated with Meterless Agent architecture: Scout Intent, Relay Zetaris, and reconciliation engines." },
-      { start: 80.5, end: 87.5, text: "Meterless Nightshift acts as our AI provider, executing Race, Judge, Verify, and Generate on local compute." },
-      { start: 87.5, end: 92.5, text: "Producing an immutable audit receipt at zero dollar cloud token cost, committed to Meterless Gaia H-MEM memory." },
-      { start: 92.5, end: 98.2, text: "Lead auditor approves the $1,200 claim with one click, while clean PO-1002 yields 0% false positives. Cash recovered!" }
+      { start: 0.0, end: 3.5, text: "Welcome to TraceBack AI — Autonomous Supplier Invoice & Reconciliation Agent." },
+      { start: 3.5, end: 9.5, text: "Enterprises lose up to 4% of procurement spend to uncaptured invoice overcharges." },
+      { start: 9.5, end: 18.0, text: "Data is siloed across ERP purchase orders, warehouse delivery receipts, AP invoices, and legal contracts." },
+      { start: 18.0, end: 24.5, text: "TraceBack AI unifies all four sources into an autonomous agent that stops spend leakage in real time." },
+      { start: 24.5, end: 32.5, text: "In a live audit of Purchase Order PO-1001, TraceBack AI discovers $1,200 in overcharges in 184 milliseconds." },
+      { start: 32.5, end: 41.5, text: "Discrepancy 1: Quantity overbilling. Invoiced 120 units, but warehouse dock note DN-045 logged 100 received ($1,000 loss)." },
+      { start: 41.5, end: 50.5, text: "Discrepancy 2: Contract rate escalation. Invoiced at $50/unit versus contracted $48 ceiling ($200 rate creep)." },
+      { start: 50.5, end: 55.5, text: "Every single finding links directly to the exact file, row, and column." },
+      { start: 55.5, end: 60.5, text: "This is powered by Zetaris data virtualization." },
+      { start: 60.5, end: 68.0, text: "TraceBack AI executes federated SQL joins across all four data sources on the fly in 12 milliseconds." },
+      { start: 68.0, end: 74.5, text: "Data stays in place with zero ETL pipelines, zero replication, and zero latency." },
+      { start: 74.5, end: 79.5, text: "The agent workflow is orchestrated with Meterless architecture." },
+      { start: 79.5, end: 87.0, text: "Scout Intent establishes audit rules, Relay coordinates queries, and Meterless Nightshift acts as our AI provider." },
+      { start: 87.0, end: 95.5, text: "Nightshift runs a 4-stage local reasoning cycle on local compute, producing an audit receipt at $0.00 cloud token cost." },
+      { start: 95.5, end: 101.5, text: "The lead auditor approves the claim with one click, and the system synthesizes a formal supplier dispute notice." },
+      { start: 101.5, end: 107.4, text: "Testing clean order PO-1002 returns zero overcharges and zero false alarms. Cash recovery in seconds!" }
     ];
 
     function getSubtitle(t) {
@@ -88,10 +88,10 @@ const html = `
 
       // Determine Active Scene
       let scene = 1;
-      if (sec >= 23.5 && sec < 54.5) scene = 2;
-      else if (sec >= 54.5 && sec < 74.5) scene = 3;
-      else if (sec >= 74.5 && sec < 92.5) scene = 4;
-      else if (sec >= 92.5) scene = 5;
+      if (sec >= 24.5 && sec < 55.5) scene = 2;
+      else if (sec >= 55.5 && sec < 74.5) scene = 3;
+      else if (sec >= 74.5 && sec < 95.5) scene = 4;
+      else if (sec >= 95.5) scene = 5;
 
       // Main Card Container
       ctx.fillStyle = '#0b1120';
@@ -477,6 +477,6 @@ server.listen(PORT, async () => {
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 720 });
   await page.goto(`http://localhost:${PORT}/`);
-  console.log('Page loaded in Edge! Starting recording (98 seconds)...');
+  console.log('Page loaded in Edge! Starting recording (107 seconds, natural normal-speed voiceover)...');
   await page.evaluate(() => window.startRecording());
 });
