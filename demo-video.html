@@ -285,7 +285,7 @@
   </div>
 
   <script>
-    const totalDuration = 120;
+    const totalDuration = 107;
     let currentTime = 0;
     let isPlaying = true;
     let isMuted = false;
@@ -299,7 +299,7 @@
         badge: "SCENE 1/5: THE ENTERPRISE PROBLEM",
         heading: "Companies Quietly Overpay Suppliers by <span class='highlight-red'>1.5% - 4%</span>",
         sub: "Procurement data is fractured across SAP ERP, warehouse WMS, AP Invoices, and Legal Contracts.",
-        narration: "Welcome to TraceBack AI. In global supply chains, enterprises lose 1.5% to 4% of total procurement spend to uncaptured invoice overcharges. Why? Purchase orders sit in ERP, delivery receipts in WMS, supplier invoices in AP, and contract rates in legal agreements. No human has time to reconcile all four.",
+        narration: "Welcome to TraceBack AI. Enterprises lose up to 4% of procurement spend to uncaptured invoice overcharges. Data is siloed across ERP purchase orders, warehouse delivery receipts, AP invoices, and legal contracts. TraceBack AI unifies all four streams into an autonomous agent that stops spend leakage in real time.",
         renderHtml: `
           <div class="scene-heading">Companies Quietly Overpay Suppliers by <span class="highlight-red">1.5% - 4%</span></div>
           <div class="scene-sub">Procurement data is fractured across SAP ERP, warehouse WMS, AP Invoices, and Legal Contracts.</div>
@@ -333,7 +333,7 @@
         badge: "SCENE 2/5: LIVE PO-1001 RECONCILIATION",
         heading: "PO-1001 Audit: <span class='highlight-red'>$1,200.00 Overcharge</span> Detected",
         sub: "Reconciliation identifies 2 distinct discrepancies with 96.5% confidence and cell-level evidence.",
-        narration: "Here is a live audit of PO-1001. In under 200 milliseconds, TraceBack AI discovers $1,200 in overcharges. First: quantity overbilling. Invoiced for 120 units, but warehouse received only 100. That is 20 unreceived units billed at $50 each: a direct $1,000 loss. Second: contract price escalation. Invoiced at $50 per unit versus the contracted $48: an unauthorized $2 markup on 100 received units, adding $200.",
+        narration: "In a live audit of Purchase Order PO-1001, TraceBack AI discovers $1,200 in overcharges in 184 milliseconds. First: quantity overbilling. Invoiced for 120 units, but warehouse dock note DN-045 logged only 100 received: a $1,000 loss. Second: contract rate escalation. Invoiced at $50 per unit versus our $48 contract ceiling: adding $200 in rate creep. Every finding links directly to the exact file, row, and column.",
         renderHtml: `
           <div class="scene-heading">PO-1001 Audit: <span class="highlight-red">$1,200.00 Overcharge</span> Detected</div>
           <div class="scene-sub">Reconciliation identifies 2 distinct discrepancies with 96.5% confidence and cell-level evidence.</div>
@@ -359,7 +359,7 @@
         badge: "SCENE 3/5: ZETARIS DATA VIRTUALIZATION",
         heading: "Zero-ETL <span class='highlight-blue'>Federated SQL Join</span> Across 4 Silos",
         sub: "Zetaris queries data where it lives without pipeline lag or hallucination risk.",
-        narration: "How does TraceBack AI know this without brittle data pipelines? Through Zetaris data virtualization. TraceBack AI executes federated SQL joins across purchase orders, deliveries, invoices, and contracts on the fly. Every discrepancy carries an immutable evidence trail linking to the exact file, row, and column.",
+        narration: "This is powered by Zetaris data virtualization. TraceBack AI executes federated SQL joins across all four data sources on the fly in 12 milliseconds. Data stays in place with zero ETL pipelines, zero replication, and zero latency.",
         renderHtml: `
           <div class="scene-heading">Zero-ETL <span class="highlight-blue">Federated SQL Join</span> Across 4 Silos</div>
           <div class="scene-sub">Zetaris queries data where it lives without pipeline lag or hallucination risk.</div>
@@ -382,7 +382,7 @@
         badge: "SCENE 4/5: METERLESS NIGHTSHIFT AI ($0.00 COST)",
         heading: "Autonomous Relay & <span class='highlight-green'>$0.00 Local Compute</span>",
         sub: "Meterless Scout -> Relay -> H-MEM memory with Nightshift Race-Judge-Verify-Generate loop.",
-        narration: "TraceBack AI is an autonomous agent orchestrated with Meterless architecture. Scout establishes intent; Relay coordinates Zetaris queries; and Meterless Nightshift acts as our AI provider running Race, Judge, Verify, and Generate on local compute at zero dollar cloud token cost. The session is preserved in Meterless Gaia memory.",
+        narration: "The agent workflow is orchestrated with Meterless. Scout Intent establishes audit rules, Relay coordinates queries, and Meterless Nightshift acts as our AI provider. Nightshift runs a four-stage local reasoning cycle on local compute, producing an audit receipt at zero dollar cloud token cost, committed to Gaia memory.",
         renderHtml: `
           <div class="scene-heading">Autonomous Relay & <span class="highlight-green">$0.00 Local Compute</span></div>
           <div class="scene-sub">Meterless Scout -> Relay -> H-MEM memory with Nightshift Race-Judge-Verify-Generate loop.</div>
@@ -437,19 +437,24 @@
     ];
 
     function updateScene() {
-      const sceneIndex = Math.min(Math.floor(currentTime / 24), scenes.length - 1);
+      let sceneIndex = 0;
+      if (currentTime >= 95.5) sceneIndex = 4;
+      else if (currentTime >= 74.5) sceneIndex = 3;
+      else if (currentTime >= 55.5) sceneIndex = 2;
+      else if (currentTime >= 24.5) sceneIndex = 1;
+      else sceneIndex = 0;
       const scene = scenes[sceneIndex];
 
       document.getElementById('sceneBadge').innerText = scene.badge;
       document.getElementById('screenBody').innerHTML = scene.renderHtml;
       document.getElementById('captionText').innerText = `"${scene.narration}"`;
-      document.getElementById('timeDisplay').innerText = `${Math.floor(currentTime / 60)}:${(currentTime % 60).toString().padStart(2, '0')} / 2:00`;
+      document.getElementById('timeDisplay').innerText = `${Math.floor(currentTime / 60)}:${(currentTime % 60).toString().padStart(2, '0')} / 1:47`;
       document.getElementById('progressBarFill').style.width = `${(currentTime / totalDuration) * 100}%`;
 
       if (window.speechSynthesis && !isMuted && isPlaying) {
         if (!window.speechSynthesis.speaking) {
           const u = new SpeechSynthesisUtterance(scene.narration);
-          u.rate = 1.05 * playbackSpeed;
+          u.rate = 1.0 * playbackSpeed;
           window.speechSynthesis.speak(u);
         }
       }
