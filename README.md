@@ -9,6 +9,9 @@ Demo Video Walkthrough: https://zaintahir2025.github.io/traceback-ai/demo-video.
 Demo Video MP4 File: https://github.com/zaintahir2025/traceback-ai/raw/main/traceback-ai-demo.mp4
 Executive Slide Deck: https://zaintahir2025.github.io/traceback-ai/presentation.html
 PowerPoint Presentation File: https://zaintahir2025.github.io/traceback-ai/traceback-ai-presentation.pptx
+PowerPoint Presentation File (Direct Mirror): https://zaintahir2025.github.io/traceback-ai/traceback-ai-presentation-v2.pptx
+Online PowerPoint Viewer: https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fzaintahir2025.github.io%2Ftraceback-ai%2Ftraceback-ai-presentation-v2.pptx
+
 
 ---
 

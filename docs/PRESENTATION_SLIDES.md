@@ -3,6 +3,8 @@
 Autonomous 4-Way Cross-Source Data Virtualization & Supplier Spend Recovery Agent.
 
 - Presentation File (.PPTX): [traceback-ai-presentation.pptx](traceback-ai-presentation.pptx) (708 KB, 28 Slides, 16:9 Widescreen 13.33 x 7.5 in)
+- Mirror / Direct Download (.PPTX): [traceback-ai-presentation-v2.pptx](traceback-ai-presentation-v2.pptx)
+- Online PowerPoint Viewer: [Office Online Web Viewer](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fzaintahir2025.github.io%2Ftraceback-ai%2Ftraceback-ai-presentation-v2.pptx)
 - Interactive HTML Slide Deck: [presentation.html](presentation.html)
 - 2-Minute Demo Video Walkthrough: [demo-video.html](demo-video.html)
 - Full Demo Video MP4: [traceback-ai-demo.mp4](traceback-ai-demo.mp4)
