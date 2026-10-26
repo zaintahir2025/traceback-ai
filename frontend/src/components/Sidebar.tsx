@@ -268,11 +268,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className="w-full flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 transition text-left cursor-pointer group"
             >
               <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1">
-                <Cpu className="w-3.5 h-3.5 text-emerald-400" /> Meterless Agent
+                <Cpu className="w-3.5 h-3.5 text-emerald-400" /> Meterless Engines
               </span>
               <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
-                {meterless?.isLive ? "Remote Relay" : "Scout → H-MEM"}
+                Relay + Gaia
                 <span className="text-slate-500 group-hover:text-emerald-300">↗</span>
+              </span>
+            </button>
+            <button
+              onClick={() => onOpenSponsorHub?.("meterless")}
+              className="w-full flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 transition text-left cursor-pointer group"
+            >
+              <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-teal-400" /> AI: Nightshift
+              </span>
+              <span className="text-[11px] font-mono text-teal-400 flex items-center gap-1">
+                $0.00 Hotspot
+                <span className="text-slate-500 group-hover:text-teal-300">↗</span>
               </span>
             </button>
             <button
@@ -283,7 +295,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <Server className="w-3.5 h-3.5 text-purple-400" /> NVIDIA NIM
               </span>
               <span className="text-[11px] font-mono text-purple-400 flex items-center gap-1">
-                {nvidia?.isLive ? "Llama 3.1 Live" : "Local Engine"}
+                {nvidia?.isLive ? "Llama 3.1 Live" : "Optional"}
                 <span className="text-slate-500 group-hover:text-purple-300">↗</span>
               </span>
             </button>

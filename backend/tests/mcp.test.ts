@@ -72,7 +72,26 @@ describe("Model Context Protocol (MCP) Server for TraceBack AI", () => {
 
     expect(res.jsonrpc).toBe("2.0");
     const data = JSON.parse(res.result.content[0].text);
-    expect(data.provider).toContain("Meterless H-MEM");
+    expect(data.provider).toContain("Meterless");
     expect(Array.isArray(data.keys)).toBe(true);
+  });
+
+  it("should execute meterless_nightshift_generate via MCP call", async () => {
+    const res = await handleMcpJsonRpc({
+      jsonrpc: "2.0",
+      id: 5,
+      method: "tools/call",
+      params: {
+        name: "meterless_nightshift_generate",
+        arguments: { poId: "PO-1001" }
+      }
+    });
+
+    expect(res.jsonrpc).toBe("2.0");
+    const data = JSON.parse(res.result.content[0].text);
+    expect(data.provider).toContain("Meterless Nightshift");
+    expect(data.receipt).toBeDefined();
+    expect(data.receipt.status).toBe("VERIFIED");
+    expect(data.receipt.tokenCost).toContain("$0.00");
   });
 });

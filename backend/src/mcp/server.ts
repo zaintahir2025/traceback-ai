@@ -1,5 +1,6 @@
 import { zetarisClient } from "../zetaris/ZetarisClient.js";
 import { MeterlessMission, hMem } from "../meterless/MeterlessMission.js";
+import { meterlessNightshift } from "../meterless/MeterlessNightshift.js";
 import { nvidiaExplainer } from "../nvidia/NvidiaExplainer.js";
 import { compareRecords, buildAnalysisSummary } from "../analyzer/compare.js";
 import { logger } from "../utils/logger.js";
@@ -82,6 +83,20 @@ export const MCP_TOOLS: McpTool[] = [
     }
   },
   {
+    name: "meterless_nightshift_generate",
+    description: "Invokes Meterless Nightshift as the autonomous AI provider running the Race -> Judge -> Verify -> Generate cycle ($0.00 token spend).",
+    inputSchema: {
+      type: "object",
+      properties: {
+        poId: {
+          type: "string",
+          description: "Purchase order ID"
+        }
+      },
+      required: ["poId"]
+    }
+  },
+  {
     name: "nvidia_nim_generate_explanation",
     description: "Invokes NVIDIA NIM (meta/llama-3.1-8b-instruct) to generate natural language supplier dispute letters with exact line-item citations.",
     inputSchema: {
@@ -160,6 +175,24 @@ export async function executeMcpTool(name: string, args: any): Promise<any> {
         totalKeys: hMem.listKeys().length,
         keys: hMem.listKeys(),
         sessionDump: hMem.dumpSession()
+      };
+    }
+
+    case "meterless_nightshift_generate": {
+      const poId = args?.poId || "PO-1001";
+      const unified = await zetarisClient.unifiedOrderView(poId);
+      const discrepancies = compareRecords(unified);
+      const summary = buildAnalysisSummary(unified, discrepancies);
+      const output = await meterlessNightshift.generateExplanation(
+        unified,
+        discrepancies,
+        summary.totalFinancialImpact
+      );
+      return {
+        provider: "Meterless Nightshift AI Provider",
+        model: output.modelUsed,
+        receipt: output.nightshiftReceipt,
+        output
       };
     }
 

@@ -28,11 +28,15 @@ export const config = {
   zetarisApiUrl: process.env.ZETARIS_API_URL || "",
   zetarisApiKey: process.env.ZETARIS_API_KEY || "",
 
-  // Meterless Agent Orchestration
+  // Meterless Agent Orchestration & Engines
   meterlessApiUrl: process.env.METERLESS_API_URL || "",
   meterlessApiKey: process.env.METERLESS_API_KEY || "",
 
-  // NVIDIA NIM
+  // Meterless Nightshift (Autonomous Local AI Provider)
+  meterlessNightshiftUrl: process.env.METERLESS_NIGHTSHIFT_URL || "http://127.0.0.1:11434/v1",
+  meterlessNightshiftModel: process.env.METERLESS_NIGHTSHIFT_MODEL || "nightshift-llama-3.1-8b",
+
+  // NVIDIA NIM (Optional)
   nvidiaApiKey: process.env.NVIDIA_API_KEY || "",
   nvidiaModel: "meta/llama-3.1-8b-instruct",
   nvidiaApiUrl: "https://integrate.api.nvidia.com/v1/chat/completions",
@@ -43,6 +47,7 @@ export const config = {
 
 export const isZetarisLive = Boolean(config.zetarisApiKey && config.zetarisApiUrl);
 export const isMeterlessLive = Boolean(config.meterlessApiKey);
+export const isNightshiftLive = Boolean(process.env.METERLESS_NIGHTSHIFT_LIVE === "true" || process.env.NIGHTSHIFT_API_KEY);
 export const isNvidiaLive = Boolean(config.nvidiaApiKey);
 
 export function logSystemModes() {

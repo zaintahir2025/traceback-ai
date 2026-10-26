@@ -254,10 +254,21 @@ const STATIC_HEALTH: SystemHealth = {
       endpoint: "in-memory-sqlite-virtualizer"
     },
     meterless: {
-      layer: "Agent Mission Orchestration & H-MEM",
+      layer: "Agent Mission Orchestration & Context Memory",
       mode: "local-orchestrator",
       isLive: false,
-      architecture: "Scout Intent -> Relay Execution -> H-MEM Session Memory"
+      architecture: "Scout Intent -> Relay Execution -> Gaia H-MEM Memory",
+      engines: ["Meterless Relay Engine", "Meterless Gaia Context Engine (H-MEM)"],
+      activeEngine: "Meterless Relay & Gaia H-MEM"
+    },
+    meterlessNightshift: {
+      layer: "Autonomous AI Provider",
+      role: "Primary AI Provider (Race -> Judge -> Verify -> Generate)",
+      model: "nightshift-llama-3.1-8b",
+      endpoint: "http://127.0.0.1:11434/v1",
+      isLive: false,
+      hardwareLane: "Meterless Autonomous Local Hotspot",
+      tokenCost: "$0.00 (Zero Cloud Token Spend)"
     },
     nvidia: {
       layer: "Inference & Natural Language Generation",
@@ -420,8 +431,19 @@ function getStaticInvestigation(poId: string): InvestigationResult {
           claimAmount: "$350.00 USD",
           body: "Dear SUP-88 Accounts Receivable,\n\nWe have reviewed Invoice INV-9003 submitted against Purchase Order PO-1003.\n\nWhile goods receipt and base item unit prices are concordant, the invoice includes $350.00 USD in non-contracted ancillary fees. Our master procurement agreement does not permit unapproved surcharges.\n\nPlease provide a credit note for $350.00 USD or submit a corrected invoice.\n\nBest regards,\nAccounts Payable Audit Team"
         },
-        modelUsed: "meta/llama-3.1-8b-instruct (NVIDIA NIM)",
-        isLive: false
+        modelUsed: "Meterless Nightshift (Autonomous Hotspot Engine)",
+        isLive: false,
+        aiProvider: "Meterless Nightshift",
+        nightshiftReceipt: {
+          receiptId: "NS-RCPT-1003",
+          hardwareLane: "Meterless Local Hotspot Lane B",
+          tokenCost: "$0.00 (Zero Cloud Token Spend)",
+          lanesRaced: 3,
+          winningLane: "Lane B (Contract Exclusion Verification)",
+          judgeScore: 0.985,
+          verifiedAt: new Date().toISOString(),
+          status: "VERIFIED"
+        }
       },
       dataSourcesStatus: {
         purchaseOrders: { loaded: true, rowCount: 4, file: "purchase_orders.csv" },
@@ -530,8 +552,19 @@ function getStaticInvestigation(poId: string): InvestigationResult {
           claimAmount: "$1,000.00 USD",
           body: "Dear SUP-99 Accounts Receivable,\n\nOur automated audit detected duplicate invoice submissions against Purchase Order PO-1004.\n\nInvoice INV-9004-DUP has been identified as a duplicate billing for the 100 units of Cable-Z already billed under INV-9004.\n\nINV-9004-DUP has been rejected and removed from our disbursement schedule. Please verify your accounting records.\n\nSincerely,\nFinance & Fraud Prevention Team"
         },
-        modelUsed: "meta/llama-3.1-8b-instruct (NVIDIA NIM)",
-        isLive: false
+        modelUsed: "Meterless Nightshift (Autonomous Hotspot Engine)",
+        isLive: false,
+        aiProvider: "Meterless Nightshift",
+        nightshiftReceipt: {
+          receiptId: "NS-RCPT-1003",
+          hardwareLane: "Meterless Local Hotspot Lane B",
+          tokenCost: "$0.00 (Zero Cloud Token Spend)",
+          lanesRaced: 3,
+          winningLane: "Lane B (Contract Exclusion Verification)",
+          judgeScore: 0.985,
+          verifiedAt: new Date().toISOString(),
+          status: "VERIFIED"
+        }
       },
       dataSourcesStatus: {
         purchaseOrders: { loaded: true, rowCount: 4, file: "purchase_orders.csv" },
@@ -606,8 +639,19 @@ function getStaticInvestigation(poId: string): InvestigationResult {
           claimAmount: "$0.00 USD",
           body: "Dear Accounts Receivable Team,\n\nWe have completed our automated four-way reconciliation for Purchase Order PO-1002 and Invoice INV-9002.\n\nAll quantities, rates, and goods receipt receipts have been verified against our agreed supplier contract. Your invoice has been approved for regular payment processing according to net terms.\n\nThank you for your partnership.\n\nBest regards,\nAccounts Payable & Audit Team\nTraceBack AI Automated Reconciliation"
         },
-        modelUsed: "meta/llama-3.1-8b-instruct (NVIDIA NIM Engine)",
-        isLive: false
+        modelUsed: "Meterless Nightshift (Autonomous Hotspot Engine)",
+        isLive: false,
+        aiProvider: "Meterless Nightshift",
+        nightshiftReceipt: {
+          receiptId: "NS-RCPT-1002",
+          hardwareLane: "Meterless Local Hotspot Lane A",
+          tokenCost: "$0.00 (Zero Cloud Token Spend)",
+          lanesRaced: 3,
+          winningLane: "Lane A (Concordance Verification)",
+          judgeScore: 1.0,
+          verifiedAt: new Date().toISOString(),
+          status: "VERIFIED"
+        }
       },
       dataSourcesStatus: {
         purchaseOrders: { loaded: true, rowCount: 4, file: "purchase_orders.csv" },
@@ -855,8 +899,19 @@ Sincerely,
 Procurement & Accounts Payable Audit Team
 TraceBack AI Automated Reconciliation Platform`
       },
-      modelUsed: "meta/llama-3.1-8b-instruct (NVIDIA NIM Engine)",
-      isLive: false
+      modelUsed: "Meterless Nightshift (Autonomous Hotspot Engine)",
+      isLive: false,
+      aiProvider: "Meterless Nightshift",
+      nightshiftReceipt: {
+        receiptId: "NS-RCPT-1001",
+        hardwareLane: "Meterless Local Hotspot Lane B",
+        tokenCost: "$0.00 (Zero Cloud Token Spend)",
+        lanesRaced: 3,
+        winningLane: "Lane B (Forensic Evidence Grounding)",
+        judgeScore: 0.992,
+        verifiedAt: new Date().toISOString(),
+        status: "VERIFIED"
+      }
     },
     dataSourcesStatus: {
       purchaseOrders: { loaded: true, rowCount: 4, file: "purchase_orders.csv" },
@@ -1210,8 +1265,19 @@ export async function runCustomAudit(params: CustomAuditParams): Promise<Investi
         claimAmount: `$${totalFinancialImpact.toLocaleString()} USD`,
         body: `Dear ${params.supplierId} Accounts Receivable,\n\nOur cross-source audit identified $${totalFinancialImpact.toLocaleString()} USD in variance on PO ${params.poId}.\n\nPlease review and issue a credit note.\n\nSincerely,\nAudit Team`
       },
-      modelUsed: "meta/llama-3.1-8b-instruct (NVIDIA NIM)",
-      isLive: false
+      modelUsed: "Meterless Nightshift (Autonomous Hotspot Engine)",
+      isLive: false,
+      aiProvider: "Meterless Nightshift",
+      nightshiftReceipt: {
+        receiptId: `NS-SIM-${Date.now().toString(36).toUpperCase()}`,
+        hardwareLane: "Meterless Autonomous Local Hotspot",
+        tokenCost: "$0.00 (Zero Cloud Token Spend)",
+        lanesRaced: 3,
+        winningLane: "Lane A (Simulation Hardening)",
+        judgeScore: 0.99,
+        verifiedAt: new Date().toISOString(),
+        status: "VERIFIED"
+      }
     },
     dataSourcesStatus: {
       purchaseOrders: { loaded: true, rowCount: 1, file: "custom" },

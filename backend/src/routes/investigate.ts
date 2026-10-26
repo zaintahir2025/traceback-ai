@@ -35,19 +35,30 @@ router.get("/health", async (_req: Request, res: Response) => {
         endpoint: config.zetarisApiUrl || "in-memory-sqlite-virtualizer"
       },
       meterless: {
-        layer: "Agent Mission Orchestration & H-MEM",
+        layer: "Agent Mission Orchestration & Context Memory",
+        engines: ["Meterless Relay Engine", "Meterless Gaia Context Engine (H-MEM)"],
+        activeEngine: "Meterless Relay & Gaia H-MEM",
         mode: isMeterlessLive ? "live" : "local-orchestrator",
         isLive: isMeterlessLive,
-        architecture: "Scout Intent -> Relay Execution -> H-MEM Session Memory"
+        architecture: "Scout Intent -> Relay Execution -> Gaia H-MEM Memory"
+      },
+      meterlessNightshift: {
+        layer: "Autonomous AI Provider",
+        role: "Primary AI Provider (Race -> Judge -> Verify -> Generate)",
+        model: config.meterlessNightshiftModel,
+        endpoint: config.meterlessNightshiftUrl,
+        isLive: false,
+        hardwareLane: "Meterless Autonomous Local Hotspot",
+        tokenCost: "$0.00 (Zero Cloud Token Spend)"
       },
       nvidia: {
-        layer: "Inference & Natural Language Generation",
+        layer: "Secondary Inference (Optional)",
         model: config.nvidiaModel,
         isLive: isNvidiaLive,
-        mode: isNvidiaLive ? "nvidia-nim-cloud" : "deterministic-fallback"
+        mode: isNvidiaLive ? "nvidia-nim-cloud" : "optional-secondary"
       },
       cursor: {
-        layer: "Developer Velocity & AI Agent Pair Programming",
+        layer: "Developer Velocity (Optional)",
         promptsLogged: true,
         documentationPath: "docs/CURSOR_USAGE.md"
       }

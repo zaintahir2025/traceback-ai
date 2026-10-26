@@ -2,8 +2,10 @@ import { Router, Request, Response } from "express";
 import { handleMcpJsonRpc, MCP_TOOLS, executeMcpTool } from "../mcp/server.js";
 import { zetarisClient } from "../zetaris/ZetarisClient.js";
 import { MeterlessMission, hMem } from "../meterless/MeterlessMission.js";
+import { meterlessNightshift } from "../meterless/MeterlessNightshift.js";
 import { nvidiaExplainer } from "../nvidia/NvidiaExplainer.js";
 import { UNIFIED_VIEW_SQL } from "../zetaris/unifiedView.js";
+import { compareRecords, buildAnalysisSummary } from "../analyzer/compare.js";
 import { isZetarisLive, isMeterlessLive, isNvidiaLive, config } from "../config.js";
 
 export const mcpRouter = Router();
@@ -113,9 +115,62 @@ mcpRouter.post("/meterless/mission", async (req: Request, res: Response) => {
  */
 mcpRouter.get("/meterless/memory", (_req: Request, res: Response) => {
   res.json({
-    provider: "Meterless H-MEM (Hierarchical Memory)",
+    provider: "Meterless Gaia Context Engine (H-MEM)",
     totalKeys: hMem.listKeys().length,
     keys: hMem.listKeys(),
     sessionDump: hMem.dumpSession()
   });
+});
+
+/**
+ * DEDICATED SPONSOR DIRECT ROUTE: /api/meterless/engines
+ * Exposes active Meterless Engines (Relay Engine, Gaia Context Engine)
+ */
+mcpRouter.get("/meterless/engines", (_req: Request, res: Response) => {
+  res.json({
+    status: "active",
+    provider: "Meterless",
+    engines: [
+      {
+        name: "Meterless Relay Engine",
+        role: "Multi-Step Agent Mission Orchestration",
+        architecture: "Scout Intent -> Relay Execution -> H-MEM Persistence",
+        active: true
+      },
+      {
+        name: "Meterless Gaia Engine",
+        role: "Local Context & Hierarchical Memory (H-MEM)",
+        storedKeysCount: hMem.listKeys().length,
+        active: true
+      }
+    ]
+  });
+});
+
+/**
+ * DEDICATED SPONSOR DIRECT ROUTE: /api/meterless/nightshift/generate
+ * Invokes Meterless Nightshift as the designated AI provider (Race -> Judge -> Verify -> Generate)
+ */
+mcpRouter.post("/meterless/nightshift/generate", async (req: Request, res: Response) => {
+  try {
+    const { poId = "PO-1001" } = req.body || {};
+    const unified = await zetarisClient.unifiedOrderView(poId);
+    const discrepancies = compareRecords(unified);
+    const summary = buildAnalysisSummary(unified, discrepancies);
+    const output = await meterlessNightshift.generateExplanation(
+      unified,
+      discrepancies,
+      summary.totalFinancialImpact
+    );
+
+    res.json({
+      success: true,
+      provider: "Meterless Nightshift",
+      role: "Primary AI Provider",
+      receipt: output.nightshiftReceipt,
+      output
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
 });

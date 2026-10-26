@@ -43,7 +43,7 @@ export const EmailPreview: React.FC<EmailPreviewProps> = ({
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
         <div className="flex items-center space-x-2.5">
-          <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
@@ -51,7 +51,7 @@ export const EmailPreview: React.FC<EmailPreviewProps> = ({
               Supplier Clarification & Dispute Email
             </h2>
             <p className="text-xs text-slate-400">
-              Drafted by NVIDIA NIM: <span className="text-purple-300 font-mono text-[11px]">{explanation.modelUsed}</span>
+              AI Provider: <span className="text-emerald-300 font-mono text-[11px] font-semibold">{explanation.aiProvider || "Meterless Nightshift"}</span> • <span className="text-slate-400 font-mono text-[11px]">{explanation.modelUsed}</span>
             </p>
           </div>
         </div>
@@ -89,10 +89,42 @@ export const EmailPreview: React.FC<EmailPreviewProps> = ({
         </div>
       </div>
 
+      {/* Meterless Nightshift Execution Receipt */}
+      {explanation.nightshiftReceipt && (
+        <div className="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-3.5 space-y-2 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-500/20 pb-2">
+            <span className="font-semibold text-emerald-400 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+              <Cpu className="w-3.5 h-3.5" /> Meterless Nightshift Audit Receipt
+            </span>
+            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+              {explanation.nightshiftReceipt.receiptId} • {explanation.nightshiftReceipt.status}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
+            <div>
+              <span className="text-slate-400 block text-[10px]">RACE LANES:</span>
+              <span className="text-slate-200">{explanation.nightshiftReceipt.lanesRaced} parallel attempts</span>
+            </div>
+            <div>
+              <span className="text-slate-400 block text-[10px]">JUDGE SCORE:</span>
+              <span className="text-emerald-400">{explanation.nightshiftReceipt.judgeScore * 100}% verified</span>
+            </div>
+            <div>
+              <span className="text-slate-400 block text-[10px]">CLOUD TOKEN COST:</span>
+              <span className="text-cyan-400 font-semibold">{explanation.nightshiftReceipt.tokenCost}</span>
+            </div>
+            <div>
+              <span className="text-slate-400 block text-[10px]">EXECUTION LANE:</span>
+              <span className="text-slate-300 truncate">{explanation.nightshiftReceipt.winningLane}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Executive Summary Rationale Callout */}
       <div className="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3.5 space-y-1.5 text-xs">
-        <span className="font-semibold text-purple-300 uppercase tracking-wider text-[10px] block">
-          Auditor Executive Rationale
+        <span className="font-semibold text-emerald-300 uppercase tracking-wider text-[10px] block">
+          Auditor Executive Rationale (Meterless Nightshift)
         </span>
         <p className="text-slate-300 leading-relaxed font-sans">
           {explanation.executiveSummary}

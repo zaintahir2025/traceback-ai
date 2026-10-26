@@ -90,12 +90,25 @@ export interface SupplierEmailDraft {
   claimAmount: string;
 }
 
+export interface NightshiftReceipt {
+  receiptId: string;
+  hardwareLane: string;
+  tokenCost: string;
+  lanesRaced: number;
+  winningLane: string;
+  judgeScore: number;
+  verifiedAt: string;
+  status: "VERIFIED" | "FAILED_CONSTRAINTS";
+}
+
 export interface ExplanationOutput {
   executiveSummary: string;
   auditRationale: string;
   supplierEmail: SupplierEmailDraft;
   modelUsed: string;
   isLive: boolean;
+  nightshiftReceipt?: NightshiftReceipt;
+  aiProvider?: string;
 }
 
 export interface ReviewDecision {
@@ -211,6 +224,17 @@ export interface SystemHealth {
       mode: string;
       isLive: boolean;
       architecture: string;
+      engines?: string[];
+      activeEngine?: string;
+    };
+    meterlessNightshift?: {
+      layer: string;
+      role: string;
+      model: string;
+      endpoint: string;
+      isLive: boolean;
+      hardwareLane: string;
+      tokenCost: string;
     };
     nvidia: {
       layer: string;

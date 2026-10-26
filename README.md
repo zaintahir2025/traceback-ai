@@ -1,338 +1,372 @@
-# TraceBack AI — Supplier Invoice Checker & Reconciliation Agent
+# TraceBack AI -- Supplier Invoice Checker and Reconciliation Agent
 
-> **5-Day Hackathon Project | Build Window: Oct 22–27, 2026**  
-> *Autonomous 4-Way Cross-Source Data Virtualization, Evidence-Linked Agent Reasoning, and Supplier Overcharge Recovery.*
+Autonomous 4-Way Cross-Source Data Virtualization, Evidence-Linked Agent Reasoning, and Supplier Overcharge Recovery.
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-5.3-646cff.svg)](https://vitejs.dev/)
-[![Vitest](https://img.shields.io/badge/Vitest-2.1-green.svg)](https://vitest.dev/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8.svg)](https://tailwindcss.com/)
-[![NVIDIA NIM](https://img.shields.io/badge/NVIDIA%20NIM-Llama%203.1-76b900.svg)](https://build.nvidia.com/)
-[![Zetaris](https://img.shields.io/badge/Zetaris-Data%20Virtualization-00bcd4.svg)](https://www.zetaris.com/)
-[![Meterless](https://img.shields.io/badge/Meterless-Agent%20Orchestration-10b981.svg)](https://meterless.ai/)
-[![Cursor](https://img.shields.io/badge/Cursor-AI%20Agent%20Mode-slate.svg)](https://www.cursor.com/)
+Hackathon Build Window: October 22-27, 2026.
+Repository: https://github.com/zaintahir2025/traceback-ai
+Live Deployment: https://zaintahir2025.github.io/traceback-ai/
 
 ---
 
-## 🏆 Hackathon Value Proposition & Impact
+## 1. Executive Summary and Problem Statement
 
-In enterprise supply chain operations, organizations leak **1.5% to 4% of total procurement spend** through uncaptured invoice errors: suppliers bill for goods not delivered, apply rates higher than contracted price schedules, or issue unauthorized surcharges.
+Enterprise organizations process thousands of supplier invoices annually across fragmented, disconnected systems. Procurement spends between 1.5% and 4.0% in unnecessary overcharges due to four recurring leakage categories:
+1. Quantity Overbilling: Invoicing for units exceeding physical warehouse delivery receipts.
+2. Price Escalation: Billed unit rates exceeding master contracted schedules.
+3. Unauthorized Fees: Unapproved logistics, expediting, or handling surcharges not stipulated in contracts.
+4. Duplicate Invoices: Resubmission of invoices for previously cleared purchase orders.
 
-**TraceBack AI** automates multi-source reconciliation across four decentralized data sources:
-1. **Purchase Orders (PO)** from the ERP
-2. **Delivery Notes / Goods Receipts (GRN)** from the Warehouse Management System (WMS)
-3. **Supplier Invoices** from the Accounts Payable portal
-4. **Contract Price Lists** from Legal/Procurement schedules
-
-### 💰 Measurable Financial Recovery in Demo Scenarios
-| Purchase Order | Supplier Entity | Issue Category | Variance Delta | Recoverable Impact | Audit Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **PO-1001** | `SUP-42` | Quantity Overbill + Rate Escalation | **+20 units / +$2 rate** | **+$1,200.00 USD** | `Flagged (High Risk)` |
-| **PO-1002** | `SUP-17` | Perfect Concordance | **0 variances** | **$0.00 USD** | `Cleared (Clean A+)` |
-| **PO-1003** | `SUP-88` | Non-Contracted Ancillary Fees | **+$350 fee markup** | **+$350.00 USD** | `Flagged (Medium Risk)` |
-| **PO-1004** | `SUP-99` | Duplicate Invoice Double Billing | **Duplicate INV-9004** | **+$1,000.00 USD** | `Flagged (Critical Risk)` |
-| **Total Portfolio** | **4 Suppliers Audited** | **4-Way Cross-Source Virtualization** | — | **$2,550.00 USD** | **23.2% Recovery Rate** |
+TraceBack AI solves this by executing real-time 4-way cross-source reconciliation across decentralized datasets without moving or copying data into a centralized data warehouse.
 
 ---
 
-## 🌟 Mandatory Sponsor Integrations (Real Integrations)
+## 2. Core Architecture and Technology Stack
 
-TraceBack AI deeply integrates all four sponsor technologies with functional, robust implementations and guaranteed demo reliability:
+The platform is designed around three architectural pillars:
 
-### 1. 🌐 Zetaris — Data Integration / Virtualization Layer
-- **Architecture**: Eliminates brittle ETL pipelines by executing a single federated SQL join across disparate CSV sources in real time.
-- **Implementation**: [`ZetarisClient.ts`](file:///backend/src/zetaris/ZetarisClient.ts) and [`unifiedView.ts`](file:///backend/src/zetaris/unifiedView.ts).
-- **Dual-Mode Resiliency**:
-  - **Live Mode**: Sends HTTP POST requests to `ZETARIS_API_URL/query` with `ZETARIS_API_KEY`.
-  - **Mock Mode**: Automatically spins up an in-memory SQLite virtual schema across `purchase_orders.csv`, `deliveries.csv`, `invoices.csv`, and `contract_prices.csv`, running the **identical federated SQL query** so the demo works seamlessly offline.
-- **Transparency**: Exposes the exact SQL string executed and maps every field to an immutable citation reference.
+### A. Zetaris -- Data Integration and Virtualization Layer
+- Role: Primary Data Virtualization Engine.
+- Problem Solved: Eliminates brittle, expensive ETL pipelines that copy sensitive supplier data.
+- Mechanism: Connects directly to four independent data sources:
+  * Purchase Orders (ERP): data/purchase_orders.csv
+  * Delivery Notes / Goods Receipts (WMS): data/deliveries.csv
+  * Supplier Invoices (Accounts Payable): data/invoices.csv
+  * Contract Price Schedules (Legal / Procurement): data/contract_prices.csv
+- Implementation:
+  * Live Mode: Queries the Zetaris Network Data Virtualization API via POST /query with API authentication.
+  * Local Mock Mode: Automatically spins up an in-memory SQLite virtual federator executing the exact same federated SQL query with identical schema output.
+  * Evidence Provenance: Every extracted field links to an immutable coordinate citing {file, row, column, value}.
 
-### 2. 🤖 Meterless — Agent Orchestration Layer
-- **Architecture**: Implements the **Scout Intent → Relay Execution → H-MEM Memory** lifecycle.
-- **Implementation**: [`MeterlessMission.ts`](file:///backend/src/meterless/MeterlessMission.ts).
-- **5-Step Mission Chain**:
-  1. `scoutIntent`: Scope PO targets and reconciliation tolerances.
-  2. `fetchUnifiedData`: Query Zetaris data virtualization cluster.
-  3. `detectDiscrepancies`: Run 4-way comparison rules.
-  4. `scoreConfidence`: Synthesize cross-source corroboration and risk exposure.
-  5. `draftExplanation`: Relay context to NVIDIA NIM.
-- **Explainability**: Every step returns `{step, name, thought, action, observation, durationMs, status}` displayed live in the dashboard.
-- **H-MEM Memory**: Commits mission traces and audit decisions to hierarchical session memory.
+### B. Meterless Engines -- Agent Orchestration and Memory
+TraceBack AI incorporates two specialized Meterless Engines into its core workflow:
+1. Meterless Relay Engine:
+   * Coordinates the multi-step audit mission chain.
+   * Enforces sequential phase execution: Scout Intent -> Data Virtualization Relay -> Variance Detection -> Confidence Scoring -> AI Generation.
+   * Measures precise step durations and maintains telemetry logs.
+2. Meterless Gaia Context Engine (H-MEM):
+   * Provides local-first, hierarchical session memory.
+   * Persists cross-mission context, active audit findings, human reviewer approvals, and compliance verification receipts.
+   * Exposes inspection endpoints via GET /api/meterless/memory and Model Context Protocol (MCP).
 
-### 3. 🧠 NVIDIA — NVIDIA NIM Inference Layer
-- **Architecture**: Natural language audit synthesis and supplier dispute letter generation using NVIDIA NIM.
-- **Implementation**: [`NvidiaExplainer.ts`](file:///backend/src/nvidia/NvidiaExplainer.ts).
-- **Model**: `meta/llama-3.1-8b-instruct` hosted on `https://integrate.api.nvidia.com/v1/chat/completions`.
-- **Offline Resilient**: If `NVIDIA_API_KEY` is not provided, seamlessly falls back to a deterministic structured generation engine so hackathon demos never fail. Model badge is surfaced directly in the UI footer.
+### C. Meterless Nightshift -- Primary AI Provider
+- Role: Designated Autonomous AI Provider.
+- Architecture: Local-first AI hotspot running on local hardware (Windows GPU, Mac Apple Silicon, or DGX Spark) at $0.00 cloud token cost.
+- Execution Loop (The Four Duties):
+  1. Race: Executes parallel candidate resolution lanes (Lane A: Direct Claim, Lane B: Forensic Contract Evidence, Lane C: Escalated Dispute).
+  2. Judge: Evaluates candidate drafts against mathematical ground truth and contract tolerances.
+  3. Verify: Verifies that all line-item numbers, document identifiers, and claim amounts strictly match data sources.
+  4. Generate: Outputs the winning audit narrative and supplier clarification letter alongside an immutable Nightshift Execution Receipt.
+- Live Socket: Supports standard OpenAI-compatible socket integration at METERLESS_NIGHTSHIFT_URL with deterministic fallback.
 
-### 4. ⚡ Cursor — AI-First Development & Velocity
-- **Workflow**: Built end-to-end utilizing Cursor Agent Mode, `@`-context schema referencing, inline edits (Ctrl+K), and Cursor Composer.
-- **Documentation**: Documented in [`docs/CURSOR_USAGE.md`](file:///docs/CURSOR_USAGE.md) and [`PROMPTS_LOG.md`](file:///PROMPTS_LOG.md).
-
-### 🔍 Interactive Sponsor Tech Hub & Live Inspector (New!)
-Every sponsor badge in the dashboard footer and sidebar is an **interactive portal**:
-- **NVIDIA NIM Tester**: Test live inference against `meta/llama-3.1-8b-instruct` in real-time or configure your own NVIDIA API key in the browser.
-- **Zetaris Virtual SQL Console**: Inspect the cross-source SQL JOIN across the 4 decentralized datasets and execute custom federated queries.
-- **Meterless Mission & H-MEM Inspector**: Inspect the 5-step agent execution chain (`scoutIntent` → `fetchUnifiedData` → `detectDiscrepancies` → `scoreConfidence` → `draftExplanation`) and active session memory records.
-- **Cursor Agent Mode Viewer**: Browse `.cursorrules`, `@-context` rules, and actual prompt histories.
-
----
-
-## 🚀 Advanced Platform Capabilities
-
-1. **AI Auditor Copilot (NVIDIA NIM)**: Interactive conversational assistant grounded in the 4 virtualized data sources. Auditors can ask questions regarding contract clauses, warehouse delivery logs, or request escalated dispute letters in real time.
-2. **Enterprise Portfolio Risk & Supplier Scorecards**: Batch audit view aggregating total spend ($11,000 USD), recoverable leakage ($2,550 USD), and supplier compliance letter grades (from Grade A+ down to Grade F).
-3. **Live Custom Audit Simulation Engine**: Test any hypothetical order by inputting custom quantities, rates, and fee structures on the fly.
-4. **Official Compliance Audit Certificate & Print View**: Generate a formal, print-ready compliance certificate with verification hashes, H-MEM audit stamps, and authorized auditor sign-offs.
-5. **Zero-Setup Offline Execution**: Full client-side simulation fallback ensures that the live demo functions 100% seamlessly on GitHub Pages without requiring external backend servers.
+### D. Optional Sponsor Integrations
+- NVIDIA NIM: Secondary inference microservice option (meta/llama-3.1-8b-instruct) hosted on NVIDIA Cloud API.
+- Cursor: AI agent pair programming, prompt logs, and .cursorrules schema context.
 
 ---
 
-## 🏗️ System Architecture
+## 3. Financial Reconciliation Math and Ground Truth Scenarios
 
-```mermaid
-flowchart TD
-    subgraph DataMesh["4 Decentralized Data Sources"]
-        PO["Purchase Orders (PO)\npurchase_orders.csv"]
-        DEL["Delivery Notes (WMS)\ndeliveries.csv"]
-        INV["Supplier Invoices (AP)\ninvoices.csv"]
-        CP["Contract Price Lists\ncontract_prices.csv"]
-    end
+The system evaluates four distinct procurement scenarios included in the source CSV data:
 
-    subgraph ZetarisMesh["Zetaris Data Virtualization Layer"]
-        ZClient["ZetarisClient\n(Live Cloud / In-Memory SQLite Virtualizer)"]
-        SQLView["Federated 4-Way SQL Join\n(Zero ETL / No Data Duplication)"]
-        ZClient --> SQLView
-    end
+| Purchase Order | Supplier Entity | Variance Description | Financial Exposure | Audit Determination |
+| :--- | :--- | :--- | :--- | :--- |
+| PO-1001 | SUP-42 | Billed 120 vs 100 delivered; Billed $50 vs $48 contract rate | +$1,200.00 USD | Flagged (High Risk) |
+| PO-1002 | SUP-17 | Perfect concordance across all 4 decentralized records | $0.00 USD | Cleared (Clean Concordant) |
+| PO-1003 | SUP-88 | Non-contracted logistics and expediting surcharges | +$350.00 USD | Flagged (Medium Risk) |
+| PO-1004 | SUP-99 | Duplicate invoice submitted for identical purchase order | +$1,000.00 USD | Flagged (Critical Risk) |
 
-    subgraph MeterlessMesh["Meterless Agent Orchestration Layer"]
-        MScout["1. Scout Intent"]
-        MFetch["2. Fetch Unified Data"]
-        MDetect["3. Detect Discrepancies"]
-        MScore["4. Score Confidence"]
-        MExplain["5. Draft Explanation"]
-        HMEM["H-MEM Hierarchical Session Memory"]
+### PO-1001 Mathematical Breakdown:
+- Quantity Variance: 120 units invoiced minus 100 units delivered equals 20 unreceived units. At an invoiced unit price of $50, the overcharge is 20 * $50 = $1,000.00 USD.
+- Unit Price Variance: Invoiced rate of $50 minus contract ceiling rate of $48 equals $2.00 per unit variance. On 100 delivered units, the overcharge is 100 * $2 = $200.00 USD.
+- Total Financial Recovery Amount: $1,000.00 + $200.00 = $1,200.00 USD.
 
-        MScout --> MFetch --> MDetect --> MScore --> MExplain
-        MExplain --> HMEM
-    end
+---
 
-    subgraph NvidiaMesh["NVIDIA NIM Inference Layer"]
-        NvidiaNIM["NVIDIA NIM API\nmeta/llama-3.1-8b-instruct"]
-    end
+## 4. Federated Virtualization SQL Query
 
-    subgraph UserInterface["Auditor Web Dashboard"]
-        Summary["Summary Cards\n($1,200 Overcharge)"]
-        Evidence["Evidence Trail\n(Interactive Source Chips)"]
-        Modal["SourceModal\n(Raw CSV Line Viewer)"]
-        Trace["Agent Trace Log\n(Step Reasoning & Durations)"]
-        Review["Human Review Bar\n(Approve / Reject)"]
-        Email["Supplier Clarification Email\n(1-Click Copy & Dispatch)"]
-    end
+The Zetaris Virtualization layer executes the following federated SQL join across independent data meshes:
 
-    DataMesh --> ZClient
-    SQLView --> MFetch
-    MExplain --> NvidiaMesh
-    NvidiaMesh --> MExplain
-    MeterlessMesh --> Summary
-    MeterlessMesh --> Evidence
-    MeterlessMesh --> Trace
-    MeterlessMesh --> Email
-    Evidence --> Modal
-    Review --> HMEM
+```sql
+SELECT 
+  po.po_id,
+  po.supplier_id,
+  po.item,
+  po.ordered_qty,
+  po.unit_price AS po_unit_price,
+  po.currency,
+  po.order_date,
+  del.delivery_id,
+  del.delivered_qty,
+  del.delivery_date,
+  del.warehouse,
+  inv.invoice_id,
+  inv.invoiced_qty,
+  inv.unit_price AS invoice_unit_price,
+  inv.fees AS invoice_fees,
+  inv.invoice_date,
+  cp.contract_unit_price,
+  cp.valid_from AS contract_valid_from,
+  cp.valid_to AS contract_valid_to
+FROM purchase_orders po
+LEFT JOIN deliveries del ON po.po_id = del.po_id AND po.item = del.item
+LEFT JOIN invoices inv ON po.po_id = inv.po_id AND po.item = inv.item
+LEFT JOIN contract_prices cp ON po.supplier_id = cp.supplier_id AND po.item = cp.item
+WHERE po.po_id = ?;
 ```
 
 ---
 
-## 🚀 Quickstart & Runnable Instructions
+## 5. Model Context Protocol (MCP) Server
+
+TraceBack AI exposes a native Model Context Protocol (MCP) server conforming to the JSON-RPC 2.0 specification. Any MCP client (Cursor, Claude Desktop, or custom autonomous agent) can inspect and invoke these tools:
+
+### Available MCP Tools:
+1. zetaris_query_unified_view: Executes the 4-way federated join for a purchase order via Zetaris.
+2. zetaris_execute_sql: Executes arbitrary SQL across virtualized tables in the data mesh.
+3. meterless_run_mission: Executes the 5-step agent mission using the Meterless Relay Engine.
+4. meterless_inspect_hmem: Queries the Meterless Gaia Context Engine for active session memory.
+5. meterless_nightshift_generate: Invokes Meterless Nightshift to generate a verified dispute letter and audit receipt.
+6. nvidia_nim_generate_explanation: Invokes optional secondary NVIDIA NIM inference.
+
+### MCP Configuration for Cursor / IDEs (.cursor/mcp.json):
+```json
+{
+  "mcpServers": {
+    "traceback-ai": {
+      "command": "npx",
+      "args": ["tsx", "backend/src/mcp/cli.ts"],
+      "env": {
+        "PORT": "4001",
+        "NODE_ENV": "development"
+      }
+    }
+  }
+}
+```
+
+---
+
+## 6. Project Directory Structure
+
+```
+traceback-ai/
+|-- .cursor/
+|   `-- mcp.json                         # Cursor IDE Model Context Protocol configuration
+|-- .github/
+|   `-- workflows/
+|       `-- pages.yml                    # Automated GitHub Pages CI/CD workflow
+|-- backend/
+|   |-- package.json
+|   |-- tsconfig.json
+|   |-- vitest.config.ts                 # Vitest test runner configuration
+|   |-- src/
+|   |   |-- index.ts                     # Express HTTP server entrypoint
+|   |   |-- config.ts                    # Environment loading and runtime mode detection
+|   |   |-- mockData.ts                  # Ground-truth scenario baselines
+|   |   |-- analyzer/
+|   |   |   |-- compare.ts               # Core reconciliation mathematics and rules
+|   |   |   `-- types.ts                 # TypeScript domain schemas
+|   |   |-- zetaris/
+|   |   |   |-- ZetarisClient.ts         # Zetaris data virtualization engine
+|   |   |   `-- unifiedView.ts           # Federated 4-way cross-source SQL query
+|   |   |-- meterless/
+|   |   |   |-- MeterlessMission.ts      # Meterless Relay Engine and Gaia Context Engine
+|   |   |   |-- MeterlessNightshift.ts   # Meterless Nightshift AI Provider (Race-Judge-Verify)
+|   |   |   `-- steps.ts                 # Mission step telemetry definitions
+|   |   |-- nvidia/
+|   |   |   `-- NvidiaExplainer.ts       # Optional secondary NVIDIA NIM integration
+|   |   |-- mcp/
+|   |   |   |-- server.ts                # JSON-RPC 2.0 Model Context Protocol tool handler
+|   |   |   `-- cli.ts                   # Stdio transport runner for MCP clients
+|   |   |-- routes/
+|   |   |   |-- investigate.ts           # Core REST API endpoints
+|   |   |   `-- mcp.ts                   # MCP and dedicated sponsor routes
+|   |   `-- utils/
+|   |       |-- csv.ts                   # CSV file reader and parser
+|   |       `-- logger.ts                # Structured Pino logger
+|   `-- tests/
+|       |-- compare.test.ts              # Mathematical reconciliation unit tests
+|       `-- mcp.test.ts                  # MCP protocol tool verification tests
+|-- data/
+|   |-- purchase_orders.csv              # Purchase orders dataset
+|   |-- deliveries.csv                   # Warehouse delivery notes dataset
+|   |-- invoices.csv                     # Supplier invoices dataset
+|   `-- contract_prices.csv              # Master contracted pricing schedules
+|-- docs/
+|   |-- ARCHITECTURE.md                  # Comprehensive architectural reference
+|   |-- CURSOR_USAGE.md                  # Cursor Agent mode logs and engineering workflow
+|   |-- DEMO_SCRIPT.md                   # 1-to-4 minute hackathon presentation script
+|   `-- INTEGRATION_VERIFICATION.md      # Detailed sponsor technology verification report
+|-- frontend/
+|   |-- index.html
+|   |-- package.json
+|   |-- vite.config.ts
+|   |-- tailwind.config.js
+|   |-- public/
+|   |   |-- .nojekyll                    # GitHub Pages Jekyll bypass flag
+|   |   `-- 404.html                     # SPA routing fallback for static hosting
+|   `-- src/
+|       |-- main.tsx
+|       |-- App.tsx                      # Dashboard root component
+|       |-- types.ts                     # Frontend domain types and receipt schemas
+|       |-- api/
+|       |   `-- client.ts                # API client with static fallbacks
+|       `-- components/
+|           |-- Sidebar.tsx              # PO selector and architecture stack
+|           |-- SummaryCards.tsx         # Total overcharge financial recovery metrics
+|           |-- EvidenceTrail.tsx        # Discrepancy item cards with source citations
+|           |-- EvidenceCard.tsx         # Single variance card with file/row/col chips
+|           |-- SourceModal.tsx          # Raw CSV inspection viewer with Zetaris SQL
+|           |-- AgentTrace.tsx           # Meterless mission telemetry timeline
+|           |-- ApprovalBar.tsx          # Human-in-the-loop audit sign-off
+|           |-- EmailPreview.tsx         # Meterless Nightshift dispute letter and receipt
+|           |-- PortfolioAnalytics.tsx   # Enterprise portfolio risk scorecard
+|           |-- AuditorChat.tsx          # Interactive conversational copilot
+|           |-- SimulationModal.tsx      # Live custom order simulation sandbox
+|           |-- AuditCertificateModal.tsx# Official compliance certificate
+|           |-- SponsorTechHubModal.tsx  # Interactive sponsor tech inspector
+|           `-- Footer.tsx               # Tech stack badges and launch triggers
+|-- docker-compose.yml                   # Optional multi-container deployment
+|-- package.json                         # Root monorepo workspace configuration
+`-- README.md
+```
+
+---
+
+## 7. Local Installation and Running Guide
 
 ### Prerequisites
-- **Node.js** v18+ (tested on Node v20, v22, and v26)
-- **npm** v9+
+- Node.js version 22.0.0 or higher
+- npm version 9.0.0 or higher
 
-### 1. Clone & Install
+### Step 1: Clone Repository
 ```bash
-git clone https://github.com/your-username/traceback-ai.git
+git clone https://github.com/zaintahir2025/traceback-ai.git
 cd traceback-ai
+```
 
-# Install root, backend, and frontend dependencies
+### Step 2: Install Monorepo Dependencies
+```bash
 npm install
 npm install --workspace=backend
 npm install --workspace=frontend
 ```
 
-### 2. Configure Environment (Optional)
-The project works **100% out of the box** in offline/mock mode without requiring any external API keys!
-To enable live sponsor endpoints, create or edit `.env` in the root:
-```env
-PORT=4000
-NODE_ENV=development
-
-# Zetaris (Optional - leave blank for in-memory SQLite virtualization)
-ZETARIS_API_URL=https://api.zetaris.io/v1
-ZETARIS_API_KEY=your_zetaris_key
-
-# Meterless (Optional - leave blank for local Scout->Relay->H-MEM orchestrator)
-METERLESS_API_URL=https://api.meterless.ai/v1
-METERLESS_API_KEY=your_meterless_key
-
-# NVIDIA NIM (Optional - leave blank for deterministic fallback)
-NVIDIA_API_KEY=your_nvidia_api_key
+### Step 3: Configure Environment Variables
+Copy the example environment template:
+```bash
+cp .env.example .env
 ```
 
-### 3. Run the Full Stack
-Start both backend (port 4000) and frontend (port 3000) concurrently:
+Edit .env with your configuration:
+```env
+PORT=4001
+NODE_ENV=development
+
+# 1. Zetaris Data Virtualization
+# If omitted, operates in offline in-memory SQLite virtualization mode with identical schema.
+ZETARIS_API_URL=https://api.zetaris.cloud/v1
+ZETARIS_API_KEY=your_zetaris_key_here
+
+# 2. Meterless Agent Platform & Nightshift AI Provider
+# If omitted, runs local Meterless Relay Engine, Gaia H-MEM, and Nightshift Hotspot Engine.
+METERLESS_API_URL=https://api.meterless.ai/v1
+METERLESS_API_KEY=your_meterless_key_here
+METERLESS_NIGHTSHIFT_URL=http://127.0.0.1:11434/v1
+METERLESS_NIGHTSHIFT_MODEL=nightshift-llama-3.1-8b
+
+# 3. NVIDIA NIM (Optional Secondary Inference)
+NVIDIA_API_KEY=nvapi-your-key-here
+```
+
+### Step 4: Run the Application
+Start both backend API and frontend Vite server concurrently:
 ```bash
 npm run dev
 ```
+- Frontend UI: http://localhost:3000
+- Backend REST API: http://localhost:4001
+- System Health Endpoint: http://localhost:4001/api/health
 
-Open your browser to:
-👉 **`http://localhost:3000`**
-
-### 4. Run Unit Tests (Vitest)
-Verify reconciliation math and edge cases across the test suite:
+### Step 5: Run Automated Test Suite
+Execute the 12 automated unit and integration tests:
 ```bash
 npm test
 ```
-All 6 tests verify:
-- Quantity overbilling detection on PO-1001 ($1,000)
-- Contract price violation detection on PO-1001 ($200)
-- Cumulative $1,200 financial recovery amount calculation
-- Clean audit concordance on PO-1002 ($0 overcharge)
-- Unexpected fee detection
-- Duplicate invoice detection
-
-### 5. Run via Docker Compose (Optional)
-```bash
-docker-compose up --build
-```
-
----
-
-## 🎯 Live Demo Walkthrough (For Hackathon Judges)
-
-Follow the 3-minute demo script in [`docs/DEMO_SCRIPT.md`](file:///docs/DEMO_SCRIPT.md):
-
-1. **Inspect PO-1001 (Discrepant Order)**:
-   - Dashboard instantly displays **$1,200 USD Overcharge Detected** across 2 issues.
-   - Look at the **Evidence Cards**:
-     - *Quantity Overbill*: 120 invoiced vs 100 delivered $\rightarrow$ **+$1,000.00 USD**.
-     - *Price Above Contract*: Billed at $50/unit vs contract $48/unit $\rightarrow$ **+$200.00 USD**.
-2. **Inspect the Evidence Trail**:
-   - Click the interactive chip `invoices.csv:L2` or `deliveries.csv:L2`.
-   - The **Raw Virtualized Data Viewer (SourceModal)** pops open, highlighting the exact row (L2) and column (`invoiced_qty = 120` or `delivered_qty = 100`).
-   - Click **"View Zetaris SQL"** to inspect the live federated cross-source query.
-3. **Inspect the Agent Trace**:
-   - Click the **"Meterless Agent Trace"** tab.
-   - Inspect all 5 steps with live durations, internal agent thoughts, actions, and observations.
-   - Note the **H-MEM session memory key** committed.
-4. **Human-in-the-Loop Review & Dispute Dispatch**:
-   - Click **"Approve Claim ($1,200)"** in the review bar.
-   - Navigate to the **"Supplier Resolution Email"** tab.
-   - Review the **NVIDIA NIM** generated dispute letter, complete with invoice reference, delivery note reference, and debit note request.
-   - Click **"Dispatch to Supplier"** to simulate queue transmission.
-5. **Verify Clean Concordance (PO-1002)**:
-   - Click `PO-1002` in the left sidebar.
-   - The system verifies 50 units ordered, 50 delivered, 50 invoiced at $20/unit.
-   - Returns **$0.00 Overcharge** and **100% Concordance**, proving the tool does not hallucinate false positives.
+Verifies:
+- PO-1001 quantity overbilling detection ($1,000.00 USD).
+- PO-1001 contract price rate escalation detection ($200.00 USD).
+- Exact cumulative recovery calculation ($1,200.00 USD).
+- PO-1002 clean audit concordance ($0.00 USD).
+- PO-1003 unauthorized fee detection ($350.00 USD).
+- PO-1004 duplicate invoice double-billing detection ($1,000.00 USD).
+- MCP tools/list tool enumeration.
+- MCP zetaris_query_unified_view execution.
+- MCP meterless_run_mission execution.
+- MCP meterless_inspect_hmem session memory inspection.
+- MCP meterless_nightshift_generate execution and verified receipt emission.
 
 ---
 
-## 📂 Repository Structure
+## 8. REST API Reference
 
-```
-traceback-ai/
-├── README.md                        # Master hackathon documentation
-├── PROMPTS_LOG.md                   # Log of engineering & AI prompts
-├── .env.example                     # Environment template
-├── package.json                     # Monorepo workspaces & concurrently scripts
-├── docker-compose.yml               # Container deployment configuration
-├── docs/
-│   ├── CURSOR_USAGE.md              # Cursor Agent mode & @-context workflow
-│   ├── ARCHITECTURE.md              # Deep dive technical architecture
-│   └── DEMO_SCRIPT.md               # 1-4 minute judge pitch & walkthrough
-├── data/                            # Ground-truth source CSV datasets
-│   ├── purchase_orders.csv          # PO records (PO-1001, PO-1002)
-│   ├── deliveries.csv               # Warehouse Goods Receipt slips
-│   ├── invoices.csv                 # Supplier submitted invoices
-│   └── contract_prices.csv          # Master procurement price schedules
-├── backend/
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── src/
-│   │   ├── index.ts                 # Express REST API server
-│   │   ├── config.ts                # Environment loading & mode detection
-│   │   ├── mockData.ts              # Demo scenarios & fallback records
-│   │   ├── zetaris/
-│   │   │   ├── ZetarisClient.ts     # Live HTTP + SQLite virtualization engine
-│   │   │   └── unifiedView.ts       # 4-way cross-source SQL query
-│   │   ├── meterless/
-│   │   │   ├── MeterlessMission.ts  # Scout -> Relay -> H-MEM agent orchestrator
-│   │   │   └── steps.ts             # Step execution interfaces
-│   │   ├── analyzer/
-│   │   │   ├── compare.ts           # Core 4-way reconciliation logic
-│   │   │   └── types.ts             # Strict TypeScript domain schemas
-│   │   ├── nvidia/
-│   │   │   └── NvidiaExplainer.ts   # NVIDIA NIM meta/llama-3.1-8b-instruct
-│   │   ├── routes/
-│   │   │   └── investigate.ts       # REST endpoints (/api/investigate, /health)
-│   │   └── utils/
-│   │       ├── csv.ts               # 1-based row parser & source locator
-│   │       └── logger.ts            # Pino structured logger
-│   └── tests/
-│       └── compare.test.ts          # Vitest automated test suite
-└── frontend/
-    ├── package.json
-    ├── vite.config.ts
-    ├── tailwind.config.js
-    ├── index.html
-    └── src/
-        ├── main.tsx
-        ├── App.tsx                  # Root state & navigation coordinator
-        ├── api/client.ts            # Backend API client bindings
-        ├── types.ts                 # Frontend type definitions
-        ├── components/
-        │   ├── Sidebar.tsx          # Data source panel & Zetaris status
-        │   ├── SummaryCards.tsx     # Overcharge total & risk KPI cards
-        │   ├── EvidenceTrail.tsx    # Evidence cards with source chips
-        │   ├── EvidenceCard.tsx     # Single discrepancy with coordinate chips
-        │   ├── SourceModal.tsx      # Raw CSV row & column viewer
-        │   ├── AgentTrace.tsx       # Meterless mission trace with thoughts & timings
-        │   ├── ApprovalBar.tsx      # Human-in-the-loop audit review bar
-        │   ├── EmailPreview.tsx     # NVIDIA NIM supplier dispute letter
-        │   └── Footer.tsx           # Mandatory sponsor tech badges
-        └── styles/index.css         # Tailwind dark theme & scrollbars
-```
+### Health and System Status
+- GET /api/health
+  Returns overall service health, Zetaris virtualization mode, Meterless active engines, and Nightshift AI status.
+
+### Purchase Orders
+- GET /api/pos
+  Lists all purchase order audit scenarios available in the portfolio.
+
+### Investigation
+- POST /api/investigate/:poId
+  Executes the full Meterless Relay mission for a purchase order. Returns the unified record, discrepancies, summary, telemetry trace, and Nightshift AI dispute draft.
+
+### Zetaris Data Virtualization
+- GET /api/zetaris/status
+  Returns active virtualization status, latency, and the list of joined sources.
+- POST /api/zetaris/query
+  Executes federated SQL queries across the virtual data mesh.
+
+### Meterless Engines & Nightshift
+- POST /api/meterless/mission
+  Executes an autonomous mission using the Meterless Relay Engine.
+- GET /api/meterless/engines
+  Lists active Meterless engines (Relay Engine and Gaia Context Engine).
+- GET /api/meterless/memory
+  Dumps the active hierarchical session memory store (Gaia H-MEM).
+- POST /api/meterless/nightshift/generate
+  Invokes Meterless Nightshift to generate verified dispute letters and receipts.
+
+### Model Context Protocol (MCP)
+- POST /api/mcp
+  Standard JSON-RPC 2.0 endpoint handling initialize, tools/list, and tools/call.
+- GET /api/mcp/tools
+  REST inspection endpoint listing all registered MCP tools.
 
 ---
 
-## 📡 REST API Reference
+## 9. GitHub Pages Static Hosting Architecture
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/health` | System health check and live connectivity status for all 4 sponsor integrations. |
-| `GET` | `/api/pos` | Returns available purchase orders (`PO-1001` and `PO-1002`). |
-| `POST` | `/api/investigate/:poId` | Executes the Meterless mission, Zetaris query, reconciliation engine, and NVIDIA explainer for the given PO. |
-| `GET` | `/api/raw-source/:file` | Returns raw CSV headers, rows, and line numbers for `SourceModal`. |
-| `POST` | `/api/review/:poId` | Records human-in-the-loop review decision (`approve` \| `reject` \| `request_clarification`) in H-MEM session memory. |
-| `GET` | `/api/zetaris/status` | Exposes active Zetaris virtualization engine state, latency, and SQL template. |
-| `GET` | `/api/memory` | Returns raw dump of Meterless H-MEM hierarchical session memory. |
+The live dashboard is hosted on GitHub Pages at:
+https://zaintahir2025.github.io/traceback-ai/
 
----
-
-## ⚖️ Hackathon Judging Alignment
-
-| Hackathon Weight | Feature & Execution in TraceBack AI |
-| :--- | :--- |
-| **Impact (30%)** | Real, quantified financial savings: **$1,200 USD recovered on a single order** ($1,000 unreceived units + $200 price variance). Eliminates enterprise profit leakage. |
-| **Technical Quality (20%)** | Fully working full-stack TypeScript monorepo with 100% passing Vitest test suite, strict types, zero build errors, and clean separation of concerns. |
-| **Innovation (15%)** | Evidence-linked agent reasoning. Not a generic chatbot: every finding is bound to `{file, row, column, value}` coordinates with transparent Scout $\rightarrow$ Relay $\rightarrow$ H-MEM execution. |
-| **Demo (15%)** | Interactive 3-4 minute walkthrough with PO switcher (`PO-1001` overcharge vs `PO-1002` clean audit), raw data modal, and NVIDIA dispute letter. |
-| **UX (10%)** | Ultra-polished dark-mode dashboard built in Tailwind CSS with intuitive chips, status indicators, and clear human-in-the-loop controls. |
-| **Sponsor Tech (10%)** | **Zetaris** (data virtualization), **Meterless** (agent orchestration), **NVIDIA NIM** (LLM synthesis), and **Cursor** (AI-assisted development) deeply integrated with code-level proof. |
+Static Hosting Features:
+1. Client-Side Virtualization Fallback: If the backend REST server is not running, frontend/src/api/client.ts seamlessly executes local cross-source virtual joins across the four datasets.
+2. In-Memory Nightshift Engine: Emits verified Nightshift audit receipts directly in the browser.
+3. Interactive SQL Console: Allows users to run custom federated queries inside the browser.
+4. SPA Routing Reliability: Includes public/404.html and public/.nojekyll to ensure direct subpath routing without server errors.
 
 ---
 
-## 📄 License
-MIT © 2026 TraceBack AI Team. Built for the Hackathon (Oct 22–27, 2026).
+## 10. Verification and Compliance Checklist
+
+- Zetaris Data Virtualization: Implemented in backend/src/zetaris/ZetarisClient.ts and backend/src/zetaris/unifiedView.ts.
+- Meterless Relay Engine: Implemented in backend/src/meterless/MeterlessMission.ts.
+- Meterless Gaia Context Engine: Implemented via MeterlessGaiaEngine in backend/src/meterless/MeterlessMission.ts.
+- Meterless Nightshift AI Provider: Implemented in backend/src/meterless/MeterlessNightshift.ts with verified receipts.
+- Model Context Protocol: Implemented in backend/src/mcp/server.ts, backend/src/mcp/cli.ts, and .cursor/mcp.json.
+- NVIDIA NIM (Optional): Implemented in backend/src/nvidia/NvidiaExplainer.ts.
+- Cursor AI Agent Mode (Optional): Documented in docs/CURSOR_USAGE.md and PROMPTS_LOG.md.
+- Automated Test Suite: 12 passing tests in backend/tests/compare.test.ts and backend/tests/mcp.test.ts.
+- Clean Documentation: README contains zero emojis or icon characters.

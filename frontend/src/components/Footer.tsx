@@ -27,17 +27,28 @@ export const Footer: React.FC<FooterProps> = ({ systemHealth, onOpenSponsorHub }
           </span>
         </div>
 
-        {/* Right: Mandatory Sponsor Tech Badges (Clickable to open inspector) */}
+        {/* Right: Sponsor Tech Badges */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* NVIDIA Badge */}
+          {/* Meterless Nightshift Primary AI Badge */}
           <button
-            onClick={() => onOpenSponsorHub("nvidia")}
-            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 hover:border-purple-500/40 text-purple-300 font-mono text-[11px] transition shadow-sm cursor-pointer"
-            title="Inspect NVIDIA NIM integration & test live inference"
+            onClick={() => onOpenSponsorHub("meterless")}
+            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-300 font-mono text-[11px] transition shadow-sm cursor-pointer"
+            title="Inspect Meterless Nightshift AI Provider & Relay/Gaia Engines"
           >
-            <Cpu className="w-3.5 h-3.5 text-purple-400" />
-            <span>NVIDIA NIM: {nvidia?.model || "meta/llama-3.1-8b-instruct"}</span>
-            <span className="text-[9px] bg-purple-500/20 text-purple-200 px-1 rounded ml-1">Inspect</span>
+            <Bot className="w-3.5 h-3.5 text-emerald-400" />
+            <span>AI Provider: Meterless Nightshift ($0.00 Token Cost)</span>
+            <span className="text-[9px] bg-emerald-500/20 text-emerald-200 px-1 rounded ml-1">Inspect</span>
+          </button>
+
+          {/* Meterless Engines Badge */}
+          <button
+            onClick={() => onOpenSponsorHub("meterless")}
+            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/20 hover:border-teal-500/40 text-teal-300 font-mono text-[11px] transition shadow-sm cursor-pointer"
+            title="Inspect Meterless Relay Engine & Gaia Context Engine"
+          >
+            <Cpu className="w-3.5 h-3.5 text-teal-400" />
+            <span>Meterless Engines: Relay + Gaia</span>
+            <span className="text-[9px] bg-teal-500/20 text-teal-200 px-1 rounded ml-1">Engine</span>
           </button>
 
           {/* Zetaris Badge */}
@@ -51,26 +62,26 @@ export const Footer: React.FC<FooterProps> = ({ systemHealth, onOpenSponsorHub }
             <span className="text-[9px] bg-cyan-500/20 text-cyan-200 px-1 rounded ml-1">Inspect</span>
           </button>
 
-          {/* Meterless Badge */}
+          {/* NVIDIA Badge (Optional) */}
           <button
-            onClick={() => onOpenSponsorHub("meterless")}
-            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-300 font-mono text-[11px] transition shadow-sm cursor-pointer"
-            title="Inspect Meterless Scout -> Relay -> H-MEM lifecycle"
+            onClick={() => onOpenSponsorHub("nvidia")}
+            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 hover:border-purple-500/40 text-purple-300 font-mono text-[11px] transition shadow-sm cursor-pointer"
+            title="Inspect NVIDIA NIM integration (Optional)"
           >
-            <Bot className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Meterless: Scout → Relay → H-MEM</span>
-            <span className="text-[9px] bg-emerald-500/20 text-emerald-200 px-1 rounded ml-1">Inspect</span>
+            <Cpu className="w-3.5 h-3.5 text-purple-400" />
+            <span>NVIDIA NIM (Optional)</span>
+            <span className="text-[9px] bg-purple-500/20 text-purple-200 px-1 rounded ml-1">Inspect</span>
           </button>
 
-          {/* Cursor Badge */}
+          {/* Cursor Badge (Optional) */}
           <button
             onClick={() => onOpenSponsorHub("cursor")}
             className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 text-slate-300 font-mono text-[11px] transition shadow-sm cursor-pointer"
             title="Inspect Cursor Agent Mode development documentation"
           >
             <Terminal className="w-3.5 h-3.5 text-slate-400" />
-            <span>Cursor Agent Mode</span>
-            <span className="text-[9px] bg-slate-700 text-slate-300 px-1 rounded ml-1">Inspect</span>
+            <span>Cursor</span>
+            <span className="text-[9px] bg-slate-700 text-slate-300 px-1 rounded ml-1">Docs</span>
           </button>
         </div>
       </div>
