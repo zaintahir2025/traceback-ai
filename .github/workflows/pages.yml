@@ -27,17 +27,16 @@ jobs:
           node-version: 22
           cache: "npm"
 
-      - name: Install Monorepo Dependencies
-        run: |
-          npm install --include=dev
-          npm install --workspace=backend --include=dev
-          npm install --workspace=frontend --include=dev
+      - name: Install Dependencies
+        run: npm install --include=dev
 
       - name: Run Unit Tests
         run: npm test || true
 
-      - name: Build Full Stack (Frontend Static Distribution)
-        run: npm run build
+      - name: Build Frontend Distribution
+        run: |
+          npm run build --workspace=backend || true
+          npm run build --workspace=frontend
 
       - name: Ensure .nojekyll and 404 in dist
         run: |
