@@ -5,6 +5,8 @@ Autonomous 4-Way Cross-Source Data Virtualization, Evidence-Linked Agent Reasoni
 Hackathon Build Window: October 22-27, 2026.
 Repository: https://github.com/zaintahir2025/traceback-ai
 Live Deployment: https://zaintahir2025.github.io/traceback-ai/
+Demo Video Walkthrough: https://zaintahir2025.github.io/traceback-ai/demo-video.html
+Demo Video MP4 File: https://github.com/zaintahir2025/traceback-ai/raw/main/traceback-ai-demo.mp4
 
 ---
 

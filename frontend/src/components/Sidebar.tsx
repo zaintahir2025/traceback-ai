@@ -8,7 +8,8 @@ import {
   Layers,
   Sparkles,
   RefreshCw,
-  Cpu
+  Cpu,
+  Film
 } from "lucide-react";
 import { PurchaseOrderItem, SystemHealth } from "../types";
 
@@ -29,6 +30,7 @@ interface SidebarProps {
   onOpenSimulation: () => void;
   onOpenCertificate: () => void;
   onOpenSponsorHub?: (tab: "nvidia" | "zetaris" | "meterless" | "cursor") => void;
+  onOpenDemoVideo?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -42,7 +44,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onViewSourceFile,
   onOpenSimulation,
   onOpenCertificate,
-  onOpenSponsorHub
+  onOpenSponsorHub,
+  onOpenDemoVideo
 }) => {
   const zetaris = systemHealth?.sponsorIntegrations.zetaris;
   const meterless = systemHealth?.sponsorIntegrations.meterless;
@@ -75,6 +78,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        {/* 2-Min Demo Video Banner Button */}
+        {onOpenDemoVideo && (
+          <button
+            onClick={onOpenDemoVideo}
+            className="w-full p-2.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-rose-500/20 to-indigo-500/20 hover:from-amber-500/30 hover:to-indigo-500/30 border border-amber-500/40 text-amber-200 text-xs font-bold flex items-center justify-center gap-2 transition shadow-sm cursor-pointer"
+          >
+            <Film className="w-4 h-4 text-amber-400 fill-amber-400/30" />
+            <span>Watch 2-Min Demo Video</span>
+          </button>
+        )}
+
         {/* Quick Action Tools */}
         <div className="grid grid-cols-2 gap-2">
           <button

@@ -22,6 +22,7 @@ import { AuditorChat } from "./components/AuditorChat";
 import { SimulationModal } from "./components/SimulationModal";
 import { AuditCertificateModal } from "./components/AuditCertificateModal";
 import { SponsorTechHubModal } from "./components/SponsorTechHubModal";
+import { DemoVideoModal } from "./components/DemoVideoModal";
 import { Footer } from "./components/Footer";
 import {
   ShieldAlert,
@@ -34,7 +35,8 @@ import {
   TrendingUp,
   MessageSquare,
   Award,
-  Sliders
+  Sliders,
+  Film
 } from "lucide-react";
 
 export const App: React.FC = () => {
@@ -59,6 +61,7 @@ export const App: React.FC = () => {
   const [isSimulationOpen, setIsSimulationOpen] = useState(false);
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [isSponsorHubOpen, setIsSponsorHubOpen] = useState(false);
+  const [isDemoVideoOpen, setIsDemoVideoOpen] = useState(false);
   const [sponsorHubTab, setSponsorHubTab] = useState<"nvidia" | "zetaris" | "meterless" | "cursor">("nvidia");
 
   const handleOpenSponsorHub = (tab: "nvidia" | "zetaris" | "meterless" | "cursor") => {
@@ -161,6 +164,7 @@ export const App: React.FC = () => {
         onOpenSimulation={() => setIsSimulationOpen(true)}
         onOpenCertificate={() => setIsCertificateOpen(true)}
         onOpenSponsorHub={handleOpenSponsorHub}
+        onOpenDemoVideo={() => setIsDemoVideoOpen(true)}
       />
 
       {/* Main Investigation Panel */}
@@ -241,6 +245,15 @@ export const App: React.FC = () => {
               }`}
             >
               <MessageSquare className="w-3.5 h-3.5" /> AI Copilot
+            </button>
+
+            {/* 2-Min Demo Video Tour Button */}
+            <button
+              onClick={() => setIsDemoVideoOpen(true)}
+              className="ml-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-amber-500 via-rose-500 to-indigo-600 hover:brightness-110 text-white shadow-md shadow-rose-500/20 flex items-center gap-1.5 transition cursor-pointer"
+            >
+              <Film className="w-3.5 h-3.5 fill-current" />
+              <span>2-Min Demo Video</span>
             </button>
           </div>
         </header>
@@ -384,6 +397,13 @@ export const App: React.FC = () => {
         onClose={() => setIsSponsorHubOpen(false)}
         initialTab={sponsorHubTab}
         systemHealth={systemHealth}
+      />
+
+      {/* 2-Minute Demo Video Walkthrough Modal */}
+      <DemoVideoModal
+        isOpen={isDemoVideoOpen}
+        onClose={() => setIsDemoVideoOpen(false)}
+        onJumpToPo={handleSelectPo}
       />
     </div>
   );
