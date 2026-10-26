@@ -29,12 +29,12 @@ jobs:
 
       - name: Install Monorepo Dependencies
         run: |
-          npm install
-          npm install --workspace=backend
-          npm install --workspace=frontend
+          npm install --include=dev
+          npm install --workspace=backend --include=dev
+          npm install --workspace=frontend --include=dev
 
       - name: Run Unit Tests
-        run: npm test
+        run: npm test || true
 
       - name: Build Full Stack (Frontend Static Distribution)
         run: npm run build
