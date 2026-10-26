@@ -38,3 +38,4 @@ Thumbs.db
 .gemini/
 .system_generated/
 *.zip
+scripts/slide_exports/
