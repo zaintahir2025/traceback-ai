@@ -23,25 +23,35 @@ const html = `
   <script>
     const canvas = document.getElementById('c');
     const ctx = canvas.getContext('2d');
-    const totalDuration = 107.4;
+    const totalDuration = 163.6;
 
     const subtitles = [
-      { start: 0.0, end: 3.5, text: "Welcome to TraceBack AI — Autonomous Supplier Invoice & Reconciliation Agent." },
-      { start: 3.5, end: 9.5, text: "Enterprises lose up to 4% of procurement spend to uncaptured invoice overcharges." },
-      { start: 9.5, end: 18.0, text: "Data is siloed across ERP purchase orders, warehouse delivery receipts, AP invoices, and legal contracts." },
-      { start: 18.0, end: 24.5, text: "TraceBack AI unifies all four sources into an autonomous agent that stops spend leakage in real time." },
-      { start: 24.5, end: 32.5, text: "In a live audit of Purchase Order PO-1001, TraceBack AI discovers $1,200 in overcharges in 184 milliseconds." },
-      { start: 32.5, end: 41.5, text: "Discrepancy 1: Quantity overbilling. Invoiced 120 units, but warehouse dock note DN-045 logged 100 received ($1,000 loss)." },
-      { start: 41.5, end: 50.5, text: "Discrepancy 2: Contract rate escalation. Invoiced at $50/unit versus contracted $48 ceiling ($200 rate creep)." },
-      { start: 50.5, end: 55.5, text: "Every single finding links directly to the exact file, row, and column." },
-      { start: 55.5, end: 60.5, text: "This is powered by Zetaris data virtualization." },
-      { start: 60.5, end: 68.0, text: "TraceBack AI executes federated SQL joins across all four data sources on the fly in 12 milliseconds." },
-      { start: 68.0, end: 74.5, text: "Data stays in place with zero ETL pipelines, zero replication, and zero latency." },
-      { start: 74.5, end: 79.5, text: "The agent workflow is orchestrated with Meterless architecture." },
-      { start: 79.5, end: 87.0, text: "Scout Intent establishes audit rules, Relay coordinates queries, and Meterless Nightshift acts as our AI provider." },
-      { start: 87.0, end: 95.5, text: "Nightshift runs a 4-stage local reasoning cycle on local compute, producing an audit receipt at $0.00 cloud token cost." },
-      { start: 95.5, end: 101.5, text: "The lead auditor approves the claim with one click, and the system synthesizes a formal supplier dispute notice." },
-      { start: 101.5, end: 107.4, text: "Testing clean order PO-1002 returns zero overcharges and zero false alarms. Cash recovery in seconds!" }
+      { start: 0.0, end: 5.0, text: "Welcome to TraceBack AI, an autonomous enterprise spend recovery platform." },
+      { start: 5.0, end: 17.5, text: "Enterprises lose 1.5% to 4% of procurement spend due to data fragmented across ERP, WMS, AP, and Contracts." },
+      { start: 17.5, end: 23.0, text: "TraceBack AI unifies all four sources into an autonomous agent that stops spend leakage in real time." },
+      { start: 23.0, end: 31.0, text: "In a live audit of Purchase Order PO-1001, TraceBack AI discovers $1,200 in overcharges in 184 milliseconds." },
+      { start: 31.0, end: 41.0, text: "Discrepancy 1: Quantity overbilling. Invoiced 120 units vs warehouse dock note DN-045 logging 100 received ($1,000 loss)." },
+      { start: 41.0, end: 51.5, text: "Discrepancy 2: Contract rate escalation. Invoiced at $50/unit versus contracted $48 ceiling ($200 rate creep)." },
+      { start: 51.5, end: 57.5, text: "Every finding carries an immutable evidence link down to the exact file, row, and column." },
+      
+      // Scene 3: Zetaris Demo Challenge Personal Insight (57.5s - 113.5s = 56s segment)
+      { start: 57.5, end: 65.0, text: "This brings us to Zetaris Data Virtualization, submitted as part of the Zetaris Demo Challenge." },
+      { start: 65.0, end: 77.0, text: "When building TraceBack AI, our biggest hurdle was data fragmentation across 4 silos without building a 6-month ETL lakehouse." },
+      { start: 77.0, end: 81.5, text: "That was the moment Zetaris clicked for our team." },
+      { start: 81.5, end: 91.5, text: "Zetaris acted as our decentralized data harness, running federated SQL joins across live ERP, WMS, AP, and Contracts in place." },
+      { start: 91.5, end: 100.5, text: "What surprised us most was the speed: federated queries executing in just 12 milliseconds with zero data movement." },
+      { start: 100.5, end: 107.5, text: "Crucially, Zetaris enabled 100% cell-level audit defensibility: every claim cites raw file, row, and column coordinates." },
+      { start: 107.5, end: 114.0, text: "In one sentence: Zetaris eliminated the ETL bottleneck, giving our autonomous agent instant access to enterprise reality." },
+      
+      // Scene 4: Meterless & Nightshift AI
+      { start: 114.0, end: 118.5, text: "The agent orchestration is powered by Meterless architecture." },
+      { start: 118.5, end: 126.5, text: "Scout Intent sets tolerances, Relay dispatches Zetaris queries, and reconciliation algorithms compute exact variances." },
+      { start: 126.5, end: 139.0, text: "Meterless Nightshift runs a 4-stage local reasoning cycle on local compute at $0.00 cloud token cost, committed to Gaia memory." },
+      
+      // Scene 5: Human in the loop & Clean benchmark
+      { start: 139.0, end: 149.0, text: "With one click, the lead auditor approves the $1,200 claim, and TraceBack AI synthesizes a formal supplier dispute letter." },
+      { start: 149.0, end: 156.5, text: "Meanwhile, testing clean order PO-1002 returns zero overcharges and zero false alarms with 100% concordance." },
+      { start: 156.5, end: 163.6, text: "TraceBack AI turns enterprise procurement leakage into immediate cash recovery." }
     ];
 
     function getSubtitle(t) {
@@ -70,28 +80,30 @@ const html = `
       ctx.fillText('|   Autonomous Cross-Source Reconciliation & Spend Recovery Agent', 205, 59);
 
       // Top Badges
-      ctx.fillStyle = '#1e1b4b';
-      ctx.fillRect(870, 36, 170, 32);
-      ctx.strokeStyle = '#4338ca';
-      ctx.strokeRect(870, 36, 170, 32);
-      ctx.fillStyle = '#a5b4fc';
-      ctx.font = 'bold 12px monospace';
-      ctx.fillText('ZETARIS FEDERATED', 885, 57);
+      // Badge 1: Zetaris Challenge
+      ctx.fillStyle = '#082f49';
+      ctx.fillRect(810, 36, 230, 32);
+      ctx.strokeStyle = '#0284c7';
+      ctx.strokeRect(810, 36, 230, 32);
+      ctx.fillStyle = '#7dd3fc';
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText('ZETARIS DEMO CHALLENGE 2026', 820, 56);
 
+      // Badge 2: Meterless
       ctx.fillStyle = '#064e3b';
       ctx.fillRect(1055, 36, 175, 32);
       ctx.strokeStyle = '#059669';
       ctx.strokeRect(1055, 36, 175, 32);
       ctx.fillStyle = '#6ee7b7';
-      ctx.font = 'bold 12px monospace';
-      ctx.fillText('METERLESS NIGHTSHIFT', 1068, 57);
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText('METERLESS NIGHTSHIFT', 1068, 56);
 
       // Determine Active Scene
       let scene = 1;
-      if (sec >= 24.5 && sec < 55.5) scene = 2;
-      else if (sec >= 55.5 && sec < 74.5) scene = 3;
-      else if (sec >= 74.5 && sec < 95.5) scene = 4;
-      else if (sec >= 95.5) scene = 5;
+      if (sec >= 23.0 && sec < 57.5) scene = 2;
+      else if (sec >= 57.5 && sec < 114.0) scene = 3;
+      else if (sec >= 114.0 && sec < 139.0) scene = 4;
+      else if (sec >= 139.0) scene = 5;
 
       // Main Card Container
       ctx.fillStyle = '#0b1120';
@@ -103,7 +115,7 @@ const html = `
         // SCENE 1: The Problem
         ctx.fillStyle = '#f43f5e';
         ctx.font = 'bold 14px monospace';
-        ctx.fillText('SCENE 1/5: THE $1.5M ENTERPRISE PROCUREMENT LEAKAGE', 60, 145);
+        ctx.fillText('SCENE 1/5: THE ENTERPRISE PROBLEM & SPEND LEAKAGE', 60, 145);
 
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 28px sans-serif';
@@ -111,14 +123,14 @@ const html = `
 
         ctx.fillStyle = '#94a3b8';
         ctx.font = '16px sans-serif';
-        ctx.fillText('Global procurement operations suffer from 4 disconnected, uncoordinated enterprise silos:', 60, 225);
+        ctx.fillText('Global procurement operations suffer from 4 disconnected, uncoordinated enterprise data silos:', 60, 225);
 
         // 4 Silo Cards
         const silos = [
-          { name: "ERP System (SAP)", sub: "Purchase Orders", detail: "PO-1001: 120 units ordered @ $50/ea ($6,000)", color: "#38bdf8" },
-          { name: "WMS Logistics", sub: "Goods Receipts", detail: "DN-045: Only 100 units physically delivered", color: "#f59e0b" },
-          { name: "Accounts Payable", sub: "Supplier Invoices", detail: "INV-9001: Invoiced for full 120 units ($6,000)", color: "#f43f5e" },
-          { name: "Legal / Sourcing", sub: "Master Contracts", detail: "Contract Ceiling: Cap rate $48/ea (not $50)", color: "#a855f7" }
+          { name: "ERP System (SAP)", sub: "Purchase Orders", detail: "PO-1001: 120 units ordered @ $50/ea ($6,000.00)", color: "#38bdf8" },
+          { name: "WMS Logistics", sub: "Goods Receipts", detail: "DN-045: Only 100 units physically delivered to dock", color: "#f59e0b" },
+          { name: "Accounts Payable", sub: "Supplier Invoices", detail: "INV-9001: Invoiced for full 120 units ($6,000.00)", color: "#f43f5e" },
+          { name: "Legal / Sourcing", sub: "Master Contracts", detail: "Contract Ceiling: Rate capped at $48/ea (not $50)", color: "#a855f7" }
         ];
 
         silos.forEach((silo, idx) => {
@@ -151,7 +163,7 @@ const html = `
 
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 28px sans-serif';
-        ctx.fillText('Purchase Order PO-1001: $1,200.00 Overcharge Uncovered', 60, 190);
+        ctx.fillText('Purchase Order PO-1001: $1,200.00 Overcharge Uncovered in 184ms', 60, 190);
 
         // Discrepancy Card 1
         ctx.fillStyle = '#1c1917';
@@ -197,39 +209,89 @@ const html = `
         ctx.fillText('TOTAL EXPOSURE: $1,200.00 USD   |   AUDIT CONFIDENCE: 96.5%   |   LATENCY: 184ms', 60, 545);
 
       } else if (scene === 3) {
-        // SCENE 3: Zetaris Data Virtualization
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = 'bold 14px monospace';
-        ctx.fillText('SCENE 3/5: ZETARIS DATA VIRTUALIZATION ENGINE', 60, 145);
+        // SCENE 3: MANDATORY ZETARIS DEMO CHALLENGE PERSONAL INSIGHT (56s segment)
+        ctx.fillStyle = '#06b6d4';
+        ctx.font = 'bold 13px monospace';
+        ctx.fillText('SCENE 3/5: ZETARIS DEMO CHALLENGE — WHY ZETARIS CLICKED FOR OUR TEAM (56s DEDICATED SEGMENT)', 60, 135);
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 28px sans-serif';
-        ctx.fillText('Zero-ETL Federated SQL Query Across 4 Disparate Sources', 60, 190);
+        ctx.font = 'bold 24px sans-serif';
+        ctx.fillText('Decentralized Data Harness: The "Aha!" Moment That Eliminated Brittle ETL', 60, 170);
 
-        // SQL Query Code Box
-        ctx.fillStyle = '#030712';
-        ctx.fillRect(60, 220, 1160, 240);
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(60, 220, 1160, 240);
+        // Required One-Sentence Statement Box
+        ctx.fillStyle = '#082f49';
+        ctx.fillRect(60, 190, 1160, 100);
+        ctx.strokeStyle = '#06b6d4';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(60, 190, 1160, 100);
 
-        ctx.font = '15px monospace';
+        ctx.fillStyle = '#67e8f9';
+        ctx.font = 'bold 12px monospace';
+        ctx.fillText('REQUIRED STATEMENT: IN ONE SENTENCE, WHY DID YOU THINK IT WAS AMAZING? (PROJECT: TRACEBACK AI)', 80, 215);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'italic 13.5px sans-serif';
+        ctx.fillText('"Zetaris completely eliminated our need for brittle, multi-month ETL pipelines by enabling TraceBack AI to', 80, 245);
+        ctx.fillText('execute sub-20ms federated SQL queries directly across live ERP purchase orders, warehouse delivery receipts,', 80, 265);
+        ctx.fillText('AP invoices, and legal contracts in place—providing 100% cell-level audit defensibility with zero data movement."', 80, 285);
+
+        // Side by Side: Left = Insights / Right = Live SQL Query
+        // Left Column: What Surprised Us & What It Enabled
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(60, 305, 565, 205);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(60, 305, 565, 205);
+
         ctx.fillStyle = '#38bdf8';
-        ctx.fillText('SELECT po.po_id, po.supplier_id, po.ordered_qty,', 85, 260);
-        ctx.fillText('       del.delivered_qty, inv.invoiced_qty, inv.unit_price, cp.contract_unit_price', 85, 290);
-        ctx.fillStyle = '#818cf8';
-        ctx.fillText('FROM   zetaris.sap_erp.purchase_orders po', 85, 325);
-        ctx.fillStyle = '#34d399';
-        ctx.fillText('LEFT JOIN zetaris.wms_cloud.deliveries del      ON po.po_id = del.po_id', 85, 360);
-        ctx.fillStyle = '#fbbf24';
-        ctx.fillText('LEFT JOIN zetaris.ap_portal.invoices inv        ON po.po_id = inv.po_id', 85, 395);
-        ctx.fillStyle = '#c084fc';
-        ctx.fillText('LEFT JOIN zetaris.legal_repo.contract_prices cp ON po.supplier_id = cp.supplier_id;', 85, 430);
+        ctx.font = 'bold 13px monospace';
+        ctx.fillText('1. The "Moment It Clicked" (Zero Data Movement)', 80, 332);
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('No 6-month lakehouse project. Agent queries SAP, WMS & Contracts in situ.', 80, 355);
 
-        // Verification callout
+        ctx.fillStyle = '#34d399';
+        ctx.font = 'bold 13px monospace';
+        ctx.fillText('2. What Surprised Us (12ms Query Speed)', 80, 390);
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Pure SQL-92 execution joining 4 sources in 12ms with zero pipeline lag.', 80, 413);
+
+        ctx.fillStyle = '#a855f7';
+        ctx.font = 'bold 13px monospace';
+        ctx.fillText('3. What It Enabled (100% Cell-Level Defensibility)', 80, 448);
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Every claim cites {file, row, col, value} ground truth. Zero AI hallucinations.', 80, 471);
+
+        // Right Column: Live Zetaris SQL-92 query terminal
+        ctx.fillStyle = '#030712';
+        ctx.fillRect(645, 305, 575, 205);
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(645, 305, 575, 205);
+
+        ctx.font = '11.5px monospace';
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText('// Zetaris In-Situ Federated Cross-Source Virtualization', 665, 330);
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillText('SELECT po.po_id, po.ordered_qty, del.delivered_qty, inv.invoiced_qty,', 665, 352);
+        ctx.fillText('       inv.unit_price, cp.contract_unit_price', 665, 372);
+        ctx.fillStyle = '#818cf8';
+        ctx.fillText('FROM   zetaris.sap_erp.purchase_orders po', 665, 395);
+        ctx.fillStyle = '#34d399';
+        ctx.fillText('LEFT JOIN zetaris.wms_cloud.deliveries del   ON po.po_id = del.po_id', 665, 417);
+        ctx.fillStyle = '#fbbf24';
+        ctx.fillText('LEFT JOIN zetaris.ap_portal.invoices inv     ON po.po_id = inv.po_id', 665, 439);
+        ctx.fillStyle = '#c084fc';
+        ctx.fillText('LEFT JOIN zetaris.legal_repo.contract_prices cp ON po.supplier_id = cp.supplier_id;', 665, 461);
         ctx.fillStyle = '#10b981';
-        ctx.font = 'bold 18px sans-serif';
-        ctx.fillText('Executed in 12ms   •   Zero Data Movement   •   100% Immutable Cell-Level Ground Truth', 60, 545);
+        ctx.fillText('>> Execution Telemetry: 1 Record Joined in 12ms | 0 Bytes Copied', 665, 492);
+
+        // Attestation Footer
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = 'bold 12px monospace';
+        ctx.fillText('SUBMITTED AS PART OF THE ZETARIS DEMO CHALLENGE   •   GOVERNED BY THE LAWS OF VICTORIA, AUSTRALIA', 60, 545);
 
       } else if (scene === 4) {
         // SCENE 4: Meterless Relay & Nightshift
@@ -243,7 +305,7 @@ const html = `
 
         const stages = [
           { num: "01", name: "Scout Intent", time: "12ms", desc: "Establishes audit parameters & zero-tolerance thresholds" },
-          { num: "02", name: "Relay Zetaris", time: "18ms", desc: "Coordinates cross-source queries across SAP, WMS & AP" },
+          { num: "02", name: "Relay Zetaris", time: "18ms", desc: "Coordinates cross-source queries across SAP, WMS, AP & Contracts" },
           { num: "03", name: "Reconciliation", time: "8ms", desc: "Deterministic mathematical matching & variance quantification" },
           { num: "04", name: "Confidence Scoring", time: "14ms", desc: "Multi-point corroboration yielding 96.5% confidence score" },
           { num: "05", name: "Meterless Nightshift", time: "42ms", desc: "Race > Judge > Verify > Generate local AI reasoning cycle" }
@@ -275,7 +337,7 @@ const html = `
 
         // Nightshift receipt
         ctx.fillStyle = '#a855f7';
-        ctx.font = 'bold 17px monospace';
+        ctx.font = 'bold 16px monospace';
         ctx.fillText('NIGHTSHIFT RECEIPT: ns-rcpt-8f3a9e   |   $0.00 CLOUD TOKEN COST   |   METERLESS GAIA H-MEM COMMITTED', 60, 545);
 
       } else {
@@ -286,7 +348,7 @@ const html = `
 
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 28px sans-serif';
-        ctx.fillText('Auditor Claim Approval & Zero False Positives on PO-1002', 60, 190);
+        ctx.fillText('Auditor Claim Approval & Zero False Positives on Clean Order PO-1002', 60, 190);
 
         // Approval Card
         ctx.fillStyle = '#064e3b';
@@ -337,7 +399,7 @@ const html = `
 
         // Bottom takeaway
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 19px sans-serif';
+        ctx.font = 'bold 18px sans-serif';
         ctx.fillText('TraceBack AI turns enterprise procurement leakage into measurable cash recovery in seconds.', 60, 545);
       }
 
@@ -350,7 +412,7 @@ const html = `
       // Subtitle Text
       const sub = getSubtitle(sec);
       ctx.fillStyle = '#f8fafc';
-      ctx.font = '600 16px sans-serif';
+      ctx.font = '600 15px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(sub, 640, 642);
       ctx.textAlign = 'left';
@@ -360,7 +422,7 @@ const html = `
       ctx.fillRect(50, 670, 1180, 8);
 
       const progressWidth = Math.min((sec / totalDuration) * 1180, 1180);
-      ctx.fillStyle = '#6366f1';
+      ctx.fillStyle = '#06b6d4';
       ctx.fillRect(50, 670, progressWidth, 8);
 
       // Time Display
@@ -443,19 +505,23 @@ const server = http.createServer((req, res) => {
     req.on('data', c => chunks.push(c));
     req.on('end', () => {
       const buf = Buffer.concat(chunks);
-      const rootPath = path.resolve('traceback-ai-demo.mp4');
-      const publicPath = path.resolve('frontend/public/traceback-ai-demo.mp4');
-      const docsPath = path.resolve('docs/traceback-ai-demo.mp4');
+      
+      // Save under both official challenge format (TRACEBACK-AI_011126.mp4) and primary format (traceback-ai-demo.mp4)
+      const filenames = ['traceback-ai-demo.mp4', 'TRACEBACK-AI_011126.mp4'];
+      
+      filenames.forEach(fn => {
+        const rootPath = path.resolve(fn);
+        const publicPath = path.resolve('frontend/public/' + fn);
+        const docsPath = path.resolve('docs/' + fn);
 
-      fs.writeFileSync(rootPath, buf);
-      fs.writeFileSync(publicPath, buf);
-      fs.writeFileSync(docsPath, buf);
+        fs.writeFileSync(rootPath, buf);
+        fs.writeFileSync(publicPath, buf);
+        fs.writeFileSync(docsPath, buf);
 
-      console.log('SUCCESS! Rendered and saved MP4 video:');
-      console.log(' - ' + rootPath + ' (' + (buf.length / 1024 / 1024).toFixed(2) + ' MB)');
-      console.log(' - ' + publicPath);
-      console.log(' - ' + docsPath);
+        console.log('Saved: ' + rootPath + ' (' + (buf.length / 1024 / 1024).toFixed(2) + ' MB)');
+      });
 
+      console.log('SUCCESS! Rendered and saved MP4 video in root, frontend/public, and docs!');
       res.writeHead(200);
       res.end('OK');
       setTimeout(() => {
@@ -477,6 +543,6 @@ server.listen(PORT, async () => {
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 720 });
   await page.goto(`http://localhost:${PORT}/`);
-  console.log('Page loaded in Edge! Starting recording (107 seconds, natural normal-speed voiceover)...');
+  console.log('Page loaded in Edge! Starting recording (163.6 seconds, natural normal-speed voiceover with Zetaris 56s insight segment)...');
   await page.evaluate(() => window.startRecording());
 });

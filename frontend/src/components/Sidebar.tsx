@@ -10,7 +10,8 @@ import {
   RefreshCw,
   Cpu,
   Film,
-  Presentation
+  Presentation,
+  Award
 } from "lucide-react";
 import { PurchaseOrderItem, SystemHealth } from "../types";
 
@@ -32,6 +33,7 @@ interface SidebarProps {
   onOpenCertificate: () => void;
   onOpenSponsorHub?: (tab: "nvidia" | "zetaris" | "meterless" | "cursor") => void;
   onOpenDemoVideo?: () => void;
+  onOpenZetarisChallenge?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -46,7 +48,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenSimulation,
   onOpenCertificate,
   onOpenSponsorHub,
-  onOpenDemoVideo
+  onOpenDemoVideo,
+  onOpenZetarisChallenge
 }) => {
   const zetaris = systemHealth?.sponsorIntegrations.zetaris;
   const meterless = systemHealth?.sponsorIntegrations.meterless;
@@ -79,7 +82,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* 2-Min Demo Video Banner Button */}
+                {/* Zetaris Demo Challenge Submission Button */}
+        {onOpenZetarisChallenge && (
+          <button
+            onClick={onOpenZetarisChallenge}
+            className="w-full p-2.5 rounded-xl bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-indigo-500/20 hover:from-cyan-500/30 hover:to-indigo-500/30 border border-cyan-500/40 text-cyan-200 text-xs font-bold flex items-center justify-center gap-2 transition shadow-sm cursor-pointer"
+            title="View Zetaris Demo Challenge Submission Showcase"
+          >
+            <Award className="w-4 h-4 text-cyan-400" />
+            <span>Zetaris Demo Challenge</span>
+          </button>
+        )}
+
+{/* 2-Min Demo Video Banner Button */}
         {onOpenDemoVideo && (
           <button
             onClick={onOpenDemoVideo}

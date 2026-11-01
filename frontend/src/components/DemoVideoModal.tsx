@@ -46,7 +46,7 @@ export const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
-  const totalDuration = 120; // 2 minutes exact
+  const totalDuration = 164; // 2m 44s exact // 2 minutes exact
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const timerRef = useRef<any>(null);
@@ -57,9 +57,7 @@ export const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
   // 5 High-Impact Scenes (24 seconds each = 120s total)
   const scenes: Scene[] = [
     {
-      id: 1,
-      title: "The Problem",
-      durationSec: 24,
+      id: 1, title: "The Problem", durationSec: 23,
       badge: "The $1.5M Enterprise Leakage",
       badgeColor: "bg-rose-500/20 text-rose-300 border-rose-500/30",
       heading: "Uncaptured Supplier Overcharges in Siloed Enterprise Data",
@@ -187,53 +185,80 @@ export const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
         </div>
       )
     },
-    {
+        {
       id: 3,
-      title: "Zetaris Virtualization",
-      durationSec: 24,
-      badge: "Sponsor Tech: Zetaris",
-      badgeColor: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-      heading: "Zero-ETL Federated SQL Across 4 Disparate Sources",
+      title: "Zetaris Demo Challenge",
+      durationSec: 56,
+      badge: "Zetaris Demo Challenge: 56s Personal Insight Segment",
+      badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+      heading: "Decentralized Data Harness: The Moment It Clicked for Our Team",
       narration:
-        "How does TraceBack AI achieve this without brittle ETL pipelines? Through Zetaris data virtualization. TraceBack AI executes federated SQL joins across purchase orders, deliveries, invoices, and contracts on the fly. Whether connecting to Zetaris cloud network or our built-in virtual SQL federator, the data remains where it lives. Every discrepancy carries an immutable evidence trail linking to the exact file, row, column, and raw ground-truth value. When an auditor or supplier clicks an evidence chip, they inspect the raw data row instantly.",
+        "This brings us to Zetaris Data Virtualization, submitted as part of the Zetaris Demo Challenge. When building TraceBack AI, our biggest hurdle was data fragmentation: how do you reconcile four disconnected enterprise silos without spending six months building a brittle ETL lakehouse? That was the moment Zetaris clicked for us. Zetaris acted as our decentralized data harness, allowing our agent to run federated SQL joins across live ERP tables, warehouse receipts, invoices, and contracts in place. What surprised us most was the speed: federated queries executing in just 12 milliseconds with zero data movement. Crucially, Zetaris enabled 100% cell-level audit defensibility: every claim cites raw file, row, and column coordinates with zero AI hallucinations. In one sentence: Zetaris eliminated the data engineering bottleneck, giving our autonomous agent instant access to fragmented enterprise reality.",
       renderVisual: (progress) => (
-        <div className="w-full h-full flex flex-col p-6">
-          <div className="flex items-center justify-between mb-3">
+        <div className="w-full h-full flex flex-col p-6 space-y-3">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Database className="w-5 h-5 text-blue-400" />
-              <h3 className="text-base font-bold text-white">Zetaris Federated Virtual Schema</h3>
+              <Database className="w-5 h-5 text-cyan-400" />
+              <h3 className="text-sm font-bold text-white">
+                Zetaris Demo Challenge: Official Submission Showcase
+              </h3>
             </div>
-            <span className="text-xs font-mono bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-0.5 rounded-full">
-              STATUS: VIRTUALIZATION ACTIVE (SQL-92)
+            <span className="text-[11px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
+              MANDATORY 56s PERSONAL INSIGHT SEGMENT
             </span>
           </div>
 
-          {/* SQL Terminal Visual */}
-          <div className="flex-1 bg-slate-950 rounded-xl border border-slate-800 p-4 font-mono text-xs overflow-hidden flex flex-col justify-between">
-            <div>
-              <div className="text-slate-500 mb-2">// Zetaris cross-source virtualization query</div>
-              <div className="text-blue-400 font-semibold mb-1">SELECT</div>
-              <div className="pl-4 text-slate-300 leading-relaxed">
-                po.po_id, po.supplier_id, po.ordered_qty, po.unit_price AS po_unit_price,<br />
-                del.delivery_id, del.delivered_qty,<br />
-                inv.invoice_id, inv.invoiced_qty, inv.unit_price AS invoiced_unit_price,<br />
-                cp.contract_unit_price<br />
+          {/* Highlight Card: One-Sentence Statement */}
+          <div className="bg-slate-950 border border-cyan-500/40 rounded-xl p-3.5 shadow-inner">
+            <div className="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider mb-1">
+              Required Submission Statement: "In one sentence, why did you think it was amazing?"
+            </div>
+            <div className="text-xs italic text-white leading-relaxed border-l-2 border-cyan-400 pl-3">
+              "Zetaris completely eliminated our need for brittle, multi-month ETL pipelines by enabling TraceBack AI to execute sub-20ms federated SQL queries directly across live ERP purchase orders, warehouse delivery receipts, AP invoices, and legal contracts in place—providing 100% cell-level audit defensibility with zero data movement."
+            </div>
+          </div>
+
+          {/* Side by side: Left = Insights / Right = Live SQL Query */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs space-y-2 flex flex-col justify-between">
+              <div>
+                <div className="text-cyan-400 font-mono font-bold text-[11px] mb-1">
+                  1. The "Moment It Clicked" (Zero Data Movement)
+                </div>
+                <p className="text-slate-300 text-[11px] leading-relaxed">
+                  No 6-month lakehouse engineering or risk of moving sensitive financial records. Our agent queries SAP, WMS & Contracts in place.
+                </p>
               </div>
-              <div className="text-blue-400 font-semibold mt-1">FROM <span className="text-indigo-300">purchase_orders po</span></div>
-              <div className="pl-4 text-emerald-300">LEFT JOIN <span className="text-white">deliveries del</span> ON po.po_id = del.po_id</div>
-              <div className="pl-4 text-amber-300">LEFT JOIN <span className="text-white">invoices inv</span> ON po.po_id = inv.po_id</div>
-              <div className="pl-4 text-purple-300">LEFT JOIN <span className="text-white">contract_prices cp</span> ON po.supplier_id = cp.supplier_id</div>
-              <div className="text-blue-400 font-semibold mt-1">WHERE <span className="text-white">po.po_id = 'PO-1001'</span></div>
+              <div>
+                <div className="text-emerald-400 font-mono font-bold text-[11px] mb-1">
+                  2. What Surprised Us (12ms Query Speed)
+                </div>
+                <p className="text-slate-300 text-[11px] leading-relaxed">
+                  Pure SQL-92 execution joining 4 sources in 12ms with zero pipeline lag and zero data replication.
+                </p>
+              </div>
+              <div>
+                <div className="text-indigo-400 font-mono font-bold text-[11px] mb-1">
+                  3. What It Enabled (100% Cell-Level Defensibility)
+                </div>
+                <p className="text-slate-300 text-[11px] leading-relaxed">
+                  Every claim cites raw <code>{"{file, row, col, value}"}</code> coordinates. Zero probabilistic AI hallucinations.
+                </p>
+              </div>
             </div>
 
-            {/* Live virtual join result indicator */}
-            <div className={`mt-3 p-3 rounded-lg border text-xs transition-all duration-500 ${progress > 0.4 ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-300" : "bg-slate-900 border-slate-800 text-slate-400"}`}>
-              <div className="flex items-center justify-between font-bold">
-                <span>Zetaris Unified View Execution: 1 Record Joined in 12ms</span>
-                <span className="font-mono text-emerald-400">0 ETL DUPLICATION</span>
+            <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] text-slate-300 flex flex-col justify-between">
+              <div>
+                <div className="text-slate-500 mb-1.5">// Zetaris Live In-Situ Virtualization Query</div>
+                <div className="text-cyan-400">SELECT po.po_id, po.ordered_qty, del.delivered_qty, inv.invoiced_qty, inv.unit_price, cp.contract_unit_price</div>
+                <div className="text-indigo-300 mt-1">FROM zetaris.sap_erp.purchase_orders po</div>
+                <div className="text-emerald-300">LEFT JOIN zetaris.wms_cloud.deliveries del ON po.po_id = del.po_id</div>
+                <div className="text-amber-300">LEFT JOIN zetaris.ap_portal.invoices inv ON po.po_id = inv.po_id</div>
+                <div className="text-purple-300">LEFT JOIN zetaris.legal_repo.contract_prices cp ON po.supplier_id = cp.supplier_id;</div>
               </div>
-              <div className="text-[11px] text-slate-400 mt-1">
-                Ordered: 120 | Delivered: 100 | Invoiced: 120 ($50.00) | Contract: $48.00
+              <div className="pt-2 border-t border-slate-900 flex justify-between text-emerald-400 font-bold text-[10px]">
+                <span>Status: 1 Record Joined in 12ms</span>
+                <span>0 Bytes Copied</span>
               </div>
             </div>
           </div>
@@ -241,9 +266,7 @@ export const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
       )
     },
     {
-      id: 4,
-      title: "Meterless Nightshift AI",
-      durationSec: 24,
+      id: 4, title: "Meterless Nightshift AI", durationSec: 25,
       badge: "Sponsor Tech: Meterless & Nightshift",
       badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
       heading: "Autonomous Relay Orchestration & $0.00 Token Compute",
@@ -312,9 +335,7 @@ export const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
       )
     },
     {
-      id: 5,
-      title: "Human Approval & Resolution",
-      durationSec: 24,
+      id: 5, title: "Human Approval & Resolution", durationSec: 25,
       badge: "Human-in-the-Loop & NVIDIA NIM",
       badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30",
       heading: "One-Click Claim Approval, Supplier Email & Credibility",

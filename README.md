@@ -5,8 +5,9 @@ Autonomous 4-Way Cross-Source Data Virtualization, Evidence-Linked Agent Reasoni
 Hackathon Build Window: October 22-27, 2026.
 Repository: https://github.com/zaintahir2025/traceback-ai
 Live Deployment: https://zaintahir2025.github.io/traceback-ai/
+Zetaris Demo Challenge Video: https://zaintahir2025.github.io/traceback-ai/TRACEBACK-AI_011126.mp4
+Demo Video MP4 File: https://zaintahir2025.github.io/traceback-ai/traceback-ai-demo.mp4
 Demo Video Walkthrough: https://zaintahir2025.github.io/traceback-ai/demo-video.html
-Demo Video MP4 File: https://github.com/zaintahir2025/traceback-ai/raw/main/traceback-ai-demo.mp4
 Executive Slide Deck: https://zaintahir2025.github.io/traceback-ai/presentation.html
 PowerPoint Presentation File: https://zaintahir2025.github.io/traceback-ai/traceback-ai-presentation.pptx
 PowerPoint Presentation File (Direct Mirror): https://zaintahir2025.github.io/traceback-ai/traceback-ai-presentation-v2.pptx
@@ -16,6 +17,38 @@ Online PowerPoint Viewer: https://view.officeapps.live.com/op/view.aspx?src=http
 ---
 
 ## 1. Executive Summary and Problem Statement
+
+---
+
+## Zetaris Demo Challenge Official Submission Details
+
+Project Name: TraceBack AI
+Challenge: Zetaris Demo Challenge (Open Agent Hackathon 2026)
+Submission Track: Solving Fragmented Intelligence / The Agent That Can Explain Why
+
+Required Question: In one sentence, why did you think it was amazing?
+Statement:
+"Zetaris completely eliminated our need for brittle, multi-month ETL pipelines by enabling TraceBack AI to execute sub-20ms federated SQL queries directly across live ERP purchase orders, warehouse delivery receipts, AP invoices, and legal contracts in place--providing 100% cell-level audit defensibility with zero data movement."
+
+Attribution Note:
+When quoted, this statement will note that it was submitted as part of the Zetaris Demo Challenge.
+
+Mandatory Personal Insight Segment:
+Scene 3 of the submission video features a 56-second dedicated segment (strictly satisfying the 40-60 second requirement) detailing:
+1. The Problem: 4 disconnected enterprise silos (ERP, WMS, AP, Contracts) causing 1.5% to 4% spend leakage.
+2. The Moment It Clicked: Realizing our autonomous agent does not require a centralized data lakehouse, because Zetaris virtualizes live data in situ.
+3. What Surprised Us: 12ms query execution across 4 heterogeneous tables with zero ETL data duplication.
+4. What It Enabled Us to Accomplish: 100% cell-level citation defensibility ({file, row, col, value}) with zero probabilistic AI hallucinations.
+
+Official Challenge Video Files:
+- Official Challenge Naming: TRACEBACK-AI_011126.mp4 (6.68 MB)
+- Primary Video Mirror: traceback-ai-demo.mp4 (6.68 MB)
+
+Challenge Legal Attestations:
+- Original Work: Confirmed 100% original work created by the team.
+- Permissions: All permissions granted for submission and promotional licensing.
+- Governing Law: Governed by the laws of Victoria, Australia.
+
 
 Enterprise organizations process thousands of supplier invoices annually across fragmented, disconnected systems. Procurement spends between 1.5% and 4.0% in unnecessary overcharges due to four recurring leakage categories:
 1. Quantity Overbilling: Invoicing for units exceeding physical warehouse delivery receipts.

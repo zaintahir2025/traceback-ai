@@ -23,6 +23,7 @@ import { SimulationModal } from "./components/SimulationModal";
 import { AuditCertificateModal } from "./components/AuditCertificateModal";
 import { SponsorTechHubModal } from "./components/SponsorTechHubModal";
 import { DemoVideoModal } from "./components/DemoVideoModal";
+import { ZetarisChallengeModal } from "./components/ZetarisChallengeModal";
 import { Footer } from "./components/Footer";
 import {
   ShieldAlert,
@@ -63,6 +64,7 @@ export const App: React.FC = () => {
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [isSponsorHubOpen, setIsSponsorHubOpen] = useState(false);
   const [isDemoVideoOpen, setIsDemoVideoOpen] = useState(false);
+  const [isZetarisChallengeOpen, setIsZetarisChallengeOpen] = useState(false);
   const [sponsorHubTab, setSponsorHubTab] = useState<"nvidia" | "zetaris" | "meterless" | "cursor">("nvidia");
 
   const handleOpenSponsorHub = (tab: "nvidia" | "zetaris" | "meterless" | "cursor") => {
@@ -166,6 +168,7 @@ export const App: React.FC = () => {
         onOpenCertificate={() => setIsCertificateOpen(true)}
         onOpenSponsorHub={handleOpenSponsorHub}
         onOpenDemoVideo={() => setIsDemoVideoOpen(true)}
+        onOpenZetarisChallenge={() => setIsZetarisChallengeOpen(true)}
       />
 
       {/* Main Investigation Panel */}
@@ -248,7 +251,17 @@ export const App: React.FC = () => {
               <MessageSquare className="w-3.5 h-3.5" /> AI Copilot
             </button>
 
-            {/* 2-Min Demo Video Tour Button */}
+                        {/* Zetaris Demo Challenge Submission Showcase Button */}
+            <button
+              onClick={() => setIsZetarisChallengeOpen(true)}
+              className="ml-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:brightness-110 text-white shadow-md shadow-cyan-500/25 flex items-center gap-1.5 transition cursor-pointer"
+              title="View Zetaris Demo Challenge Official Submission Statement & Architecture"
+            >
+              <Award className="w-3.5 h-3.5 text-cyan-200" />
+              <span>Zetaris Challenge</span>
+            </button>
+
+{/* 2-Min Demo Video Tour Button */}
             <button
               onClick={() => setIsDemoVideoOpen(true)}
               className="ml-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-amber-500 via-rose-500 to-indigo-600 hover:brightness-110 text-white shadow-md shadow-rose-500/20 flex items-center gap-1.5 transition cursor-pointer"
@@ -418,6 +431,13 @@ export const App: React.FC = () => {
         onClose={() => setIsDemoVideoOpen(false)}
         onJumpToPo={handleSelectPo}
       />
+      {/* Zetaris Demo Challenge Official Submission Modal */}
+      <ZetarisChallengeModal
+        isOpen={isZetarisChallengeOpen}
+        onClose={() => setIsZetarisChallengeOpen(false)}
+        onOpenDemoVideo={() => setIsDemoVideoOpen(true)}
+      />
+
     </div>
   );
 };

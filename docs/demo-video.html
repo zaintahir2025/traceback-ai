@@ -353,25 +353,39 @@
           </div>
         `
       },
-      {
+            {
         id: 3,
-        title: "Zetaris Virtualization",
-        badge: "SCENE 3/5: ZETARIS DATA VIRTUALIZATION",
-        heading: "Zero-ETL <span class='highlight-blue'>Federated SQL Join</span> Across 4 Silos",
-        sub: "Zetaris queries data where it lives without pipeline lag or hallucination risk.",
-        narration: "This is powered by Zetaris data virtualization. TraceBack AI executes federated SQL joins across all four data sources on the fly in 12 milliseconds. Data stays in place with zero ETL pipelines, zero replication, and zero latency.",
+        title: "Zetaris Demo Challenge",
+        badge: "SCENE 3/5: ZETARIS DEMO CHALLENGE (56s PERSONAL INSIGHT)",
+        heading: "Decentralized Data Harness: <span class='highlight-blue'>The Moment It Clicked</span>",
+        sub: "Submitted as part of the Zetaris Demo Challenge. Governed by the laws of Victoria, Australia.",
+        narration: "This brings us to Zetaris Data Virtualization, submitted as part of the Zetaris Demo Challenge. When building TraceBack AI, our biggest hurdle was data fragmentation: how do you reconcile four disconnected enterprise silos without spending six months building a brittle ETL lakehouse? That was the moment Zetaris clicked for us. Zetaris acted as our decentralized data harness, allowing our agent to run federated SQL joins across live ERP tables, warehouse receipts, invoices, and contracts in place. What surprised us most was the speed: federated queries executing in just 12 milliseconds with zero data movement. Crucially, Zetaris enabled 100% cell-level audit defensibility: every claim cites raw file, row, and column coordinates with zero AI hallucinations. In one sentence: Zetaris eliminated the data engineering bottleneck, giving our autonomous agent instant access to fragmented enterprise reality.",
         renderHtml: `
-          <div class="scene-heading">Zero-ETL <span class="highlight-blue">Federated SQL Join</span> Across 4 Silos</div>
-          <div class="scene-sub">Zetaris queries data where it lives without pipeline lag or hallucination risk.</div>
-          <div class="card" style="max-width: 700px; width: 100%; font-family: monospace; font-size: 0.75rem; line-height: 1.5; color: #cbd5e1;">
-            <span style="color: #38bdf8;">SELECT</span> po.po_id, po.ordered_qty, del.delivered_qty, inv.invoiced_qty, inv.unit_price, cp.contract_unit_price<br/>
-            <span style="color: #38bdf8;">FROM</span> purchase_orders po<br/>
-            <span style="color: #10b981;">LEFT JOIN</span> deliveries del ON po.po_id = del.po_id<br/>
-            <span style="color: #f59e0b;">LEFT JOIN</span> invoices inv ON po.po_id = inv.po_id<br/>
-            <span style="color: #a855f7;">LEFT JOIN</span> contract_prices cp ON po.supplier_id = cp.supplier_id<br/>
-            <span style="color: #38bdf8;">WHERE</span> po.po_id = 'PO-1001';
-            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #1e293b; color: #10b981;">
-              ✓ Query executed in 12ms | 0 ETL data movement | 100% ground-truth linked
+          <div class="scene-heading">Decentralized Data Harness: <span class="highlight-blue">The Moment It Clicked</span></div>
+          <div class="scene-sub">Submitted as part of the Zetaris Demo Challenge. Governed by the laws of Victoria, Australia.</div>
+          <div class="card" style="max-width: 780px; width: 100%; border-color: rgba(6,182,212,0.5); background: rgba(8,47,73,0.4); text-align: left; padding: 0.85rem 1.25rem; margin-bottom: 0.75rem;">
+            <div style="font-family: monospace; font-size: 0.65rem; color: #67e8f9; font-weight: bold; margin-bottom: 0.25rem;">
+              REQUIRED STATEMENT: "IN ONE SENTENCE, WHY DID YOU THINK IT WAS AMAZING?" (PROJECT: TRACEBACK AI)
+            </div>
+            <div style="font-size: 0.78rem; font-style: italic; color: #fff; line-height: 1.4; border-left: 3px solid #06b6d4; padding-left: 0.6rem;">
+              "Zetaris completely eliminated our need for brittle, multi-month ETL pipelines by enabling TraceBack AI to execute sub-20ms federated SQL queries directly across live ERP purchase orders, warehouse delivery receipts, AP invoices, and legal contracts in place—providing 100% cell-level audit defensibility with zero data movement."
+            </div>
+          </div>
+          <div class="grid-4" style="grid-template-columns: repeat(2, 1fr); max-width: 780px; gap: 0.75rem;">
+            <div class="card" style="text-align: left; padding: 0.75rem;">
+              <div style="color: #38bdf8; font-weight: bold; font-size: 0.75rem; margin-bottom: 0.25rem;">1. The Moment It Clicked</div>
+              <div style="color: #cbd5e1; font-size: 0.7rem; line-height: 1.4;">Zero ETL lakehouse. Real-time in-situ SQL queries across SAP, WMS & Contracts.</div>
+              <div style="color: #34d399; font-weight: bold; font-size: 0.75rem; margin-top: 0.5rem; margin-bottom: 0.25rem;">2. What Surprised Us</div>
+              <div style="color: #cbd5e1; font-size: 0.7rem; line-height: 1.4;">12ms query execution across 4 sources with zero data movement.</div>
+            </div>
+            <div class="card" style="font-family: monospace; font-size: 0.68rem; line-height: 1.35; color: #cbd5e1; text-align: left; background: #030712; padding: 0.75rem;">
+              <span style="color: #38bdf8;">// Zetaris Live In-Situ Query</span><br/>
+              <span style="color: #38bdf8;">SELECT</span> po.po_id, po.ordered_qty, del.delivered_qty, inv.invoiced_qty, cp.contract_unit_price<br/>
+              <span style="color: #818cf8;">FROM</span> zetaris.sap_erp.purchase_orders po<br/>
+              <span style="color: #34d399;">LEFT JOIN</span> zetaris.wms_cloud.deliveries del ON po.po_id = del.po_id<br/>
+              <span style="color: #fbbf24;">LEFT JOIN</span> zetaris.ap_portal.invoices inv ON po.po_id = inv.po_id<br/>
+              <span style="color: #c084fc;">LEFT JOIN</span> zetaris.legal_repo.contract_prices cp ON po.supplier_id = cp.supplier_id;<br/>
+              <span style="color: #10b981; font-weight: bold;">>> 1 Record Joined in 12ms | 0 Bytes Copied</span>
             </div>
           </div>
         `
@@ -438,10 +452,10 @@
 
     function updateScene() {
       let sceneIndex = 0;
-      if (currentTime >= 95.5) sceneIndex = 4;
-      else if (currentTime >= 74.5) sceneIndex = 3;
-      else if (currentTime >= 55.5) sceneIndex = 2;
-      else if (currentTime >= 24.5) sceneIndex = 1;
+      if (currentTime >= 139.0) sceneIndex = 4;
+      else if (currentTime >= 114.0) sceneIndex = 3;
+      else if (currentTime >= 57.5) sceneIndex = 2;
+      else if (currentTime >= 23.0) sceneIndex = 1;
       else sceneIndex = 0;
       const scene = scenes[sceneIndex];
 
